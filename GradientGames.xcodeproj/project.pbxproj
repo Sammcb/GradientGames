@@ -8,17 +8,95 @@
 
 /* Begin PBXBuildFile section */
 		22DB9D9227B95101002D8312 /* GradientGamesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9D9127B95101002D8312 /* GradientGamesApp.swift */; };
-		22DB9D9427B95101002D8312 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9D9327B95101002D8312 /* ContentView.swift */; };
-		22DB9D9627B95102002D8312 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22DB9D9527B95102002D8312 /* Assets.xcassets */; };
-		22DB9D9927B95102002D8312 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22DB9D9827B95102002D8312 /* Preview Assets.xcassets */; };
+		22DB9DA927B9533A002D8312 /* GamesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DA827B9533A002D8312 /* GamesView.swift */; };
+		22DB9DAE27B95482002D8312 /* ReversiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DAD27B95482002D8312 /* ReversiView.swift */; };
+		22DB9DB027B95DF3002D8312 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DAF27B95DF3002D8312 /* SettingsView.swift */; };
+		22DB9DB327B95F18002D8312 /* GradientGames.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DB127B95F18002D8312 /* GradientGames.xcdatamodeld */; };
+		22DB9DB527B95F2E002D8312 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DB427B95F2E002D8312 /* Extensions.swift */; };
+		22DB9DB727B9618F002D8312 /* ChessState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DB627B9618F002D8312 /* ChessState.swift */; };
+		22DB9DB927B961CE002D8312 /* ChessBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DB827B961CE002D8312 /* ChessBoard.swift */; };
+		22DB9DBB27B96234002D8312 /* ChessPiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DBA27B96234002D8312 /* ChessPiece.swift */; };
+		22DB9DBD27B9624F002D8312 /* ChessSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DBC27B9624F002D8312 /* ChessSquare.swift */; };
+		22DB9DBF27B96273002D8312 /* Times.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DBE27B96273002D8312 /* Times.swift */; };
+		22DB9DC127B96292002D8312 /* ChessMove.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DC027B96292002D8312 /* ChessMove.swift */; };
+		22DB9DC327B96528002D8312 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DC227B96528002D8312 /* Settings.swift */; };
+		22DB9DC727B96730002D8312 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22DB9DC627B96730002D8312 /* CloudKit.framework */; };
+		22DB9DCA27B9683A002D8312 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22DB9DC927B9683A002D8312 /* Assets.xcassets */; };
+		22DB9DCC27B9698F002D8312 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DCB27B9698F002D8312 /* Store.swift */; };
+		22DB9DCE27B96A33002D8312 /* ChessGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DCD27B96A33002D8312 /* ChessGame.swift */; };
+		22DB9DD027B96BAA002D8312 /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DCF27B96BAA002D8312 /* Navigation.swift */; };
+		22DB9DD227B96E37002D8312 /* NewChessThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DD127B96E37002D8312 /* NewChessThemeView.swift */; };
+		22DB9DD427B96E7C002D8312 /* ImportChessThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DD327B96E7C002D8312 /* ImportChessThemeView.swift */; };
+		22DB9DD627B96F1F002D8312 /* EditChessThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DD527B96F1F002D8312 /* EditChessThemeView.swift */; };
+		22DB9DD827B96F4C002D8312 /* ShareSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DD727B96F4C002D8312 /* ShareSheetView.swift */; };
+		22DB9DDA27B970F7002D8312 /* ChessBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DD927B970F7002D8312 /* ChessBoardView.swift */; };
+		22DB9DDC27B9710E002D8312 /* ChessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DDB27B9710E002D8312 /* ChessView.swift */; };
+		22DB9DDE27B97132002D8312 /* ChessSquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DDD27B97132002D8312 /* ChessSquareView.swift */; };
+		22DB9DE027B97143002D8312 /* ChessPieceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DDF27B97143002D8312 /* ChessPieceView.swift */; };
+		22DB9DE227B97153002D8312 /* ChessUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DE127B97153002D8312 /* ChessUIView.swift */; };
+		22DB9DE427B97164002D8312 /* ChessPromoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DE327B97164002D8312 /* ChessPromoteView.swift */; };
+		22DB9DE727B97CE1002D8312 /* ReversiState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DE627B97CE1002D8312 /* ReversiState.swift */; };
+		22DB9DE927B97D12002D8312 /* ReversiBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DE827B97D12002D8312 /* ReversiBoard.swift */; };
+		22DB9DEB27B97D2C002D8312 /* ReversiPiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DEA27B97D2C002D8312 /* ReversiPiece.swift */; };
+		22DB9DED27B97D43002D8312 /* ReversiSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DEC27B97D43002D8312 /* ReversiSquare.swift */; };
+		22DB9DEF27B97D54002D8312 /* ReversiMove.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DEE27B97D54002D8312 /* ReversiMove.swift */; };
+		22DB9DF127B97D6A002D8312 /* ReversiGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DF027B97D6A002D8312 /* ReversiGame.swift */; };
+		22DB9DF327B97EF5002D8312 /* ReversiBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DF227B97EF5002D8312 /* ReversiBoardView.swift */; };
+		22DB9DF527B97F0D002D8312 /* ReversiSquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DF427B97F0D002D8312 /* ReversiSquareView.swift */; };
+		22DB9DF727B97F35002D8312 /* ReversiPieceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DF627B97F35002D8312 /* ReversiPieceView.swift */; };
+		22DB9DF927B97F53002D8312 /* ReversiUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DF827B97F53002D8312 /* ReversiUIView.swift */; };
+		22DB9DFB27B97F81002D8312 /* ReversiStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DFA27B97F81002D8312 /* ReversiStatsView.swift */; };
+		22DB9DFD27B980FE002D8312 /* NewReversiThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DFC27B980FE002D8312 /* NewReversiThemeView.swift */; };
+		22DB9DFF27B98106002D8312 /* ImportReversiThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DFE27B98106002D8312 /* ImportReversiThemeView.swift */; };
+		22DB9E0127B9810E002D8312 /* EditReversiThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9E0027B9810E002D8312 /* EditReversiThemeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		22DB9D8E27B95101002D8312 /* GradientGames.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GradientGames.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22DB9D9127B95101002D8312 /* GradientGamesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientGamesApp.swift; sourceTree = "<group>"; };
-		22DB9D9327B95101002D8312 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		22DB9D9527B95102002D8312 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		22DB9D9827B95102002D8312 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		22DB9DA827B9533A002D8312 /* GamesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesView.swift; sourceTree = "<group>"; };
+		22DB9DAD27B95482002D8312 /* ReversiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversiView.swift; sourceTree = "<group>"; };
+		22DB9DAF27B95DF3002D8312 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		22DB9DB227B95F18002D8312 /* GradientGames.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GradientGames.xcdatamodel; sourceTree = "<group>"; };
+		22DB9DB427B95F2E002D8312 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		22DB9DB627B9618F002D8312 /* ChessState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessState.swift; sourceTree = "<group>"; };
+		22DB9DB827B961CE002D8312 /* ChessBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessBoard.swift; sourceTree = "<group>"; };
+		22DB9DBA27B96234002D8312 /* ChessPiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessPiece.swift; sourceTree = "<group>"; };
+		22DB9DBC27B9624F002D8312 /* ChessSquare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessSquare.swift; sourceTree = "<group>"; };
+		22DB9DBE27B96273002D8312 /* Times.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Times.swift; sourceTree = "<group>"; };
+		22DB9DC027B96292002D8312 /* ChessMove.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessMove.swift; sourceTree = "<group>"; };
+		22DB9DC227B96528002D8312 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		22DB9DC427B96720002D8312 /* GradientGames.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GradientGames.entitlements; sourceTree = "<group>"; };
+		22DB9DC627B96730002D8312 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		22DB9DC827B9675F002D8312 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		22DB9DC927B9683A002D8312 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		22DB9DCB27B9698F002D8312 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
+		22DB9DCD27B96A33002D8312 /* ChessGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessGame.swift; sourceTree = "<group>"; };
+		22DB9DCF27B96BAA002D8312 /* Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigation.swift; sourceTree = "<group>"; };
+		22DB9DD127B96E37002D8312 /* NewChessThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChessThemeView.swift; sourceTree = "<group>"; };
+		22DB9DD327B96E7C002D8312 /* ImportChessThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportChessThemeView.swift; sourceTree = "<group>"; };
+		22DB9DD527B96F1F002D8312 /* EditChessThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditChessThemeView.swift; sourceTree = "<group>"; };
+		22DB9DD727B96F4C002D8312 /* ShareSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheetView.swift; sourceTree = "<group>"; };
+		22DB9DD927B970F7002D8312 /* ChessBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessBoardView.swift; sourceTree = "<group>"; };
+		22DB9DDB27B9710E002D8312 /* ChessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessView.swift; sourceTree = "<group>"; };
+		22DB9DDD27B97132002D8312 /* ChessSquareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessSquareView.swift; sourceTree = "<group>"; };
+		22DB9DDF27B97143002D8312 /* ChessPieceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessPieceView.swift; sourceTree = "<group>"; };
+		22DB9DE127B97153002D8312 /* ChessUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessUIView.swift; sourceTree = "<group>"; };
+		22DB9DE327B97164002D8312 /* ChessPromoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessPromoteView.swift; sourceTree = "<group>"; };
+		22DB9DE627B97CE1002D8312 /* ReversiState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversiState.swift; sourceTree = "<group>"; };
+		22DB9DE827B97D12002D8312 /* ReversiBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversiBoard.swift; sourceTree = "<group>"; };
+		22DB9DEA27B97D2C002D8312 /* ReversiPiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversiPiece.swift; sourceTree = "<group>"; };
+		22DB9DEC27B97D43002D8312 /* ReversiSquare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversiSquare.swift; sourceTree = "<group>"; };
+		22DB9DEE27B97D54002D8312 /* ReversiMove.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversiMove.swift; sourceTree = "<group>"; };
+		22DB9DF027B97D6A002D8312 /* ReversiGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversiGame.swift; sourceTree = "<group>"; };
+		22DB9DF227B97EF5002D8312 /* ReversiBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversiBoardView.swift; sourceTree = "<group>"; };
+		22DB9DF427B97F0D002D8312 /* ReversiSquareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversiSquareView.swift; sourceTree = "<group>"; };
+		22DB9DF627B97F35002D8312 /* ReversiPieceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversiPieceView.swift; sourceTree = "<group>"; };
+		22DB9DF827B97F53002D8312 /* ReversiUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversiUIView.swift; sourceTree = "<group>"; };
+		22DB9DFA27B97F81002D8312 /* ReversiStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversiStatsView.swift; sourceTree = "<group>"; };
+		22DB9DFC27B980FE002D8312 /* NewReversiThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReversiThemeView.swift; sourceTree = "<group>"; };
+		22DB9DFE27B98106002D8312 /* ImportReversiThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportReversiThemeView.swift; sourceTree = "<group>"; };
+		22DB9E0027B9810E002D8312 /* EditReversiThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditReversiThemeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -26,6 +104,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22DB9DC727B96730002D8312 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -35,8 +114,11 @@
 		22DB9D8527B95101002D8312 = {
 			isa = PBXGroup;
 			children = (
-				22DB9D9027B95101002D8312 /* GradientGames */,
+				22DB9D9F27B9527C002D8312 /* Shared */,
+				22DB9DA427B952FF002D8312 /* iOS */,
+				22DB9DA527B95304002D8312 /* tvOS */,
 				22DB9D8F27B95101002D8312 /* Products */,
+				22DB9DC527B96730002D8312 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -48,23 +130,116 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		22DB9D9027B95101002D8312 /* GradientGames */ = {
+		22DB9D9F27B9527C002D8312 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				22DB9DC427B96720002D8312 /* GradientGames.entitlements */,
+				22DB9DB127B95F18002D8312 /* GradientGames.xcdatamodeld */,
 				22DB9D9127B95101002D8312 /* GradientGamesApp.swift */,
-				22DB9D9327B95101002D8312 /* ContentView.swift */,
-				22DB9D9527B95102002D8312 /* Assets.xcassets */,
-				22DB9D9727B95102002D8312 /* Preview Content */,
+				22DB9DB427B95F2E002D8312 /* Extensions.swift */,
+				22DB9DCB27B9698F002D8312 /* Store.swift */,
+				22DB9DC227B96528002D8312 /* Settings.swift */,
+				22DB9DBE27B96273002D8312 /* Times.swift */,
+				22DB9DA027B9528E002D8312 /* Chess */,
+				22DB9DAC27B9546B002D8312 /* Reversi */,
 			);
-			path = GradientGames;
+			path = Shared;
 			sourceTree = "<group>";
 		};
-		22DB9D9727B95102002D8312 /* Preview Content */ = {
+		22DB9DA027B9528E002D8312 /* Chess */ = {
 			isa = PBXGroup;
 			children = (
-				22DB9D9827B95102002D8312 /* Preview Assets.xcassets */,
+				22DB9DB627B9618F002D8312 /* ChessState.swift */,
+				22DB9DB827B961CE002D8312 /* ChessBoard.swift */,
+				22DB9DBC27B9624F002D8312 /* ChessSquare.swift */,
+				22DB9DBA27B96234002D8312 /* ChessPiece.swift */,
+				22DB9DC027B96292002D8312 /* ChessMove.swift */,
+				22DB9DCD27B96A33002D8312 /* ChessGame.swift */,
+				22DB9DDB27B9710E002D8312 /* ChessView.swift */,
+				22DB9DD927B970F7002D8312 /* ChessBoardView.swift */,
+				22DB9DDD27B97132002D8312 /* ChessSquareView.swift */,
+				22DB9DDF27B97143002D8312 /* ChessPieceView.swift */,
+				22DB9DE127B97153002D8312 /* ChessUIView.swift */,
+				22DB9DE327B97164002D8312 /* ChessPromoteView.swift */,
 			);
-			path = "Preview Content";
+			path = Chess;
+			sourceTree = "<group>";
+		};
+		22DB9DA427B952FF002D8312 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				22DB9DC927B9683A002D8312 /* Assets.xcassets */,
+				22DB9DC827B9675F002D8312 /* Info.plist */,
+				22DB9DCF27B96BAA002D8312 /* Navigation.swift */,
+				22DB9DA827B9533A002D8312 /* GamesView.swift */,
+				22DB9DAF27B95DF3002D8312 /* SettingsView.swift */,
+				22DB9DD727B96F4C002D8312 /* ShareSheetView.swift */,
+				22DB9DA627B9530B002D8312 /* Chess */,
+				22DB9DE527B97C59002D8312 /* Reversi */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+		22DB9DA527B95304002D8312 /* tvOS */ = {
+			isa = PBXGroup;
+			children = (
+				22DB9DA727B95311002D8312 /* Chess */,
+			);
+			path = tvOS;
+			sourceTree = "<group>";
+		};
+		22DB9DA627B9530B002D8312 /* Chess */ = {
+			isa = PBXGroup;
+			children = (
+				22DB9DD127B96E37002D8312 /* NewChessThemeView.swift */,
+				22DB9DD327B96E7C002D8312 /* ImportChessThemeView.swift */,
+				22DB9DD527B96F1F002D8312 /* EditChessThemeView.swift */,
+			);
+			path = Chess;
+			sourceTree = "<group>";
+		};
+		22DB9DA727B95311002D8312 /* Chess */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Chess;
+			sourceTree = "<group>";
+		};
+		22DB9DAC27B9546B002D8312 /* Reversi */ = {
+			isa = PBXGroup;
+			children = (
+				22DB9DE627B97CE1002D8312 /* ReversiState.swift */,
+				22DB9DE827B97D12002D8312 /* ReversiBoard.swift */,
+				22DB9DEC27B97D43002D8312 /* ReversiSquare.swift */,
+				22DB9DEA27B97D2C002D8312 /* ReversiPiece.swift */,
+				22DB9DEE27B97D54002D8312 /* ReversiMove.swift */,
+				22DB9DF027B97D6A002D8312 /* ReversiGame.swift */,
+				22DB9DAD27B95482002D8312 /* ReversiView.swift */,
+				22DB9DF227B97EF5002D8312 /* ReversiBoardView.swift */,
+				22DB9DF427B97F0D002D8312 /* ReversiSquareView.swift */,
+				22DB9DF627B97F35002D8312 /* ReversiPieceView.swift */,
+				22DB9DF827B97F53002D8312 /* ReversiUIView.swift */,
+				22DB9DFA27B97F81002D8312 /* ReversiStatsView.swift */,
+			);
+			path = Reversi;
+			sourceTree = "<group>";
+		};
+		22DB9DC527B96730002D8312 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				22DB9DC627B96730002D8312 /* CloudKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		22DB9DE527B97C59002D8312 /* Reversi */ = {
+			isa = PBXGroup;
+			children = (
+				22DB9DFC27B980FE002D8312 /* NewReversiThemeView.swift */,
+				22DB9DFE27B98106002D8312 /* ImportReversiThemeView.swift */,
+				22DB9E0027B9810E002D8312 /* EditReversiThemeView.swift */,
+			);
+			path = Reversi;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,8 +300,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				22DB9D9927B95102002D8312 /* Preview Assets.xcassets in Resources */,
-				22DB9D9627B95102002D8312 /* Assets.xcassets in Resources */,
+				22DB9DCA27B9683A002D8312 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,8 +311,46 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				22DB9D9427B95101002D8312 /* ContentView.swift in Sources */,
+				22DB9DCC27B9698F002D8312 /* Store.swift in Sources */,
+				22DB9DE927B97D12002D8312 /* ReversiBoard.swift in Sources */,
+				22DB9DBF27B96273002D8312 /* Times.swift in Sources */,
+				22DB9DF927B97F53002D8312 /* ReversiUIView.swift in Sources */,
+				22DB9DDA27B970F7002D8312 /* ChessBoardView.swift in Sources */,
+				22DB9DB027B95DF3002D8312 /* SettingsView.swift in Sources */,
+				22DB9DD427B96E7C002D8312 /* ImportChessThemeView.swift in Sources */,
+				22DB9DF127B97D6A002D8312 /* ReversiGame.swift in Sources */,
+				22DB9DE227B97153002D8312 /* ChessUIView.swift in Sources */,
+				22DB9DFB27B97F81002D8312 /* ReversiStatsView.swift in Sources */,
+				22DB9DB927B961CE002D8312 /* ChessBoard.swift in Sources */,
+				22DB9DC127B96292002D8312 /* ChessMove.swift in Sources */,
+				22DB9DFF27B98106002D8312 /* ImportReversiThemeView.swift in Sources */,
+				22DB9DC327B96528002D8312 /* Settings.swift in Sources */,
+				22DB9DA927B9533A002D8312 /* GamesView.swift in Sources */,
+				22DB9DBB27B96234002D8312 /* ChessPiece.swift in Sources */,
+				22DB9DD027B96BAA002D8312 /* Navigation.swift in Sources */,
+				22DB9E0127B9810E002D8312 /* EditReversiThemeView.swift in Sources */,
+				22DB9DB727B9618F002D8312 /* ChessState.swift in Sources */,
+				22DB9DE427B97164002D8312 /* ChessPromoteView.swift in Sources */,
+				22DB9DD227B96E37002D8312 /* NewChessThemeView.swift in Sources */,
+				22DB9DE027B97143002D8312 /* ChessPieceView.swift in Sources */,
+				22DB9DD827B96F4C002D8312 /* ShareSheetView.swift in Sources */,
+				22DB9DD627B96F1F002D8312 /* EditChessThemeView.swift in Sources */,
+				22DB9DF327B97EF5002D8312 /* ReversiBoardView.swift in Sources */,
+				22DB9DCE27B96A33002D8312 /* ChessGame.swift in Sources */,
+				22DB9DEB27B97D2C002D8312 /* ReversiPiece.swift in Sources */,
+				22DB9DED27B97D43002D8312 /* ReversiSquare.swift in Sources */,
+				22DB9DB327B95F18002D8312 /* GradientGames.xcdatamodeld in Sources */,
+				22DB9DDE27B97132002D8312 /* ChessSquareView.swift in Sources */,
+				22DB9DEF27B97D54002D8312 /* ReversiMove.swift in Sources */,
+				22DB9DE727B97CE1002D8312 /* ReversiState.swift in Sources */,
+				22DB9DBD27B9624F002D8312 /* ChessSquare.swift in Sources */,
 				22DB9D9227B95101002D8312 /* GradientGamesApp.swift in Sources */,
+				22DB9DF727B97F35002D8312 /* ReversiPieceView.swift in Sources */,
+				22DB9DAE27B95482002D8312 /* ReversiView.swift in Sources */,
+				22DB9DDC27B9710E002D8312 /* ChessView.swift in Sources */,
+				22DB9DF527B97F0D002D8312 /* ReversiSquareView.swift in Sources */,
+				22DB9DFD27B980FE002D8312 /* NewReversiThemeView.swift in Sources */,
+				22DB9DB527B95F2E002D8312 /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,13 +477,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Shared/GradientGames.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"GradientGames/Preview Content\"";
 				DEVELOPMENT_TEAM = J8P6BA4WGF;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = iOS/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Gradient Games";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -294,13 +507,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Shared/GradientGames.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"GradientGames/Preview Content\"";
 				DEVELOPMENT_TEAM = J8P6BA4WGF;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = iOS/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Gradient Games";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -341,6 +555,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		22DB9DB127B95F18002D8312 /* GradientGames.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				22DB9DB227B95F18002D8312 /* GradientGames.xcdatamodel */,
+			);
+			currentVersion = 22DB9DB227B95F18002D8312 /* GradientGames.xcdatamodel */;
+			path = GradientGames.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 22DB9D8627B95101002D8312 /* Project object */;
 }
