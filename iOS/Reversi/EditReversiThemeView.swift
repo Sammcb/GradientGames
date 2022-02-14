@@ -89,7 +89,6 @@ struct EditReversiThemeView: View {
 		}
 		.toolbar {
 			Button {
-//				navigation.sheet = Sheet(id: .share, shareURL: themeURL())
 				navigation.sheet = .share
 			} label: {
 				Label("Share", systemImage: "square.and.arrow.up")

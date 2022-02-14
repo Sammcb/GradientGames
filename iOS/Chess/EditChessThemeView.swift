@@ -89,8 +89,6 @@ struct EditChessThemeView: View {
 		}
 		.toolbar {
 			Button {
-//				navigation.showAlert = true
-//				navigation.sheet = Sheet(id: .share, shareURL: themeURL())
 				navigation.sheet = .share
 			} label: {
 				Label("Share", systemImage: "square.and.arrow.up")

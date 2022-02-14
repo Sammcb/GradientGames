@@ -17,7 +17,7 @@ struct GamesView: View {
 	
 	private func present(_ id: Navigation.SheetId) {
 		navigation.editingId = nil
-		navigation.view = .settings
+		navigation.view = nil
 		navigation.sheet = id
 	}
 	
