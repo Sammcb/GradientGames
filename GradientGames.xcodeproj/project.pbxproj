@@ -80,6 +80,7 @@
 		22DB9E3627BC1216002D8312 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9E3527BC1216002D8312 /* SettingsView.swift */; };
 		22DB9E3727BC1219002D8312 /* GamesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9E3327BC1205002D8312 /* GamesView.swift */; };
 		22DB9E3A27BC1230002D8312 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22DB9E3927BC1230002D8312 /* CloudKit.framework */; };
+		22DB9E3F27BC4819002D8312 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22DB9E3E27BC4819002D8312 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -130,6 +131,7 @@
 		22DB9E3327BC1205002D8312 /* GamesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesView.swift; sourceTree = "<group>"; };
 		22DB9E3527BC1216002D8312 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		22DB9E3927BC1230002D8312 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS15.2.sdk/System/Library/Frameworks/CloudKit.framework; sourceTree = DEVELOPER_DIR; };
+		22DB9E3E27BC4819002D8312 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,6 +227,7 @@
 		22DB9DA527B95304002D8312 /* tvOS */ = {
 			isa = PBXGroup;
 			children = (
+				22DB9E3E27BC4819002D8312 /* Assets.xcassets */,
 				22DB9E3327BC1205002D8312 /* GamesView.swift */,
 				22DB9E3527BC1216002D8312 /* SettingsView.swift */,
 			);
@@ -364,6 +367,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22DB9E3F27BC4819002D8312 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -637,7 +641,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Shared/GradientGames.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -645,6 +648,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Shared/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Gradient Games";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -666,7 +670,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Shared/GradientGames.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -674,6 +677,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Shared/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Gradient Games";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
 				LD_RUNPATH_SEARCH_PATHS = (
