@@ -113,9 +113,7 @@ struct GamesView: View {
 				} label: {
 					Label("Chess", systemImage: "crown")
 						.contextMenu {
-							Button(role: .destructive) {
-								ChessState.reset()
-							} label: {
+							Button(role: .destructive, action: ChessState.reset) {
 								Label("New game", systemImage: "trash")
 							}
 						}
@@ -126,9 +124,7 @@ struct GamesView: View {
 				} label: {
 					Label("Reversi", systemImage: "circle")
 						.contextMenu {
-							Button(role: .destructive) {
-								ReversiState.reset()
-							} label: {
+							Button(role: .destructive, action: ReversiState.reset) {
 								Label("New game", systemImage: "trash")
 							}
 						}

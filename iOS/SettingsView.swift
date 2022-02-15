@@ -98,12 +98,11 @@ struct SettingsView: View {
 				List {
 					ForEach(chessThemes) { theme in
 						NavigationLink(destination: EditChessThemeView(theme), tag: theme.id!, selection: $navigation.editing) {
-							Text(theme.symbol!)
-							if settings.chessThemeId == theme.id {
-								Label("Selected", systemImage: "checkmark")
-									.labelStyle(.iconOnly)
-									.symbolVariant(.circle.fill)
-									.foregroundColor(.green)
+							Label {
+								Text(theme.symbol!)
+							} icon: {
+								Image(systemName: settings.chessThemeId == theme.id ? "checkmark.circle.fill" : "circle")
+									.foregroundColor(settings.chessThemeId == theme.id ? .green : .gray)
 							}
 						}
 						.swipeActions(edge: .leading) {
@@ -155,12 +154,11 @@ struct SettingsView: View {
 				List {
 					ForEach(reversiThemes) { theme in
 						NavigationLink(destination: EditReversiThemeView(theme), tag: theme.id!, selection: $navigation.editing) {
-							Text(theme.symbol!)
-							if settings.reversiThemeId == theme.id {
-								Label("Selected", systemImage: "checkmark")
-									.labelStyle(.iconOnly)
-									.symbolVariant(.circle.fill)
-									.foregroundColor(.green)
+							Label {
+								Text(theme.symbol!)
+							} icon: {
+								Image(systemName: settings.reversiThemeId == theme.id ? "checkmark.circle.fill" : "circle")
+									.foregroundColor(settings.reversiThemeId == theme.id ? .green : .gray)
 							}
 						}
 						.swipeActions(edge: .leading) {

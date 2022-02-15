@@ -148,6 +148,20 @@ struct ChessView: View {
 			.frame(maxWidth: .infinity, maxHeight: .infinity)
 			.environment(\.chessBoardLength, size)
 		}
+#if os(tvOS)
+		.onPlayPauseCommand {
+			guard game.pawnSquare == nil else {
+				return
+			}
+			
+			if game.board.history.isEmpty {
+				return
+			}
+			
+			game.selectedSquare = nil
+			game.board.undo()
+		}
+#endif
 		.environment(\.chessTheme, theme)
 		.environmentObject(game)
 	}

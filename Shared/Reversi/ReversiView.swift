@@ -135,6 +135,15 @@ struct ReversiView: View {
 			.frame(maxWidth: .infinity, maxHeight: .infinity)
 			.environment(\.reversiBoardLength, size)
 		}
+#if os(tvOS)
+		.onPlayPauseCommand {
+			if game.board.history.isEmpty {
+				return
+			}
+			
+			game.board.undo()
+		}
+#endif
 		.environment(\.reversiTheme, theme)
 		.environmentObject(game)
 	}
