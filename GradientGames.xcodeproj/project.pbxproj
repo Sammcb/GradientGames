@@ -26,7 +26,6 @@
 		22DB9DCE27B96A33002D8312 /* ChessGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DCD27B96A33002D8312 /* ChessGame.swift */; };
 		22DB9DD027B96BAA002D8312 /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DCF27B96BAA002D8312 /* Navigation.swift */; };
 		22DB9DD227B96E37002D8312 /* NewChessThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DD127B96E37002D8312 /* NewChessThemeView.swift */; };
-		22DB9DD427B96E7C002D8312 /* ImportChessThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DD327B96E7C002D8312 /* ImportChessThemeView.swift */; };
 		22DB9DD627B96F1F002D8312 /* EditChessThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DD527B96F1F002D8312 /* EditChessThemeView.swift */; };
 		22DB9DD827B96F4C002D8312 /* ShareSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DD727B96F4C002D8312 /* ShareSheetView.swift */; };
 		22DB9DDA27B970F7002D8312 /* ChessBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DD927B970F7002D8312 /* ChessBoardView.swift */; };
@@ -47,7 +46,6 @@
 		22DB9DF927B97F53002D8312 /* ReversiUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DF827B97F53002D8312 /* ReversiUIView.swift */; };
 		22DB9DFB27B97F81002D8312 /* ReversiStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DFA27B97F81002D8312 /* ReversiStatsView.swift */; };
 		22DB9DFD27B980FE002D8312 /* NewReversiThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DFC27B980FE002D8312 /* NewReversiThemeView.swift */; };
-		22DB9DFF27B98106002D8312 /* ImportReversiThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DFE27B98106002D8312 /* ImportReversiThemeView.swift */; };
 		22DB9E0127B9810E002D8312 /* EditReversiThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9E0027B9810E002D8312 /* EditReversiThemeView.swift */; };
 /* End PBXBuildFile section */
 
@@ -74,7 +72,6 @@
 		22DB9DCD27B96A33002D8312 /* ChessGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessGame.swift; sourceTree = "<group>"; };
 		22DB9DCF27B96BAA002D8312 /* Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigation.swift; sourceTree = "<group>"; };
 		22DB9DD127B96E37002D8312 /* NewChessThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChessThemeView.swift; sourceTree = "<group>"; };
-		22DB9DD327B96E7C002D8312 /* ImportChessThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportChessThemeView.swift; sourceTree = "<group>"; };
 		22DB9DD527B96F1F002D8312 /* EditChessThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditChessThemeView.swift; sourceTree = "<group>"; };
 		22DB9DD727B96F4C002D8312 /* ShareSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheetView.swift; sourceTree = "<group>"; };
 		22DB9DD927B970F7002D8312 /* ChessBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessBoardView.swift; sourceTree = "<group>"; };
@@ -95,7 +92,6 @@
 		22DB9DF827B97F53002D8312 /* ReversiUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversiUIView.swift; sourceTree = "<group>"; };
 		22DB9DFA27B97F81002D8312 /* ReversiStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversiStatsView.swift; sourceTree = "<group>"; };
 		22DB9DFC27B980FE002D8312 /* NewReversiThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReversiThemeView.swift; sourceTree = "<group>"; };
-		22DB9DFE27B98106002D8312 /* ImportReversiThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportReversiThemeView.swift; sourceTree = "<group>"; };
 		22DB9E0027B9810E002D8312 /* EditReversiThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditReversiThemeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -192,7 +188,6 @@
 			isa = PBXGroup;
 			children = (
 				22DB9DD127B96E37002D8312 /* NewChessThemeView.swift */,
-				22DB9DD327B96E7C002D8312 /* ImportChessThemeView.swift */,
 				22DB9DD527B96F1F002D8312 /* EditChessThemeView.swift */,
 			);
 			path = Chess;
@@ -236,7 +231,6 @@
 			isa = PBXGroup;
 			children = (
 				22DB9DFC27B980FE002D8312 /* NewReversiThemeView.swift */,
-				22DB9DFE27B98106002D8312 /* ImportReversiThemeView.swift */,
 				22DB9E0027B9810E002D8312 /* EditReversiThemeView.swift */,
 			);
 			path = Reversi;
@@ -317,13 +311,11 @@
 				22DB9DF927B97F53002D8312 /* ReversiUIView.swift in Sources */,
 				22DB9DDA27B970F7002D8312 /* ChessBoardView.swift in Sources */,
 				22DB9DB027B95DF3002D8312 /* SettingsView.swift in Sources */,
-				22DB9DD427B96E7C002D8312 /* ImportChessThemeView.swift in Sources */,
 				22DB9DF127B97D6A002D8312 /* ReversiGame.swift in Sources */,
 				22DB9DE227B97153002D8312 /* ChessUIView.swift in Sources */,
 				22DB9DFB27B97F81002D8312 /* ReversiStatsView.swift in Sources */,
 				22DB9DB927B961CE002D8312 /* ChessBoard.swift in Sources */,
 				22DB9DC127B96292002D8312 /* ChessMove.swift in Sources */,
-				22DB9DFF27B98106002D8312 /* ImportReversiThemeView.swift in Sources */,
 				22DB9DC327B96528002D8312 /* Settings.swift in Sources */,
 				22DB9DA927B9533A002D8312 /* GamesView.swift in Sources */,
 				22DB9DBB27B96234002D8312 /* ChessPiece.swift in Sources */,

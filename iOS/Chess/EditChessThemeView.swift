@@ -15,6 +15,7 @@ struct EditChessThemeView: View {
 	@State private var squareDark: Color
 	@State private var pieceLight: Color
 	@State private var pieceDark: Color
+	@State private var showShare = false
 	
 	init(_ theme: ChessTheme) {
 		symbol = theme.symbol!
@@ -38,7 +39,7 @@ struct EditChessThemeView: View {
 		var components = URLComponents()
 		components.scheme = "https"
 		components.host = "www.sammcb.com"
-		components.path = "/ChessColors"
+		components.path = ThemeLink.chess.rawValue
 		components.queryItems = [
 			URLQueryItem(name: "symbol", value: symbol),
 			URLQueryItem(name: "pieceLight", value: pieceLightHex),
@@ -89,15 +90,16 @@ struct EditChessThemeView: View {
 		}
 		.toolbar {
 			Button {
-				navigation.sheet = .share
+				showShare = true
 			} label: {
 				Label("Share", systemImage: "square.and.arrow.up")
 			}
 		}
-		.sheet(item: $navigation.sheet) { sheet in
-			if sheet == .share {
-				ShareSheet(activityItems: [themeURL()])
-			}
+		.onChange(of: navigation.editing) { _ in
+			showShare = false
+		}
+		.sheet(isPresented: $showShare) {
+			ShareSheet(activityItems: [themeURL()])
 		}
 		.navigationTitle(symbol)
 	}

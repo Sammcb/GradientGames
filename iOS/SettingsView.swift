@@ -97,7 +97,7 @@ struct SettingsView: View {
 			Section("Theme") {
 				List {
 					ForEach(chessThemes) { theme in
-						NavigationLink(destination: EditChessThemeView(theme), tag: theme.id!, selection: $navigation.editingId) {
+						NavigationLink(destination: EditChessThemeView(theme), tag: theme.id!, selection: $navigation.editing) {
 							Text(theme.symbol!)
 							if settings.chessThemeId == theme.id {
 								Label("Selected", systemImage: "checkmark")
@@ -154,7 +154,7 @@ struct SettingsView: View {
 			Section("Theme") {
 				List {
 					ForEach(reversiThemes) { theme in
-						NavigationLink(destination: EditReversiThemeView(theme), tag: theme.id!, selection: $navigation.editingId) {
+						NavigationLink(destination: EditReversiThemeView(theme), tag: theme.id!, selection: $navigation.editing) {
 							Text(theme.symbol!)
 							if settings.reversiThemeId == theme.id {
 								Label("Selected", systemImage: "checkmark")
@@ -195,9 +195,10 @@ struct SettingsView: View {
 			}
 		}
 		.sheet(item: $navigation.sheet) { sheet in
-			if sheet == .newChess {
+			switch sheet {
+			case .newChess:
 				NewChessThemeView()
-			} else if sheet == .newReversi {
+			case .newReversi:
 				NewReversiThemeView()
 			}
 		}
