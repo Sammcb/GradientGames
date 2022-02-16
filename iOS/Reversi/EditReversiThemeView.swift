@@ -28,13 +28,13 @@ struct EditReversiThemeView: View {
 	
 	private func themeURL() -> URL {
 		let pieceLightShortHex = String(UIColor(pieceLight).hex, radix: 16)
-		let pieceLightHex = "#" + String(repeating: "0", count: 6 - pieceLightShortHex.count) + pieceLightShortHex
+		let pieceLightHex = String(repeating: "0", count: 6 - pieceLightShortHex.count) + pieceLightShortHex
 		let pieceDarkShortHex = String(UIColor(pieceDark).hex, radix: 16)
-		let pieceDarkHex = "#" + String(repeating: "0", count: 6 - pieceDarkShortHex.count) + pieceDarkShortHex
+		let pieceDarkHex = String(repeating: "0", count: 6 - pieceDarkShortHex.count) + pieceDarkShortHex
 		let squareShortHex = String(UIColor(square).hex, radix: 16)
-		let squareHex = "#" + String(repeating: "0", count: 6 - squareShortHex.count) + squareShortHex
+		let squareHex = String(repeating: "0", count: 6 - squareShortHex.count) + squareShortHex
 		let borderShortHex = String(UIColor(border).hex, radix: 16)
-		let borderHex = "#" + String(repeating: "0", count: 6 - borderShortHex.count) + borderShortHex
+		let borderHex = String(repeating: "0", count: 6 - borderShortHex.count) + borderShortHex
 		
 		var components = URLComponents()
 		components.scheme = "https"

@@ -29,18 +29,13 @@ struct GamesView: View {
 			return
 		}
 
-		guard var pieceLightString = queryItems[1].value, var pieceDarkString = queryItems[2].value else {
+		guard let pieceLightString = queryItems[1].value, let pieceDarkString = queryItems[2].value else {
 			return
 		}
 
-		guard var squareLightString = queryItems[3].value, var squareDarkString = queryItems[4].value else {
+		guard let squareLightString = queryItems[3].value, let squareDarkString = queryItems[4].value else {
 			return
 		}
-
-		pieceLightString.removeFirst()
-		pieceDarkString.removeFirst()
-		squareLightString.removeFirst()
-		squareDarkString.removeFirst()
 
 		guard let pieceLight = Int64(pieceLightString, radix: 16), let pieceDark = Int64(pieceDarkString, radix: 16) else {
 			return
@@ -69,18 +64,13 @@ struct GamesView: View {
 			return
 		}
 
-		guard var pieceLightString = queryItems[1].value, var pieceDarkString = queryItems[2].value else {
+		guard let pieceLightString = queryItems[1].value, let pieceDarkString = queryItems[2].value else {
 			return
 		}
 
-		guard var squareString = queryItems[3].value, var borderString = queryItems[4].value else {
+		guard let squareString = queryItems[3].value, let borderString = queryItems[4].value else {
 			return
 		}
-
-		pieceLightString.removeFirst()
-		pieceDarkString.removeFirst()
-		squareString.removeFirst()
-		borderString.removeFirst()
 
 		guard let pieceLight = Int64(pieceLightString, radix: 16), let pieceDark = Int64(pieceDarkString, radix: 16) else {
 			return

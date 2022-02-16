@@ -28,13 +28,13 @@ struct EditChessThemeView: View {
 	
 	private func themeURL() -> URL {
 		let pieceLightShortHex = String(UIColor(pieceLight).hex, radix: 16)
-		let pieceLightHex = "#" + String(repeating: "0", count: 6 - pieceLightShortHex.count) + pieceLightShortHex
+		let pieceLightHex = String(repeating: "0", count: 6 - pieceLightShortHex.count) + pieceLightShortHex
 		let pieceDarkShortHex = String(UIColor(pieceDark).hex, radix: 16)
-		let pieceDarkHex = "#" + String(repeating: "0", count: 6 - pieceDarkShortHex.count) + pieceDarkShortHex
+		let pieceDarkHex = String(repeating: "0", count: 6 - pieceDarkShortHex.count) + pieceDarkShortHex
 		let squareLightShortHex = String(UIColor(squareLight).hex, radix: 16)
-		let squareLightHex = "#" + String(repeating: "0", count: 6 - squareLightShortHex.count) + squareLightShortHex
+		let squareLightHex = String(repeating: "0", count: 6 - squareLightShortHex.count) + squareLightShortHex
 		let squareDarkShortHex = String(UIColor(squareDark).hex, radix: 16)
-		let squareDarkHex = "#" + String(repeating: "0", count: 6 - squareDarkShortHex.count) + squareDarkShortHex
+		let squareDarkHex = String(repeating: "0", count: 6 - squareDarkShortHex.count) + squareDarkShortHex
 		
 		var components = URLComponents()
 		components.scheme = "https"
