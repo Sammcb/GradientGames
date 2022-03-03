@@ -94,27 +94,26 @@ struct ChessBoard: Equatable {
 		ChessState.history.count.isMultiple(of: 2)
 	}
 	
-	mutating func movePiece(_ piece: ChessPiece, to square: ChessSquare) {
+	private mutating func movePiece(_ piece: ChessPiece, to square: ChessSquare) {
 		pieces[square] = piece
 	}
 	
-	mutating func movePiece(at oldSquare: ChessSquare, to square: ChessSquare) {
-		let piece = pieces[oldSquare]
+	private mutating func movePiece(at oldSquare: ChessSquare, to square: ChessSquare) {
+		pieces[square] = pieces[oldSquare]
 		capture(at: oldSquare)
-		pieces[square] = piece
 	}
 	
-	mutating func capture(at square: ChessSquare) {
+	private mutating func capture(at square: ChessSquare) {
 		pieces[square] = nil
 	}
 	
-	mutating func enPassant(from oldSquare: ChessSquare, to square: ChessSquare) {
+	private mutating func enPassant(from oldSquare: ChessSquare, to square: ChessSquare) {
 		let offset = pieces[oldSquare]!.isLight ? -1 : 1
 		capture(at: ChessSquare(square, deltaRank: offset)!)
 		movePiece(at: oldSquare, to: square)
 	}
 	
-	mutating func castle(from oldSquare: ChessSquare, to square: ChessSquare) {
+	private mutating func castle(from oldSquare: ChessSquare, to square: ChessSquare) {
 		let offset = oldSquare.file < square.file ? -1 : 1
 		let rookSquare = oldSquare.file < square.file ? ChessSquare(file: .h, rank: square.rank) : ChessSquare(file: .a, rank: square.rank)
 		movePiece(at: rookSquare, to: ChessSquare(file: square.file + offset, rank: square.rank))
@@ -211,7 +210,7 @@ struct ChessBoard: Equatable {
 		return attackedSquares
 	}
 	
-	func attackedFrom(_ square: ChessSquare) -> [ChessSquare] {
+	private func attackedFrom(_ square: ChessSquare) -> [ChessSquare] {
 		// No piece at square
 		guard let piece = pieces[square] else {
 			return []
@@ -268,7 +267,7 @@ struct ChessBoard: Equatable {
 		}
 	}
 	
-	func canEnPassant(to square: ChessSquare, with offset: Int) -> Bool {
+	private func canEnPassant(to square: ChessSquare, with offset: Int) -> Bool {
 		guard let move = history.last else {
 			return false
 		}
@@ -280,7 +279,7 @@ struct ChessBoard: Equatable {
 		return move.piece.group == .pawn && move.fromSquare == fromSquare && move.toSquare == toSquare
 	}
 	
-	func canCastle(to square: ChessSquare) -> Bool {
+	private func canCastle(to square: ChessSquare) -> Bool {
 		let kingSquare = ChessSquare(file: .e, rank: square.rank)
 		let offset = kingSquare.file < square.file ? 1 : -1
 		let rookFile: ChessFile = kingSquare.file < square.file ? .h : .a
@@ -321,7 +320,7 @@ struct ChessBoard: Equatable {
 		return true
 	}
 	
-	func inCheckAt(_ square: ChessSquare, isLight: Bool) -> Bool {
+	private func inCheckAt(_ square: ChessSquare, isLight: Bool) -> Bool {
 		for (index, piece) in pieces.enumerated() {
 			let checkSquare = ChessPieces.square(at: index)
 			if let piece = piece, piece.isLight != isLight, attackedFrom(checkSquare).contains(square) {

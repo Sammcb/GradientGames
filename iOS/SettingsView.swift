@@ -13,10 +13,13 @@ struct SettingsView: View {
 	@EnvironmentObject private var navigation: Navigation
 	@FetchRequest(sortDescriptors: [SortDescriptor(\ChessTheme.index, order: .forward)]) private var chessThemes: FetchedResults<ChessTheme>
 	@FetchRequest(sortDescriptors: [SortDescriptor(\ReversiTheme.index, order: .forward)]) private var reversiThemes: FetchedResults<ReversiTheme>
+	@FetchRequest(sortDescriptors: [SortDescriptor(\CheckersTheme.index, order: .forward)]) private var checkersThemes: FetchedResults<CheckersTheme>
 	@AppStorage(Settings.Key.chessEnableUndo.rawValue) private var chessEnableUndo = true
 	@AppStorage(Settings.Key.chessEnableTimer.rawValue) private var chessEnableTimer = true
 	@AppStorage(Settings.Key.reversiEnableUndo.rawValue) private var reversiEnableUndo = true
 	@AppStorage(Settings.Key.reversiEnableTimer.rawValue) private var reversiEnableTimer = true
+	@AppStorage(Settings.Key.checkersEnableUndo.rawValue) private var checkersEnableUndo = true
+	@AppStorage(Settings.Key.checkersEnableTimer.rawValue) private var checkersEnableTimer = true
 	
 	private func deleteChessTheme(at indexSet: IndexSet) {
 		for index in indexSet {
@@ -56,6 +59,25 @@ struct SettingsView: View {
 		Store.shared.save()
 	}
 	
+	private func deleteCheckersTheme(at indexSet: IndexSet) {
+		for index in indexSet {
+			context.delete(checkersThemes[index])
+		}
+		
+		var deleted = 0
+		for (index, theme) in checkersThemes.enumerated() {
+			guard !indexSet.contains(index) else {
+				deleted += 1
+				continue
+			}
+			
+			if theme.index != index - deleted {
+				theme.index = Int64(index - deleted)
+			}
+		}
+		Store.shared.save()
+	}
+	
 	private func moveChessThemeRow(from offsets: IndexSet, to offset: Int) {
 		var themesArray = Array(chessThemes)
 		themesArray.move(fromOffsets: offsets, toOffset: offset)
@@ -69,6 +91,17 @@ struct SettingsView: View {
 	
 	private func moveReversiThemeRow(from offsets: IndexSet, to offset: Int) {
 		var themesArray = Array(reversiThemes)
+		themesArray.move(fromOffsets: offsets, toOffset: offset)
+		for (index, themeRow) in themesArray.enumerated() {
+			if themeRow.index != index {
+				themeRow.index = Int64(index)
+			}
+		}
+		Store.shared.save()
+	}
+	
+	private func moveCheckersThemeRow(from offsets: IndexSet, to offset: Int) {
+		var themesArray = Array(checkersThemes)
 		themesArray.move(fromOffsets: offsets, toOffset: offset)
 		for (index, themeRow) in themesArray.enumerated() {
 			if themeRow.index != index {
@@ -191,6 +224,62 @@ struct SettingsView: View {
 					}
 				}
 			}
+			
+			Section("Checkers") {
+				Toggle(isOn: $checkersEnableUndo) {
+					Label("Undos", systemImage: "arrow.uturn.backward")
+						.symbolVariant(.circle.fill)
+						.foregroundColor(.primary)
+				}
+				Toggle(isOn: $checkersEnableTimer) {
+					Label("Timers", systemImage: "clock")
+						.symbolVariant(.fill)
+						.foregroundColor(.primary)
+				}
+			}
+			.headerProminence(.increased)
+			
+			Section("Theme") {
+				List {
+					ForEach(checkersThemes) { theme in
+						NavigationLink(destination: EditCheckersThemeView(theme), tag: theme.id!, selection: $navigation.editing) {
+							Label {
+								Text(theme.symbol!)
+							} icon: {
+								Image(systemName: settings.checkersThemeId == theme.id ? "checkmark.circle.fill" : "circle")
+									.foregroundColor(settings.checkersThemeId == theme.id ? .green : .gray)
+							}
+						}
+						.swipeActions(edge: .leading) {
+							Button {
+								settings.checkersThemeId = settings.checkersThemeId == theme.id ? nil : theme.id
+							} label: {
+								if settings.checkersThemeId == theme.id {
+									Label("Deselect", systemImage: "xmark")
+								} else {
+									Label("Select", systemImage: "checkmark")
+								}
+							}
+						}
+						.tint(settings.checkersThemeId == theme.id ? .gray : .green)
+						.swipeActions(edge: .trailing) {
+							Button(role: .destructive) {
+								deleteCheckersTheme(at: [checkersThemes.firstIndex(of: theme)!])
+							} label: {
+								Label("Delete", systemImage: "trash")
+							}
+						}
+					}
+					.onDelete(perform: deleteCheckersTheme)
+					.onMove(perform: moveCheckersThemeRow)
+					
+					Button {
+						navigation.sheet = .newCheckers
+					} label: {
+						Label("Create theme", systemImage: "plus")
+					}
+				}
+			}
 		}
 		.sheet(item: $navigation.sheet) { sheet in
 			switch sheet {
@@ -198,6 +287,8 @@ struct SettingsView: View {
 				NewChessThemeView()
 			case .newReversi:
 				NewReversiThemeView()
+			case .newCheckers:
+				NewCheckersThemeView()
 			}
 		}
 		.navigationTitle("Settings")

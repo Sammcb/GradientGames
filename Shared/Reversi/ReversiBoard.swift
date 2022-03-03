@@ -81,10 +81,10 @@ struct ReversiBoard: Equatable {
 	}
 	
 	func canPlace(at square: ReversiSquare) -> Bool {
-		return pieces[square] == nil && !squaresFlanked(from: square).isEmpty
+		pieces[square] == nil && !squaresFlanked(from: square).isEmpty
 	}
 	
-	func canMove() -> Bool {
+	private func canMove() -> Bool {
 		var moves = 2
 		for move in history {
 			if !move.skip && move.piece.isLight == lightTurn {
@@ -109,7 +109,7 @@ struct ReversiBoard: Equatable {
 		return false
 	}
 	
-	mutating func flank(_ flankedSquares: [ReversiSquare]) {
+	private mutating func flank(_ flankedSquares: [ReversiSquare]) {
 		for square in flankedSquares {
 			pieces[square] = ReversiPiece(isLight: !pieces[square]!.isLight)
 		}
@@ -136,7 +136,7 @@ struct ReversiBoard: Equatable {
 		skipMove()
 	}
 	
-	mutating func skipMove() {
+	private mutating func skipMove() {
 		history.append(ReversiMove(skip: true))
 		
 		ReversiState.history = history

@@ -12,6 +12,7 @@ class Navigation: ObservableObject {
 		case settings
 		case chess
 		case reversi
+		case checkers
 		
 		var id: String {
 			self.rawValue
@@ -21,6 +22,7 @@ class Navigation: ObservableObject {
 	enum SheetId: String, Identifiable {
 		case newChess
 		case newReversi
+		case newCheckers
 		
 		var id: String {
 			self.rawValue

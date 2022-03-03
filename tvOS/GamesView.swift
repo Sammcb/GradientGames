@@ -22,6 +22,7 @@ struct GamesView: View {
 							}
 						}
 				}
+				
 				NavigationLink {
 					ReversiView()
 						.buttonStyle(.plain)
@@ -29,6 +30,19 @@ struct GamesView: View {
 					Label("Reversi", systemImage: "circle")
 						.contextMenu {
 							Button(role: .destructive, action: ReversiState.reset) {
+								Label("New game", systemImage: "trash")
+							}
+						}
+				}
+				
+				NavigationLink {
+					CheckersView()
+						.buttonStyle(.plain)
+				} label: {
+					Label("Checkers", systemImage: "circle")
+						.symbolVariant(.circle)
+						.contextMenu {
+							Button(role: .destructive, action: CheckersState.reset) {
 								Label("New game", systemImage: "trash")
 							}
 						}

@@ -58,7 +58,7 @@ struct ChessUITheme {
 	}
 }
 
-struct PortraitGameView: View {
+struct ChessPortraitGameView: View {
 	@EnvironmentObject private var game: ChessGame
 	
 	var body: some View {
@@ -87,7 +87,7 @@ struct PortraitGameView: View {
 	}
 }
 
-struct LandscapeGameView: View {
+struct ChessLandscapeGameView: View {
 	@EnvironmentObject private var game: ChessGame
 	
 	var body: some View {
@@ -138,9 +138,9 @@ struct ChessView: View {
 					.ignoresSafeArea()
 				
 				if width < height {
-					PortraitGameView()
+					ChessPortraitGameView()
 				} else {
-					LandscapeGameView()
+					ChessLandscapeGameView()
 				}
 				
 				ChessBoardView()

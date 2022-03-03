@@ -62,3 +62,22 @@ extension ReversiTheme {
 		UIColor(hex: pieceDarkRaw)
 	}
 }
+
+extension CheckersTheme {
+	static func ==(lhs: CheckersTheme, rhs: CheckersTheme) -> Bool {
+		lhs.id == rhs.id
+	}
+
+	var squareLight: UIColor {
+		UIColor(hex: squareLightRaw)
+	}
+	var squareDark: UIColor {
+		UIColor(hex: squareDarkRaw)
+	}
+	var pieceLight: UIColor {
+		UIColor(hex: pieceLightRaw)
+	}
+	var pieceDark: UIColor {
+		UIColor(hex: pieceDarkRaw)
+	}
+}

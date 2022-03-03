@@ -52,7 +52,7 @@ struct ChessSquareView: View {
 				.frame(width: boardLength / 8, height: boardLength / 8)
 		}
 #if os(tvOS)
-		.buttonStyle(ReversiSquareStyle())
+		.buttonStyle(CheckersSquareStyle())
 #endif
 		.background((rank + file.rawValue - 1).isMultiple(of: 2) ? theme.squareLight : theme.squareDark, in: Rectangle())
 		.disabled(gameOver || game.pawnSquare != nil || game.selectedSquare == square)

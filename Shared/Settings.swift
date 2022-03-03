@@ -14,17 +14,22 @@ class Settings: ObservableObject {
 		case chessEnableTimer
 		case reversiEnableUndo
 		case reversiEnableTimer
+		case checkersEnableUndo
+		case checkersEnableTimer
 	}
 	
 	private enum InternalKey: String {
 		case chessTheme
 		case reversiTheme
+		case checkersTheme
 	}
 	
 	@Published var chessThemeId: UUID?
 	@Published var reversiThemeId: UUID?
+	@Published var checkersThemeId: UUID?
 	private var chessThemeIdSubscriber: AnyCancellable?
 	private var reversiThemeIdSubscriber: AnyCancellable?
+	private var checkersThemeIdSubscriber: AnyCancellable?
 	private let localStorage = UserDefaults.standard
 	
 	init() {
@@ -36,6 +41,9 @@ class Settings: ObservableObject {
 			self.reversiThemeId = reversiThemeId
 		}
 		
+		if let checkersIdString = localStorage.string(forKey: InternalKey.checkersTheme.rawValue), let checkersThemeId = UUID(uuidString: checkersIdString) {
+			self.checkersThemeId = checkersThemeId
+		}
 		
 		chessThemeIdSubscriber = $chessThemeId.sink { value in
 			self.set(value, forKey: .chessTheme)
@@ -43,6 +51,10 @@ class Settings: ObservableObject {
 		
 		reversiThemeIdSubscriber = $reversiThemeId.sink { value in
 			self.set(value, forKey: .reversiTheme)
+		}
+		
+		checkersThemeIdSubscriber = $checkersThemeId.sink { value in
+			self.set(value, forKey: .checkersTheme)
 		}
 	}
 	
@@ -60,6 +72,12 @@ class Settings: ObservableObject {
 				return
 			}
 			localStorage.set(reversiThemeId.uuidString, forKey: key.rawValue)
+		case .checkersTheme:
+			guard let checkersThemeId = value as? UUID else  {
+				localStorage.set(nil, forKey: key.rawValue)
+				return
+			}
+			localStorage.set(checkersThemeId.uuidString, forKey: key.rawValue)
 		}
 	}
 }

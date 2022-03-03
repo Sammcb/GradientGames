@@ -25,13 +25,9 @@ struct ChessPiece: Codable, Equatable, Identifiable {
 	let group: Group
 	let id: UUID
 	
-	init(isLight: Bool, group: Group, id: UUID) {
+	init(isLight: Bool, group: Group, id: UUID = UUID()) {
 		self.isLight = isLight
 		self.group = group
 		self.id = id
-	}
-	
-	init(isLight: Bool, group: Group) {
-		self.init(isLight: isLight, group: group, id: UUID())
 	}
 }

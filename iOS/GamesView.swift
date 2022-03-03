@@ -10,12 +10,14 @@ import SwiftUI
 enum ThemeLink: String {
 	case chess = "/ChessColors/"
 	case reversi = "/ReversiColors/"
+	case checkers = "/CheckersColors/"
 }
 
 struct GamesView: View {
 	@Environment(\.managedObjectContext) private var context
 	@FetchRequest(sortDescriptors: [SortDescriptor(\ChessTheme.index, order: .forward)]) private var chessThemes: FetchedResults<ChessTheme>
 	@FetchRequest(sortDescriptors: [SortDescriptor(\ReversiTheme.index, order: .forward)]) private var reversiThemes: FetchedResults<ReversiTheme>
+	@FetchRequest(sortDescriptors: [SortDescriptor(\CheckersTheme.index, order: .forward)]) private var checkersThemes: FetchedResults<CheckersTheme>
 	@StateObject private var navigation = Navigation()
 	
 	private func present(_ id: UUID) {
@@ -94,6 +96,41 @@ struct GamesView: View {
 		present(theme.id!)
 	}
 	
+	private func parseCheckersLink(_ queryItems: [URLQueryItem]) {
+		guard let symbol = queryItems[0].value else {
+			return
+		}
+
+		guard let pieceLightString = queryItems[1].value, let pieceDarkString = queryItems[2].value else {
+			return
+		}
+
+		guard let squareLightString = queryItems[3].value, let squareDarkString = queryItems[4].value else {
+			return
+		}
+
+		guard let pieceLight = Int64(pieceLightString, radix: 16), let pieceDark = Int64(pieceDarkString, radix: 16) else {
+			return
+		}
+
+		guard let squareLight = Int64(squareLightString, radix: 16), let squareDark = Int64(squareDarkString, radix: 16) else {
+			return
+		}
+		
+		let themeCount = Int(checkersThemes.last?.index ?? -1)
+		let theme = CheckersTheme(context: context)
+		theme.id = UUID()
+		theme.symbol = symbol
+		theme.squareLightRaw = squareLight
+		theme.squareDarkRaw = squareDark
+		theme.pieceLightRaw = pieceLight
+		theme.pieceDarkRaw = pieceDark
+		theme.index = Int64(themeCount + 1)
+		Store.shared.save()
+		
+		present(theme.id!)
+	}
+	
 	var body: some View {
 		NavigationView {
 			List {
@@ -115,6 +152,18 @@ struct GamesView: View {
 					Label("Reversi", systemImage: "circle")
 						.contextMenu {
 							Button(role: .destructive, action: ReversiState.reset) {
+								Label("New game", systemImage: "trash")
+							}
+						}
+				}
+				NavigationLink(tag: Navigation.ViewId.checkers, selection: $navigation.view) {
+					CheckersView()
+						.navigationBarTitleDisplayMode(.inline)
+				} label: {
+					Label("Checkers", systemImage: "circle")
+						.symbolVariant(.circle)
+						.contextMenu {
+							Button(role: .destructive, action: CheckersState.reset) {
 								Label("New game", systemImage: "trash")
 							}
 						}
@@ -144,6 +193,11 @@ struct GamesView: View {
 				
 				if components.path == ThemeLink.reversi.rawValue {
 					parseReversiLink(queryItems)
+					return
+				}
+				
+				if components.path == ThemeLink.checkers.rawValue {
+					parseCheckersLink(queryItems)
 					return
 				}
 			}
