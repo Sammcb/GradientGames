@@ -8,10 +8,15 @@
 import SwiftUI
 
 struct ChessTimesTimelineView: View {
+	@EnvironmentObject private var game: ChessGame
+	@AppStorage(Settings.Key.chessFlipPieces.rawValue) private var flipped = false
+	
 	var body: some View {
 		TimelineView(.periodic(from: .now, by: 1 / 60)) { timeline in
 			ChessTimesView(date: timeline.date)
 		}
+		.rotationEffect(!game.board.lightTurn && flipped ? Angle(degrees: 180) : .zero)
+		.animation(.easeIn, value: game.board.lightTurn)
 	}
 }
 
@@ -79,6 +84,7 @@ struct ChessKingStatusView: View {
 
 struct ChessStatusView: View {
 	@EnvironmentObject private var game: ChessGame
+	@AppStorage(Settings.Key.chessFlipPieces.rawValue) private var flipped = false
 	
 	var body: some View {
 		let lightTurn = game.board.lightTurn
@@ -90,12 +96,15 @@ struct ChessStatusView: View {
 			
 			ChessKingStatusView(isLight: false)
 		}
+		.rotationEffect(!game.board.lightTurn && flipped ? Angle(degrees: 180) : .zero)
+		.animation(.easeIn, value: lightTurn)
 	}
 }
 
 struct ChessUndoView: View {
 	@EnvironmentObject private var game: ChessGame
 	@AppStorage(Settings.Key.chessEnableUndo.rawValue) private var enableUndo = true
+	@AppStorage(Settings.Key.chessFlipPieces.rawValue) private var flipped = false
 	
 	var body: some View {
 		Button {
@@ -108,6 +117,8 @@ struct ChessUndoView: View {
 		}
 		.opacity(enableUndo ? 1 : 0)
 		.disabled(game.pawnSquare != nil || game.board.history.isEmpty || !enableUndo)
+		.rotationEffect(!game.board.lightTurn && flipped ? Angle(degrees: 180) : .zero)
+		.animation(.easeIn, value: game.board.lightTurn)
 	}
 }
 

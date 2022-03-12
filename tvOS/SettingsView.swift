@@ -25,12 +25,10 @@ struct SettingsView: View {
 				Toggle(isOn: $chessEnableUndo) {
 					Label("Undos", systemImage: "arrow.uturn.backward")
 						.symbolVariant(.circle.fill)
-						.foregroundColor(.primary)
 				}
 				Toggle(isOn: $chessEnableTimer) {
 					Label("Timers", systemImage: "clock")
 						.symbolVariant(.fill)
-						.foregroundColor(.primary)
 				}
 			}
 			
@@ -61,12 +59,10 @@ struct SettingsView: View {
 				Toggle(isOn: $reversiEnableUndo) {
 					Label("Undos", systemImage: "arrow.uturn.backward")
 						.symbolVariant(.circle.fill)
-						.foregroundColor(.primary)
 				}
 				Toggle(isOn: $reversiEnableTimer) {
 					Label("Timers", systemImage: "clock")
 						.symbolVariant(.fill)
-						.foregroundColor(.primary)
 				}
 			}
 			
@@ -97,12 +93,10 @@ struct SettingsView: View {
 				Toggle(isOn: $checkersEnableUndo) {
 					Label("Undos", systemImage: "arrow.uturn.backward")
 						.symbolVariant(.circle.fill)
-						.foregroundColor(.primary)
 				}
 				Toggle(isOn: $checkersEnableTimer) {
 					Label("Timers", systemImage: "clock")
 						.symbolVariant(.fill)
-						.foregroundColor(.primary)
 				}
 			}
 			

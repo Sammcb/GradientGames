@@ -16,6 +16,7 @@ struct SettingsView: View {
 	@FetchRequest(sortDescriptors: [SortDescriptor(\CheckersTheme.index, order: .forward)]) private var checkersThemes: FetchedResults<CheckersTheme>
 	@AppStorage(Settings.Key.chessEnableUndo.rawValue) private var chessEnableUndo = true
 	@AppStorage(Settings.Key.chessEnableTimer.rawValue) private var chessEnableTimer = true
+	@AppStorage(Settings.Key.chessFlipPieces.rawValue) private var chessFlipPieces = false
 	@AppStorage(Settings.Key.reversiEnableUndo.rawValue) private var reversiEnableUndo = true
 	@AppStorage(Settings.Key.reversiEnableTimer.rawValue) private var reversiEnableTimer = true
 	@AppStorage(Settings.Key.checkersEnableUndo.rawValue) private var checkersEnableUndo = true
@@ -117,12 +118,14 @@ struct SettingsView: View {
 				Toggle(isOn: $chessEnableUndo) {
 					Label("Undos", systemImage: "arrow.uturn.backward")
 						.symbolVariant(.circle.fill)
-						.foregroundColor(.primary)
 				}
 				Toggle(isOn: $chessEnableTimer) {
 					Label("Timers", systemImage: "clock")
 						.symbolVariant(.fill)
-						.foregroundColor(.primary)
+				}
+				Toggle(isOn: $chessFlipPieces) {
+					Label("Flip dark pieces", systemImage: "arrow.up.arrow.down")
+						.symbolVariant(.circle.fill)
 				}
 			}
 			.headerProminence(.increased)
@@ -173,12 +176,10 @@ struct SettingsView: View {
 				Toggle(isOn: $reversiEnableUndo) {
 					Label("Undos", systemImage: "arrow.uturn.backward")
 						.symbolVariant(.circle.fill)
-						.foregroundColor(.primary)
 				}
 				Toggle(isOn: $reversiEnableTimer) {
 					Label("Timers", systemImage: "clock")
 						.symbolVariant(.fill)
-						.foregroundColor(.primary)
 				}
 			}
 			.headerProminence(.increased)
@@ -229,12 +230,10 @@ struct SettingsView: View {
 				Toggle(isOn: $checkersEnableUndo) {
 					Label("Undos", systemImage: "arrow.uturn.backward")
 						.symbolVariant(.circle.fill)
-						.foregroundColor(.primary)
 				}
 				Toggle(isOn: $checkersEnableTimer) {
 					Label("Timers", systemImage: "clock")
 						.symbolVariant(.fill)
-						.foregroundColor(.primary)
 				}
 			}
 			.headerProminence(.increased)

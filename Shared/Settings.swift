@@ -12,6 +12,7 @@ class Settings: ObservableObject {
 	enum Key: String {
 		case chessEnableUndo
 		case chessEnableTimer
+		case chessFlipPieces
 		case reversiEnableUndo
 		case reversiEnableTimer
 		case checkersEnableUndo

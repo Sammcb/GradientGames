@@ -12,6 +12,7 @@ struct ChessBoardView: View {
 	@Environment(\.chessBoardLength) private var boardLength
 	@EnvironmentObject private var game: ChessGame
 	@FocusState private var focusedSquare: ChessSquare?
+	@AppStorage(Settings.Key.chessFlipPieces.rawValue) private var flipped = false
 	
 	var body: some View {
 		let animation: Animation = .linear(duration: 0.3)
@@ -43,6 +44,7 @@ struct ChessBoardView: View {
 							.stroke(game.selectedSquare == square ? pieceColor : .clear, lineWidth: boardLength / 128)
 							.frame(width: boardLength / 10, height: boardLength / 10)
 					}
+					.rotationEffect(!piece.isLight && flipped ? Angle(degrees: 180) : .zero)
 					.offset(x: CGFloat(square.file.rawValue) * boardLength / 8 - boardLength * 9 / 16, y: CGFloat(1 - square.rank) * boardLength / 8 + boardLength * 7 / 16)
 					.transition(.opacity.animation(animation))
 					.animation(animation, value: game.board)
