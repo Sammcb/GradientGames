@@ -346,6 +346,11 @@ struct ChessBoard: Equatable {
 		
 		switch piece.group {
 		case .pawn:
+			// Pawns should always move forward at least one square
+			if (piece.isLight && square.rank <= oldSquare.rank) || (!piece.isLight && square.rank >= oldSquare.rank) {
+				return false
+			}
+			
 			let offset = piece.isLight ? 1 : -1
 			let startRank = piece.isLight ? 2 : 7
 			
