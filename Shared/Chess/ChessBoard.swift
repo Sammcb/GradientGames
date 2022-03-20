@@ -364,19 +364,14 @@ struct ChessBoard: Equatable {
 					validSquares.append(ChessSquare(file: oldSquare.file, rank: oldSquare.rank + offset * 2))
 				}
 			}
-			break
 		case .knight:
 			validSquares.append(contentsOf: attackedSquares)
-			break
 		case .bishop:
 			validSquares.append(contentsOf: attackedSquares)
-			break
 		case .rook:
 			validSquares.append(contentsOf: attackedSquares)
-			break
 		case .queen:
 			validSquares.append(contentsOf: attackedSquares)
-			break
 		case .king:
 			let rank = piece.isLight ? 1 : 8
 			// Check if in check at attack squares
@@ -384,7 +379,6 @@ struct ChessBoard: Equatable {
 			// Check if castle squares are valid
 			let castleSquares = [ChessSquare(file: .g, rank: rank), ChessSquare(file: .c, rank: rank)]
 			validSquares.append(contentsOf: castleSquares.filter({ canCastle(to: $0) }))
-			break
 		}
 		
 		guard validSquares.contains(square) else {

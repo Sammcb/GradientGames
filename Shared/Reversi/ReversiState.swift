@@ -82,10 +82,8 @@ struct ReversiState {
 				pieces[4, 5] = ReversiPiece(isLight: true)
 				
 				return pieces
-				
 			case .history:
 				return []
-				
 			case .times:
 				return Times(light: 0, dark: 0, lastUpdate: .now)
 			}
