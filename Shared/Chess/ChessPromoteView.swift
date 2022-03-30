@@ -11,7 +11,7 @@ struct ChessPromoteView: View {
 	@Environment(\.chessTheme) private var theme
 	@Environment(\.chessBoardLength) private var boardLength
 	@EnvironmentObject private var game: ChessGame
-	@AppStorage(Settings.Key.chessFlipPieces.rawValue) private var flipped = false
+	@AppStorage(Settings.Key.chessFlipUI.rawValue) private var flipped = false
 	let promoteGroups: [ChessPiece.Group] = [.knight, .bishop, .rook, .queen]
 	let isLight: Bool
 	
@@ -37,7 +37,7 @@ struct ChessPromoteView: View {
 		}
 		.font(.system(size: 50))
 		.disabled(game.pawnSquare == nil)
-		.rotationEffect(!game.board.lightTurn && flipped ? Angle(degrees: 180) : .zero)
+		.rotationEffect(!game.board.lightTurn && flipped ? .radians(.pi) : .zero)
 		.animation(.easeIn, value: game.board.lightTurn)
 	}
 }

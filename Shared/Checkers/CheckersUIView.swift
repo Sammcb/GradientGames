@@ -8,10 +8,15 @@
 import SwiftUI
 
 struct CheckersTimesTimelineView: View {
+	@EnvironmentObject private var game: CheckersGame
+	@AppStorage(Settings.Key.checkersFlipUI.rawValue) private var flipped = false
+	
 	var body: some View {
 		TimelineView(.periodic(from: .now, by: 1 / 60)) { timeline in
 			CheckersTimesView(date: timeline.date)
 		}
+		.rotationEffect(game.board.lightTurn && flipped ? .radians(.pi) : .zero)
+		.animation(.easeIn, value: game.board.lightTurn)
 	}
 }
 
@@ -48,6 +53,7 @@ struct CheckersTimesView: View {
 struct CheckersStateView: View {
 	@Environment(\.checkersTheme) private var theme
 	@EnvironmentObject private var game: CheckersGame
+	@AppStorage(Settings.Key.checkersFlipUI.rawValue) private var flipped = false
 	let isLight: Bool
 	
 	var body: some View {
@@ -55,6 +61,8 @@ struct CheckersStateView: View {
 			.symbolVariant(isLight ? .none : .fill)
 			.opacity(game.board.gameOver && game.board.lightTurn != isLight ? 1 : 0)
 			.foregroundColor(isLight ? theme.pieceLight : theme.pieceDark)
+			.rotationEffect(game.board.lightTurn && flipped ? .radians(.pi) : .zero)
+			.animation(.easeIn, value: game.board.lightTurn)
 	}
 }
 
@@ -76,6 +84,7 @@ struct CheckersStatusView: View {
 struct CheckersUndoView: View {
 	@EnvironmentObject private var game: CheckersGame
 	@AppStorage(Settings.Key.checkersEnableUndo.rawValue) private var enableUndo = true
+	@AppStorage(Settings.Key.checkersFlipUI.rawValue) private var flipped = false
 	
 	var body: some View {
 		Button {
@@ -88,6 +97,8 @@ struct CheckersUndoView: View {
 		}
 		.opacity(enableUndo ? 1 : 0)
 		.disabled(game.board.history.isEmpty || !enableUndo)
+		.rotationEffect(game.board.lightTurn && flipped ? .radians(.pi) : .zero)
+		.animation(.easeIn, value: game.board.lightTurn)
 	}
 }
 

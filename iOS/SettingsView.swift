@@ -16,11 +16,13 @@ struct SettingsView: View {
 	@FetchRequest(sortDescriptors: [SortDescriptor(\CheckersTheme.index, order: .forward)]) private var checkersThemes: FetchedResults<CheckersTheme>
 	@AppStorage(Settings.Key.chessEnableUndo.rawValue) private var chessEnableUndo = true
 	@AppStorage(Settings.Key.chessEnableTimer.rawValue) private var chessEnableTimer = true
-	@AppStorage(Settings.Key.chessFlipPieces.rawValue) private var chessFlipPieces = false
+	@AppStorage(Settings.Key.chessFlipUI.rawValue) private var chessFlipUI = false
 	@AppStorage(Settings.Key.reversiEnableUndo.rawValue) private var reversiEnableUndo = true
 	@AppStorage(Settings.Key.reversiEnableTimer.rawValue) private var reversiEnableTimer = true
+	@AppStorage(Settings.Key.reversiFlipUI.rawValue) private var reversiFlipUI = false
 	@AppStorage(Settings.Key.checkersEnableUndo.rawValue) private var checkersEnableUndo = true
 	@AppStorage(Settings.Key.checkersEnableTimer.rawValue) private var checkersEnableTimer = true
+	@AppStorage(Settings.Key.checkersFlipUI.rawValue) private var checkersFlipUI = false
 	
 	private func deleteChessTheme(at indexSet: IndexSet) {
 		for index in indexSet {
@@ -123,8 +125,8 @@ struct SettingsView: View {
 					Label("Timers", systemImage: "clock")
 						.symbolVariant(.fill)
 				}
-				Toggle(isOn: $chessFlipPieces) {
-					Label("Flip dark pieces", systemImage: "arrow.up.arrow.down")
+				Toggle(isOn: $chessFlipUI) {
+					Label("Flip UI each turn", systemImage: "arrow.up.arrow.down")
 						.symbolVariant(.circle.fill)
 				}
 			}
@@ -181,6 +183,10 @@ struct SettingsView: View {
 					Label("Timers", systemImage: "clock")
 						.symbolVariant(.fill)
 				}
+				Toggle(isOn: $reversiFlipUI) {
+					Label("Flip UI each turn", systemImage: "arrow.up.arrow.down")
+						.symbolVariant(.circle.fill)
+				}
 			}
 			.headerProminence(.increased)
 			
@@ -234,6 +240,10 @@ struct SettingsView: View {
 				Toggle(isOn: $checkersEnableTimer) {
 					Label("Timers", systemImage: "clock")
 						.symbolVariant(.fill)
+				}
+				Toggle(isOn: $checkersFlipUI) {
+					Label("Flip UI each turn", systemImage: "arrow.up.arrow.down")
+						.symbolVariant(.circle.fill)
 				}
 			}
 			.headerProminence(.increased)

@@ -8,10 +8,15 @@
 import SwiftUI
 
 struct ReversiTimesTimelineView: View {
+	@EnvironmentObject private var game: ReversiGame
+	@AppStorage(Settings.Key.reversiFlipUI.rawValue) private var flipped = false
+	
 	var body: some View {
 		TimelineView(.periodic(from: .now, by: 1 / 60)) { timeline in
 			ReversiTimesView(date: timeline.date)
 		}
+		.rotationEffect(game.board.lightTurn && flipped ? .radians(.pi) : .zero)
+		.animation(.easeIn, value: game.board.lightTurn)
 	}
 }
 
@@ -57,6 +62,7 @@ struct ReversiStatusView: View {
 struct ReversiUndoView: View {
 	@EnvironmentObject private var game: ReversiGame
 	@AppStorage(Settings.Key.reversiEnableUndo.rawValue) private var enableUndo = true
+	@AppStorage(Settings.Key.reversiFlipUI.rawValue) private var flipped = false
 	
 	var body: some View {
 		Button {
@@ -68,6 +74,8 @@ struct ReversiUndoView: View {
 		}
 		.opacity(enableUndo ? 1 : 0)
 		.disabled(game.board.history.isEmpty || !enableUndo)
+		.rotationEffect(game.board.lightTurn && flipped ? .radians(.pi) : .zero)
+		.animation(.easeIn, value: game.board.lightTurn)
 	}
 }
 

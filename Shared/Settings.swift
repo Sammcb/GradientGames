@@ -12,11 +12,13 @@ class Settings: ObservableObject {
 	enum Key: String {
 		case chessEnableUndo
 		case chessEnableTimer
-		case chessFlipPieces
+		case chessFlipUI
 		case reversiEnableUndo
 		case reversiEnableTimer
+		case reversiFlipUI
 		case checkersEnableUndo
 		case checkersEnableTimer
+		case checkersFlipUI
 	}
 	
 	private enum InternalKey: String {

@@ -35,20 +35,25 @@ struct ReversiStatsView: View {
 	@Environment(\.reversiTheme) private var theme
 	@Environment(\.reversiBoardLength) private var boardLength
 	@EnvironmentObject private var game: ReversiGame
+	@AppStorage(Settings.Key.reversiFlipUI.rawValue) private var flipped = false
 	
 	var body: some View {
 		let lightMoves = game.board.history.filter({ !$0.skip && $0.piece.isLight }).count
 		let darkMoves = game.board.history.filter({ !$0.skip && !$0.piece.isLight }).count
-		Spacer()
-		ReversiScoreStatusView(isLight: true)
-		Spacer()
-		Text("\(lightMoves + 2)/\(game.board.maxMoves)")
-			.foregroundColor(theme.pieceLight)
-		Spacer()
-		Text("\(darkMoves + 2)/\(game.board.maxMoves)")
-			.foregroundColor(theme.pieceDark)
-		Spacer()
-		ReversiScoreStatusView(isLight: false)
-		Spacer()
+		Group {
+			Spacer()
+			ReversiScoreStatusView(isLight: true)
+			Spacer()
+			Text("\(lightMoves + 2)/\(game.board.maxMoves)")
+				.foregroundColor(theme.pieceLight)
+			Spacer()
+			Text("\(darkMoves + 2)/\(game.board.maxMoves)")
+				.foregroundColor(theme.pieceDark)
+			Spacer()
+			ReversiScoreStatusView(isLight: false)
+			Spacer()
+		}
+		.rotationEffect(game.board.lightTurn && flipped ? .radians(.pi) : .zero)
+		.animation(.easeIn, value: game.board.lightTurn)
 	}
 }
