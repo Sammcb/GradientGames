@@ -81,3 +81,68 @@ extension CheckersTheme: Theme {
 		UIColor(hex: pieceDarkRaw)
 	}
 }
+
+extension UniversalLinkReciever {		
+	private func themeColorKeys(for linkType: ThemeLink) -> [String] {
+		switch linkType {
+		case .chess, .checkers:
+			return ["pieceLight", "pieceDark", "squareLight", "squareDark"]
+		case .reversi:
+			return ["pieceLight", "pieceDark", "square", "border"]
+		}
+	}
+	
+	private func parseThemeLink(with queryItems: [URLQueryItem], type linkType: ThemeLink) throws -> ThemeField {
+		guard let symbol = queryItems.first(where: { $0.name == "symbol" })?.value else {
+			throw UniversalLinkParseError.componentError
+		}
+		
+		let colorKeys = themeColorKeys(for: linkType)
+		var colors: [Int64] = []
+		for key in colorKeys {
+			guard let colorString = queryItems.first(where: { $0.name == key })?.value else {
+				throw UniversalLinkParseError.componentError
+			}
+			
+			guard let color = Int64(colorString, radix: 16) else {
+				throw UniversalLinkParseError.componentError
+			}
+			
+			colors.append(color)
+		}
+		
+		switch linkType {
+		case .chess:
+			return .chess(symbol, colors[0], colors[1], colors[2], colors[3])
+		case .reversi:
+			return .reversi(symbol, colors[0], colors[1], colors[2], colors[3])
+		case .checkers:
+			return .checkers(symbol, colors[0], colors[1], colors[2], colors[3])
+		}
+	}
+	
+	func parseUniversalLink(_ url: URL) throws -> ThemeField {
+		guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
+			throw UniversalLinkParseError.componentError
+		}
+		
+		guard let linkType = ThemeLink(rawValue: components.path) else {
+			throw UniversalLinkParseError.typeError
+		}
+		
+		let expectedQueryItemsCount: Int
+		switch linkType {
+		case .chess, .reversi, .checkers:
+			expectedQueryItemsCount = 5
+		}
+		
+		guard let queryItems = components.queryItems, queryItems.count == expectedQueryItemsCount else {
+			throw UniversalLinkParseError.componentError
+		}
+		
+		switch linkType {
+		case .chess, .reversi, .checkers:
+			return try parseThemeLink(with: queryItems, type: linkType)
+		}
+	}
+}

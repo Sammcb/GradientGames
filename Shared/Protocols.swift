@@ -5,7 +5,6 @@
 //  Created by Sam McBroom on 9/14/22.
 //
 
-import Foundation
 import CoreData.NSFetchRequest
 
 protocol Theme: NSFetchRequestResult {
@@ -15,4 +14,8 @@ protocol Theme: NSFetchRequestResult {
 
 protocol GameState {
 	func reset()
+}
+
+protocol UniversalLinkReciever {
+	func parseUniversalLink(_ url: URL) throws -> ThemeField
 }
