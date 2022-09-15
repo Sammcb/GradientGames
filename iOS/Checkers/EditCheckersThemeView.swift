@@ -8,14 +8,12 @@
 import SwiftUI
 
 struct EditCheckersThemeView: View {
-	@EnvironmentObject private var navigation: Navigation
 	@State var theme: CheckersTheme
 	@State private var symbol: String
 	@State private var squareLight: Color
 	@State private var squareDark: Color
 	@State private var pieceLight: Color
 	@State private var pieceDark: Color
-	@State private var showShare = false
 	
 	init(_ theme: CheckersTheme) {
 		symbol = theme.symbol!
@@ -89,17 +87,7 @@ struct EditCheckersThemeView: View {
 			}
 		}
 		.toolbar {
-			Button {
-				showShare = true
-			} label: {
-				Label("Share", systemImage: "square.and.arrow.up")
-			}
-		}
-		.onChange(of: navigation.editing) { _ in
-			showShare = false
-		}
-		.sheet(isPresented: $showShare) {
-			ShareSheet(activityItems: [themeURL()])
+			ShareLink(item: themeURL())
 		}
 		.navigationTitle(symbol)
 	}

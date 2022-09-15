@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CheckersTimesTimelineView: View {
 	@EnvironmentObject private var game: CheckersGame
-	@AppStorage(Settings.Key.checkersFlipUI.rawValue) private var flipped = false
+	@AppStorage(Setting.checkersFlipUI.rawValue) private var flipped = false
 	
 	var body: some View {
 		TimelineView(.periodic(from: .now, by: 1 / 60)) { timeline in
@@ -23,15 +23,15 @@ struct CheckersTimesTimelineView: View {
 struct CheckersTimesView: View {
 	@Environment(\.checkersTheme) private var theme
 	@EnvironmentObject private var game: CheckersGame
-	@AppStorage(Settings.Key.checkersEnableTimer.rawValue) private var enableTimer = true
+	@AppStorage(Setting.checkersEnableTimer.rawValue) private var enableTimer = true
 	private let cadence: TimeInterval = 1 / 60
 	let date: Date
 	
 	var body: some View {
 		VStack {
-			Text(CheckersState.times.stringFor(lightTime: true))
+			Text(CheckersState.shared.times.stringFor(lightTime: true))
 				.foregroundColor(theme.pieceLight)
-			Text(CheckersState.times.stringFor(lightTime: false))
+			Text(CheckersState.shared.times.stringFor(lightTime: false))
 				.foregroundColor(theme.pieceDark)
 		}
 		.opacity(enableTimer ? 1 : 0)
@@ -41,11 +41,11 @@ struct CheckersTimesView: View {
 			}
 			
 			if game.board.lightTurn {
-				CheckersState.times.light += cadence
+				CheckersState.shared.times.light += cadence
 			} else {
-				CheckersState.times.dark += cadence
+				CheckersState.shared.times.dark += cadence
 			}
-			CheckersState.times.lastUpdate = date
+			CheckersState.shared.times.lastUpdate = date
 		}
 	}
 }
@@ -53,7 +53,7 @@ struct CheckersTimesView: View {
 struct CheckersStateView: View {
 	@Environment(\.checkersTheme) private var theme
 	@EnvironmentObject private var game: CheckersGame
-	@AppStorage(Settings.Key.checkersFlipUI.rawValue) private var flipped = false
+	@AppStorage(Setting.checkersFlipUI.rawValue) private var flipped = false
 	let isLight: Bool
 	
 	var body: some View {
@@ -74,7 +74,7 @@ struct CheckersStatusView: View {
 			CheckersStateView(isLight: true)
 			
 			CheckersPieceView(isLight: game.board.lightTurn, kinged: true)
-				.frame(width: 64, height: 64)
+				.frame(width: 50, height: 50)
 			
 			CheckersStateView(isLight: false)
 		}
@@ -83,8 +83,8 @@ struct CheckersStatusView: View {
 
 struct CheckersUndoView: View {
 	@EnvironmentObject private var game: CheckersGame
-	@AppStorage(Settings.Key.checkersEnableUndo.rawValue) private var enableUndo = true
-	@AppStorage(Settings.Key.checkersFlipUI.rawValue) private var flipped = false
+	@AppStorage(Setting.checkersEnableUndo.rawValue) private var enableUndo = true
+	@AppStorage(Setting.checkersFlipUI.rawValue) private var flipped = false
 	
 	var body: some View {
 		Button {
@@ -102,38 +102,28 @@ struct CheckersUndoView: View {
 	}
 }
 
-struct CheckersPortraitUIView: View {
+struct CheckersUIView: View {
+	let vertical: Bool
+	
 	var body: some View {
-		HStack {
+		let layout = vertical ? AnyLayout(HStackLayout()) : AnyLayout(VStackLayout())
+		
+		layout {
+			Spacer()
+			
 			CheckersTimesTimelineView()
-				.frame(maxWidth: .infinity)
+			
+			Spacer()
 			
 			CheckersStatusView()
-				.frame(maxWidth: .infinity)
+			
+			Spacer()
 			
 			CheckersUndoView()
-				.frame(maxWidth: .infinity)
 			
+			Spacer()
 		}
-		.padding(.bottom)
+		.padding(vertical ? .vertical : .horizontal)
 		.background(.ultraThinMaterial)
 	}
 }
-
-struct CheckersLandscapeUIView: View {
-	var body: some View {
-		VStack {
-			CheckersUndoView()
-				.frame(maxHeight: .infinity)
-			
-			CheckersStatusView()
-				.frame(maxHeight: .infinity)
-			
-			CheckersTimesTimelineView()
-				.frame(maxHeight: .infinity)
-		}
-		.padding(.horizontal)
-		.background(.ultraThinMaterial)
-	}
-}
-

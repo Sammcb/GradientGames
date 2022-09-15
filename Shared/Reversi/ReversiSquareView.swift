@@ -16,38 +16,37 @@ struct ReversiSquareStyle: ButtonStyle {
 
 struct ReversiSquareView: View {
 	@Environment(\.reversiTheme) private var theme
-	@Environment(\.reversiBoardLength) private var boardLength
 	@EnvironmentObject private var game: ReversiGame
 	let column: Int
 	let row: Int
 	
 	var body: some View {
 		let square = ReversiSquare(column: column, row: row)
-		let animation: Animation = .linear(duration: 0.3)
-		ZStack {
-			Button {
-				guard game.board.canPlace(at: square) else {
-					return
-				}
-				
-				game.board.place(at: square)
-			} label: {
-				Text("")
-					.frame(width: boardLength / 8, height: boardLength / 8)
+		Button {
+			guard game.board.canPlace(at: square) else {
+				return
 			}
-			.disabled(game.board.gameOver)
-			.background(theme.square, in: Rectangle())
-#if os(tvOS)
-			.buttonStyle(ReversiSquareStyle())
-#endif
 			
+			game.board.place(at: square)
+		} label: {
 			if let piece = game.board.pieces[square] {
 				ReversiPieceView(isLight: piece.isLight)
-					.frame(width: boardLength / 16, height: boardLength / 16)
-					.transition(.opacity.animation(animation))
-					.animation(animation, value: game.board)
-					.zIndex(1)
+					.scaleEffect(0.5)
+					.frame(maxWidth: .infinity, maxHeight: .infinity)
+					.transition(.opacity.animation(.linear))
+					.animation(.linear, value: game.board)
+			} else {
+				Text("")
+					.frame(maxWidth: .infinity, maxHeight: .infinity)
 			}
+			
 		}
+		.background(theme.square, in: Rectangle())
+#if os(iOS)
+		.disabled(game.board.gameOver || game.board.pieces[square] != nil)
+#elseif os(tvOS)
+		.disabled(game.board.gameOver)
+		.buttonStyle(ReversiSquareStyle())
+#endif
 	}
 }

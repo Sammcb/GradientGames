@@ -8,16 +8,18 @@
 import SwiftUI
 
 struct SettingsView: View {
-	@EnvironmentObject private var settings: Settings
 	@FetchRequest(sortDescriptors: [SortDescriptor(\ChessTheme.index, order: .forward)]) private var chessThemes: FetchedResults<ChessTheme>
 	@FetchRequest(sortDescriptors: [SortDescriptor(\ReversiTheme.index, order: .forward)]) private var reversiThemes: FetchedResults<ReversiTheme>
 	@FetchRequest(sortDescriptors: [SortDescriptor(\CheckersTheme.index, order: .forward)]) private var checkersThemes: FetchedResults<CheckersTheme>
-	@AppStorage(Settings.Key.chessEnableUndo.rawValue) private var chessEnableUndo = true
-	@AppStorage(Settings.Key.chessEnableTimer.rawValue) private var chessEnableTimer = true
-	@AppStorage(Settings.Key.reversiEnableUndo.rawValue) private var reversiEnableUndo = true
-	@AppStorage(Settings.Key.reversiEnableTimer.rawValue) private var reversiEnableTimer = true
-	@AppStorage(Settings.Key.checkersEnableUndo.rawValue) private var checkersEnableUndo = true
-	@AppStorage(Settings.Key.checkersEnableTimer.rawValue) private var checkersEnableTimer = true
+	@AppStorage(Setting.chessTheme.rawValue) private var chessTheme = ""
+	@AppStorage(Setting.chessEnableUndo.rawValue) private var chessEnableUndo = true
+	@AppStorage(Setting.chessEnableTimer.rawValue) private var chessEnableTimer = true
+	@AppStorage(Setting.reversiTheme.rawValue) private var reversiTheme = ""
+	@AppStorage(Setting.reversiEnableUndo.rawValue) private var reversiEnableUndo = true
+	@AppStorage(Setting.reversiEnableTimer.rawValue) private var reversiEnableTimer = true
+	@AppStorage(Setting.checkersTheme.rawValue) private var checkersTheme = ""
+	@AppStorage(Setting.checkersEnableUndo.rawValue) private var checkersEnableUndo = true
+	@AppStorage(Setting.checkersEnableTimer.rawValue) private var checkersEnableTimer = true
 	
 	var body: some View {
 		Form {
@@ -40,14 +42,15 @@ struct SettingsView: View {
 							.frame(maxWidth: .infinity, alignment: .center)
 					}
 					ForEach(chessThemes) { theme in
+						let themeSelected = chessTheme == theme.id!.uuidString
 						Button {
-							settings.chessThemeId = settings.chessThemeId == theme.id ? nil : theme.id
+							chessTheme = themeSelected ? "" : theme.id!.uuidString
 						} label: {
 							Label {
 								Text(theme.symbol!)
 							} icon: {
-								Image(systemName: settings.chessThemeId == theme.id ? "checkmark.circle.fill" : "circle")
-									.foregroundColor(settings.chessThemeId == theme.id ? .green : .gray)
+								Image(systemName: themeSelected ? "checkmark.circle.fill" : "circle")
+									.foregroundColor(themeSelected ? .green : .gray)
 							}
 						}
 					}
@@ -74,14 +77,15 @@ struct SettingsView: View {
 							.frame(maxWidth: .infinity, alignment: .center)
 					}
 					ForEach(reversiThemes) { theme in
+						let themeSelected = reversiTheme == theme.id!.uuidString
 						Button {
-							settings.reversiThemeId = settings.reversiThemeId == theme.id ? nil : theme.id
+							reversiTheme = themeSelected ? "" : theme.id!.uuidString
 						} label: {
 							Label {
 								Text(theme.symbol!)
 							} icon: {
-								Image(systemName: settings.reversiThemeId == theme.id ? "checkmark.circle.fill" : "circle")
-									.foregroundColor(settings.reversiThemeId == theme.id ? .green : .gray)
+								Image(systemName: themeSelected ? "checkmark.circle.fill" : "circle")
+									.foregroundColor(themeSelected ? .green : .gray)
 							}
 						}
 					}
@@ -108,14 +112,15 @@ struct SettingsView: View {
 							.frame(maxWidth: .infinity, alignment: .center)
 					}
 					ForEach(checkersThemes) { theme in
+						let themeSelected = checkersTheme == theme.id!.uuidString
 						Button {
-							settings.checkersThemeId = settings.checkersThemeId == theme.id ? nil : theme.id
+							checkersTheme = themeSelected ? "" : theme.id!.uuidString
 						} label: {
 							Label {
 								Text(theme.symbol!)
 							} icon: {
-								Image(systemName: settings.checkersThemeId == theme.id ? "checkmark.circle.fill" : "circle")
-									.foregroundColor(settings.checkersThemeId == theme.id ? .green : .gray)
+								Image(systemName: themeSelected ? "checkmark.circle.fill" : "circle")
+									.foregroundColor(themeSelected ? .green : .gray)
 							}
 						}
 					}

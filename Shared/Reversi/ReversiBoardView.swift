@@ -26,5 +26,6 @@ struct ReversiBoardView: View {
 				}
 			}
 		}
+		.aspectRatio(1, contentMode: .fit)
 	}
 }

@@ -15,7 +15,7 @@ class CheckersGame: ObservableObject {
 	}
 	
 	func reset() {
-		CheckersState.reset()
+		CheckersState.shared.reset()
 		board = CheckersBoard()
 	}
 }

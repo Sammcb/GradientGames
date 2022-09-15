@@ -16,7 +16,6 @@ struct CheckersSquareStyle: ButtonStyle {
 
 struct CheckersSquareView: View {
 	@Environment(\.checkersTheme) private var theme
-	@Environment(\.checkersBoardLength) private var boardLength
 	@EnvironmentObject private var game: CheckersGame
 	let column: Int
 	let row: Int
@@ -45,7 +44,7 @@ struct CheckersSquareView: View {
 			select(square: square)
 		} label: {
 			Text("")
-				.frame(width: boardLength / 8, height: boardLength / 8)
+				.frame(maxWidth: .infinity, maxHeight: .infinity)
 		}
 #if os(tvOS)
 		.buttonStyle(CheckersSquareStyle())

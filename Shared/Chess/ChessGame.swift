@@ -29,7 +29,7 @@ class ChessGame: ObservableObject {
 	}
 	
 	func reset() {
-		ChessState.reset()
+		ChessState.shared.reset()
 		board = ChessBoard()
 		selectedSquare = nil
 		pawnSquare = nil

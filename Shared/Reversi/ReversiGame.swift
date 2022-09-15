@@ -14,7 +14,7 @@ class ReversiGame: ObservableObject {
 	}
 	
 	func reset() {
-		ReversiState.reset()
+		ReversiState.shared.reset()
 		board = ReversiBoard()
 	}
 }

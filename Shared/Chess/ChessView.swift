@@ -7,25 +7,11 @@
 
 import SwiftUI
 
-struct ChessBoardLengthKey: EnvironmentKey {
-	static let defaultValue: CGFloat = .zero
-}
-
 struct ChessThemeKey: EnvironmentKey {
 	static let defaultValue = ChessUITheme()
 }
 
-extension EnvironmentValues {
-	var chessBoardLength: Double {
-		get {
-			self[ChessBoardLengthKey.self]
-		}
-		
-		set {
-			self[ChessBoardLengthKey.self] = newValue
-		}
-	}
-	
+extension EnvironmentValues {	
 	var chessTheme: ChessUITheme {
 		get {
 			self[ChessThemeKey.self]
@@ -58,71 +44,12 @@ struct ChessUITheme {
 	}
 }
 
-struct ChessPortraitGameView: View {
-	@EnvironmentObject private var game: ChessGame
-	
-	var body: some View {
-		VStack {
-			ChessPortraitUIView()
-#if os(tvOS)
-				.focusSection()
-#endif
-			
-			Spacer()
-				.frame(maxHeight: .infinity)
-			
-			if game.pawnSquare != nil {
-				HStack {
-					ChessPromoteView(isLight: game.board.lightTurn)
-				}
-				.background(.ultraThinMaterial)
-#if os(tvOS)
-				.focusSection()
-#endif
-				.transition(.opacity.animation(.linear))
-			}
-		}
-		.font(.system(.headline, design: .rounded).bold().monospacedDigit())
-		.frame(maxHeight: .infinity)
-	}
-}
-
-struct ChessLandscapeGameView: View {
-	@EnvironmentObject private var game: ChessGame
-	
-	var body: some View {
-		HStack {
-			if game.pawnSquare != nil {
-				VStack {
-					ChessPromoteView(isLight: game.board.lightTurn)
-				}
-				.padding(.horizontal)
-				.background(.ultraThinMaterial)
-#if os(tvOS)
-				.focusSection()
-#endif
-				.transition(.opacity.animation(.linear))
-			}
-			
-			Spacer()
-				.frame(maxHeight: .infinity)
-			
-			ChessLandscapeUIView()
-#if os(tvOS)
-				.focusSection()
-#endif
-		}
-		.font(.system(.headline, design: .rounded).bold().monospacedDigit())
-		.frame(maxHeight: .infinity)
-	}
-}
-
 struct ChessView: View {
-	@EnvironmentObject private var settings: Settings
 	@FetchRequest(sortDescriptors: [SortDescriptor(\ChessTheme.index, order: .forward)]) private var themes: FetchedResults<ChessTheme>
 	@StateObject private var game = ChessGame()
+	@AppStorage(Setting.chessTheme.rawValue) private var chessTheme = ""
 	private var theme: ChessUITheme {
-		guard let selectedTheme = themes.first(where: { $0.id! == settings.chessThemeId }) else {
+		guard let selectedTheme = themes.first(where: { $0.id!.uuidString == chessTheme }) else {
 			return ChessUITheme()
 		}
 		return ChessUITheme(theme: selectedTheme)
@@ -130,25 +57,30 @@ struct ChessView: View {
 	
 	var body: some View {
 		GeometryReader { geometry in
-			let width = geometry.size.width
-			let height = geometry.size.height - geometry.safeAreaInsets.bottom
-			let size = min(width, height)
-			ZStack {
-				LinearGradient(colors: [theme.squareLight, theme.squareDark], startPoint: .top, endPoint: .bottom)
-					.ignoresSafeArea()
-				
-				if width < height {
-					ChessPortraitGameView()
-				} else {
-					ChessLandscapeGameView()
-				}
-				
-				ChessBoardView()
-			}
-			.frame(maxWidth: .infinity, maxHeight: .infinity)
-			.environment(\.chessBoardLength, size)
-		}
+			let vertical = geometry.size.width < geometry.size.height
+			let layout = vertical ? AnyLayout(VStackLayout()) : AnyLayout(HStackLayout())
+			
+			layout {
+				ChessUIView(vertical: vertical)
+					.animation(.linear, value: game.pawnSquare)
 #if os(tvOS)
+					.focusSection()
+#endif
+				ChessBoardView()
+					.animation(.linear, value: game.pawnSquare)
+					.frame(maxWidth: .infinity, maxHeight: .infinity)
+				
+				if game.pawnSquare != nil {
+					ChessPromoteView(isLight: game.board.lightTurn, vertical: vertical)
+				}
+			}
+			.background(.linearGradient(colors: [theme.squareLight, theme.squareDark], startPoint: .top, endPoint: .bottom))
+			.frame(maxWidth: .infinity, maxHeight: .infinity)
+			.font(.system(.headline, design: .rounded).bold().monospacedDigit())
+		}
+#if os(iOS)
+		.navigationBarTitleDisplayMode(.inline)
+#elseif os(tvOS)
 		.onPlayPauseCommand {
 			guard game.pawnSquare == nil else {
 				return

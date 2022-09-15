@@ -14,16 +14,68 @@ enum ThemeLink: String {
 }
 
 struct GamesView: View {
+	private enum DetailView: String, Identifiable, CaseIterable {
+		case chess
+		case reversi
+		case checkers
+		case settings
+		
+		var id: String {
+			rawValue
+		}
+	}
+	
 	@Environment(\.managedObjectContext) private var context
 	@FetchRequest(sortDescriptors: [SortDescriptor(\ChessTheme.index, order: .forward)]) private var chessThemes: FetchedResults<ChessTheme>
 	@FetchRequest(sortDescriptors: [SortDescriptor(\ReversiTheme.index, order: .forward)]) private var reversiThemes: FetchedResults<ReversiTheme>
 	@FetchRequest(sortDescriptors: [SortDescriptor(\CheckersTheme.index, order: .forward)]) private var checkersThemes: FetchedResults<CheckersTheme>
 	@StateObject private var navigation = Navigation()
+	@State private var path: [UUID] = []
+	@State private var selectedView: DetailView?
 	
-	private func present(_ id: UUID) {
-		navigation.sheet = nil
-		navigation.view = .settings
-		navigation.editing = id
+	private func getViewTitle(for id: DetailView) -> String {
+		switch id {
+		case .chess:
+			return "Chess"
+		case .reversi:
+			return "Reversi"
+		case .checkers:
+			return "Checkers"
+		case .settings:
+			return "Settings"
+		}
+	}
+	
+	private func getViewSymbol(for id: DetailView) -> String {
+		switch id {
+		case .chess:
+			return "crown"
+		case .reversi:
+			return "circle"
+		case .checkers:
+			return "circle.circle"
+		case .settings:
+			return "gearshape"
+		}
+	}
+	
+	private func getGameState(for id: DetailView) -> GameState? {
+		switch id {
+		case .chess:
+			return ChessState.shared
+		case .reversi:
+			return ReversiState.shared
+		case .checkers:
+			return CheckersState.shared
+		case .settings:
+			return nil
+		}
+	}
+	
+	private func present(_ theme: Theme) {
+		selectedView = .settings
+		navigation.themeLinkOpened = true
+		path = []
 	}
 	
 	private func parseChessLink(_ queryItems: [URLQueryItem]) {
@@ -58,7 +110,7 @@ struct GamesView: View {
 		theme.index = Int64(themeCount + 1)
 		Store.shared.save()
 		
-		present(theme.id!)
+		present(theme)
 	}
 	
 	private func parseReversiLink(_ queryItems: [URLQueryItem]) {
@@ -93,7 +145,7 @@ struct GamesView: View {
 		theme.index = Int64(themeCount + 1)
 		Store.shared.save()
 		
-		present(theme.id!)
+		present(theme)
 	}
 	
 	private func parseCheckersLink(_ queryItems: [URLQueryItem]) {
@@ -128,42 +180,16 @@ struct GamesView: View {
 		theme.index = Int64(themeCount + 1)
 		Store.shared.save()
 		
-		present(theme.id!)
+		present(theme)
 	}
 	
 	var body: some View {
-		NavigationView {
-			List {
-				NavigationLink(tag: Navigation.ViewId.chess, selection: $navigation.view) {
-					ChessView()
-						.navigationBarTitleDisplayMode(.inline)
-				} label: {
-					Label("Chess", systemImage: "crown")
+		NavigationSplitView {
+			List(DetailView.allCases.filter({ $0 != .settings }), selection: $selectedView) { detailView in
+				NavigationLink(value: detailView) {
+					Label(getViewTitle(for: detailView), systemImage: getViewSymbol(for: detailView))
 						.contextMenu {
-							Button(role: .destructive, action: ChessState.reset) {
-								Label("New game", systemImage: "trash")
-							}
-						}
-				}
-				NavigationLink(tag: Navigation.ViewId.reversi, selection: $navigation.view) {
-					ReversiView()
-						.navigationBarTitleDisplayMode(.inline)
-				} label: {
-					Label("Reversi", systemImage: "circle")
-						.contextMenu {
-							Button(role: .destructive, action: ReversiState.reset) {
-								Label("New game", systemImage: "trash")
-							}
-						}
-				}
-				NavigationLink(tag: Navigation.ViewId.checkers, selection: $navigation.view) {
-					CheckersView()
-						.navigationBarTitleDisplayMode(.inline)
-				} label: {
-					Label("Checkers", systemImage: "circle")
-						.symbolVariant(.circle)
-						.contextMenu {
-							Button(role: .destructive, action: CheckersState.reset) {
+							Button(role: .destructive, action: getGameState(for: detailView)!.reset) {
 								Label("New game", systemImage: "trash")
 							}
 						}
@@ -172,8 +198,10 @@ struct GamesView: View {
 			.symbolVariant(.fill)
 			.foregroundColor(.primary)
 			.toolbar {
-				NavigationLink(destination: SettingsView(), tag: Navigation.ViewId.settings, selection: $navigation.view) {
-					Label("Settings", systemImage: "gearshape")
+				Button(action: {
+					selectedView = .settings
+				}) {
+					Label(getViewTitle(for: .settings), systemImage: getViewSymbol(for: .settings))
 				}
 			}
 			.navigationTitle("Games")
@@ -201,8 +229,22 @@ struct GamesView: View {
 					return
 				}
 			}
+		} detail: {
+			NavigationStack(path: $path) {
+				switch selectedView {
+				case .none:
+					Text("Select a game")
+				case .chess:
+					ChessView()
+				case .reversi:
+					ReversiView()
+				case .checkers:
+					CheckersView()
+				case .settings:
+					SettingsView()
+				}
+			}
 		}
-		.navigationViewStyle(.stack)
 		.environmentObject(navigation)
 	}
 }

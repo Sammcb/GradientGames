@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NewReversiThemeView: View {
 	@Environment(\.managedObjectContext) private var context
-	@Environment(\.presentationMode) private var mode
+	@Environment(\.dismiss) private var dismiss
 	@FetchRequest(sortDescriptors: [SortDescriptor(\ReversiTheme.index, order: .forward)]) private var themes: FetchedResults<ReversiTheme>
 	@State private var symbol: String = ""
 	@State private var square: Color = .clear
@@ -43,7 +43,7 @@ struct NewReversiThemeView: View {
 					theme.pieceDarkRaw = UIColor(pieceDark).hex
 					theme.index = Int64(themeCount + 1)
 					Store.shared.save()
-					mode.wrappedValue.dismiss()
+					dismiss()
 				}
 			}
 			.navigationTitle("Add reversi theme")

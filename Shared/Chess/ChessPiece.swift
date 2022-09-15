@@ -17,7 +17,7 @@ struct ChessPiece: Codable, Equatable, Identifiable {
 		case king
 		
 		var id: String {
-			self.rawValue
+			rawValue
 		}
 	}
 	

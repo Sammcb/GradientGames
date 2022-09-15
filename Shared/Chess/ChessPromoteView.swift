@@ -9,11 +9,10 @@ import SwiftUI
 
 struct ChessPromoteView: View {
 	@Environment(\.chessTheme) private var theme
-	@Environment(\.chessBoardLength) private var boardLength
 	@EnvironmentObject private var game: ChessGame
-	@AppStorage(Settings.Key.chessFlipUI.rawValue) private var flipped = false
-	let promoteGroups: [ChessPiece.Group] = [.knight, .bishop, .rook, .queen]
+	@AppStorage(Setting.chessFlipUI.rawValue) private var flipped = false
 	let isLight: Bool
+	let vertical: Bool
 	
 	private func promote(to group: ChessPiece.Group) {
 		let square = game.pawnSquare!
@@ -23,21 +22,57 @@ struct ChessPromoteView: View {
 	}
 	
 	var body: some View {
-		Spacer()
-		
-		ForEach(promoteGroups) { group in
+		let layout = vertical ? AnyLayout(HStackLayout()) : AnyLayout(VStackLayout())
+		layout {
+			Spacer()
+			
 			Button {
-				promote(to: group)
+				promote(to: .knight)
 			} label: {
-				ChessPieceView(group: group, isLight: isLight)
-					.frame(width: boardLength / 8, height: boardLength / 8)
+				ChessPieceView(group: .knight, isLight: isLight)
+					.font(.system(size: 60))
 			}
+			.rotationEffect(!game.board.lightTurn && flipped ? .radians(.pi) : .zero)
+			
+			Spacer()
+			
+			Button {
+				promote(to: .bishop)
+			} label: {
+				ChessPieceView(group: .bishop, isLight: isLight)
+					.font(.system(size: 60))
+			}
+			.rotationEffect(!game.board.lightTurn && flipped ? .radians(.pi) : .zero)
+			
+			Spacer()
+			
+			Button {
+				promote(to: .rook)
+			} label: {
+				ChessPieceView(group: .rook, isLight: isLight)
+					.font(.system(size: 60))
+			}
+			.rotationEffect(!game.board.lightTurn && flipped ? .radians(.pi) : .zero)
+			
+			Spacer()
+			
+			Button {
+				promote(to: .queen)
+			} label: {
+				ChessPieceView(group: .queen, isLight: isLight)
+					.font(.system(size: 60))
+			}
+			.rotationEffect(!game.board.lightTurn && flipped ? .radians(.pi) : .zero)
 			
 			Spacer()
 		}
-		.font(.system(size: 50))
 		.disabled(game.pawnSquare == nil)
-		.rotationEffect(!game.board.lightTurn && flipped ? .radians(.pi) : .zero)
 		.animation(.easeIn, value: game.board.lightTurn)
+		.padding(vertical ? .vertical : .horizontal)
+		.background(.ultraThinMaterial)
+#if os(tvOS)
+		.focusSection()
+#endif
+		.transition(.opacity.animation(.linear))
 	}
 }

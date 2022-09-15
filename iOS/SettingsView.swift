@@ -6,36 +6,51 @@
 //
 
 import SwiftUI
+import CoreData.NSManagedObject
 
 struct SettingsView: View {
+	private enum SheetId: String, Identifiable {
+		case newChess
+		case newReversi
+		case newCheckers
+		
+		var id: String {
+			rawValue
+		}
+	}
+	
 	@Environment(\.managedObjectContext) private var context
-	@EnvironmentObject private var settings: Settings
 	@EnvironmentObject private var navigation: Navigation
 	@FetchRequest(sortDescriptors: [SortDescriptor(\ChessTheme.index, order: .forward)]) private var chessThemes: FetchedResults<ChessTheme>
 	@FetchRequest(sortDescriptors: [SortDescriptor(\ReversiTheme.index, order: .forward)]) private var reversiThemes: FetchedResults<ReversiTheme>
 	@FetchRequest(sortDescriptors: [SortDescriptor(\CheckersTheme.index, order: .forward)]) private var checkersThemes: FetchedResults<CheckersTheme>
-	@AppStorage(Settings.Key.chessEnableUndo.rawValue) private var chessEnableUndo = true
-	@AppStorage(Settings.Key.chessEnableTimer.rawValue) private var chessEnableTimer = true
-	@AppStorage(Settings.Key.chessFlipUI.rawValue) private var chessFlipUI = false
-	@AppStorage(Settings.Key.reversiEnableUndo.rawValue) private var reversiEnableUndo = true
-	@AppStorage(Settings.Key.reversiEnableTimer.rawValue) private var reversiEnableTimer = true
-	@AppStorage(Settings.Key.reversiFlipUI.rawValue) private var reversiFlipUI = false
-	@AppStorage(Settings.Key.checkersEnableUndo.rawValue) private var checkersEnableUndo = true
-	@AppStorage(Settings.Key.checkersEnableTimer.rawValue) private var checkersEnableTimer = true
-	@AppStorage(Settings.Key.checkersFlipUI.rawValue) private var checkersFlipUI = false
+	@AppStorage(Setting.chessTheme.rawValue) private var chessTheme = ""
+	@AppStorage(Setting.chessEnableUndo.rawValue) private var chessEnableUndo = true
+	@AppStorage(Setting.chessEnableTimer.rawValue) private var chessEnableTimer = true
+	@AppStorage(Setting.chessFlipUI.rawValue) private var chessFlipUI = false
+	@AppStorage(Setting.reversiTheme.rawValue) private var reversiTheme = ""
+	@AppStorage(Setting.checkersTheme.rawValue) private var checkersTheme = ""
+	@AppStorage(Setting.reversiEnableUndo.rawValue) private var reversiEnableUndo = true
+	@AppStorage(Setting.reversiEnableTimer.rawValue) private var reversiEnableTimer = true
+	@AppStorage(Setting.reversiFlipUI.rawValue) private var reversiFlipUI = false
+	@AppStorage(Setting.checkersEnableUndo.rawValue) private var checkersEnableUndo = true
+	@AppStorage(Setting.checkersEnableTimer.rawValue) private var checkersEnableTimer = true
+	@AppStorage(Setting.checkersFlipUI.rawValue) private var checkersFlipUI = false
+	@State private var sheet: SheetId? = nil
+	@State private var selectedTheme: UUID? = nil
 	
-	private func deleteChessTheme(at indexSet: IndexSet) {
+	private func deleteTheme(for themeObjects: [NSManagedObject], at indexSet: IndexSet) {
 		for index in indexSet {
-			context.delete(chessThemes[index])
+			context.delete(themeObjects[index])
 		}
 		
 		var deleted = 0
-		for (index, theme) in chessThemes.enumerated() {
+		let themes = themeObjects as! [Theme]
+		for (index, theme) in themes.enumerated() {
 			guard !indexSet.contains(index) else {
 				deleted += 1
 				continue
 			}
-			
 			if theme.index != index - deleted {
 				theme.index = Int64(index - deleted)
 			}
@@ -43,70 +58,10 @@ struct SettingsView: View {
 		Store.shared.save()
 	}
 	
-	private func deleteReversiTheme(at indexSet: IndexSet) {
-		for index in indexSet {
-			context.delete(reversiThemes[index])
-		}
-		
-		var deleted = 0
-		for (index, theme) in reversiThemes.enumerated() {
-			guard !indexSet.contains(index) else {
-				deleted += 1
-				continue
-			}
-			
-			if theme.index != index - deleted {
-				theme.index = Int64(index - deleted)
-			}
-		}
-		Store.shared.save()
-	}
-	
-	private func deleteCheckersTheme(at indexSet: IndexSet) {
-		for index in indexSet {
-			context.delete(checkersThemes[index])
-		}
-		
-		var deleted = 0
-		for (index, theme) in checkersThemes.enumerated() {
-			guard !indexSet.contains(index) else {
-				deleted += 1
-				continue
-			}
-			
-			if theme.index != index - deleted {
-				theme.index = Int64(index - deleted)
-			}
-		}
-		Store.shared.save()
-	}
-	
-	private func moveChessThemeRow(from offsets: IndexSet, to offset: Int) {
-		var themesArray = Array(chessThemes)
-		themesArray.move(fromOffsets: offsets, toOffset: offset)
-		for (index, themeRow) in themesArray.enumerated() {
-			if themeRow.index != index {
-				themeRow.index = Int64(index)
-			}
-		}
-		Store.shared.save()
-	}
-	
-	private func moveReversiThemeRow(from offsets: IndexSet, to offset: Int) {
-		var themesArray = Array(reversiThemes)
-		themesArray.move(fromOffsets: offsets, toOffset: offset)
-		for (index, themeRow) in themesArray.enumerated() {
-			if themeRow.index != index {
-				themeRow.index = Int64(index)
-			}
-		}
-		Store.shared.save()
-	}
-	
-	private func moveCheckersThemeRow(from offsets: IndexSet, to offset: Int) {
-		var themesArray = Array(checkersThemes)
-		themesArray.move(fromOffsets: offsets, toOffset: offset)
-		for (index, themeRow) in themesArray.enumerated() {
+	private func moveThemeRow(for themes: [any Theme], from offsets: IndexSet, to offset: Int) {
+		var themes = themes
+		themes.move(fromOffsets: offsets, toOffset: offset)
+		for (index, themeRow) in themes.enumerated() {
 			if themeRow.index != index {
 				themeRow.index = Int64(index)
 			}
@@ -133,44 +88,42 @@ struct SettingsView: View {
 			.headerProminence(.increased)
 			
 			Section("Theme") {
-				List {
+				List(selection: $selectedTheme) {
 					ForEach(chessThemes) { theme in
-						NavigationLink(destination: EditChessThemeView(theme), tag: theme.id!, selection: $navigation.editing) {
+						let themeSelected = chessTheme == theme.id!.uuidString
+						NavigationLink(value: theme.id) {
 							Label {
 								Text(theme.symbol!)
 							} icon: {
-								Image(systemName: settings.chessThemeId == theme.id ? "checkmark.circle.fill" : "circle")
-									.foregroundColor(settings.chessThemeId == theme.id ? .green : .gray)
+								Image(systemName: themeSelected ? "checkmark.circle.fill" : "circle")
+									.foregroundColor(themeSelected ? .green : .gray)
 							}
 						}
 						.swipeActions(edge: .leading) {
 							Button {
-								settings.chessThemeId = settings.chessThemeId == theme.id ? nil : theme.id
+								chessTheme = themeSelected ? "" : theme.id!.uuidString
 							} label: {
-								if settings.chessThemeId == theme.id {
+								if themeSelected {
 									Label("Deselect", systemImage: "xmark")
 								} else {
 									Label("Select", systemImage: "checkmark")
 								}
 							}
 						}
-						.tint(settings.chessThemeId == theme.id ? .gray : .green)
-						.swipeActions(edge: .trailing) {
-							Button(role: .destructive) {
-								deleteChessTheme(at: [chessThemes.firstIndex(of: theme)!])
-							} label: {
-								Label("Delete", systemImage: "trash")
-							}
-						}
+						.tint(chessTheme == theme.id!.uuidString ? .gray : .green)
 					}
-					.onDelete(perform: deleteChessTheme)
-					.onMove(perform: moveChessThemeRow)
-					
-					Button {
-						navigation.sheet = .newChess
-					} label: {
-						Label("Create theme", systemImage: "plus")
+					.onDelete { indexSet in
+						deleteTheme(for: Array(chessThemes), at: indexSet)
 					}
+					.onMove { indexSet, index in
+						moveThemeRow(for: Array(chessThemes), from: indexSet, to: index)
+					}
+				}
+				
+				Button {
+					sheet = .newChess
+				} label: {
+					Label("Create theme", systemImage: "plus")
 				}
 			}
 			
@@ -191,41 +144,35 @@ struct SettingsView: View {
 			.headerProminence(.increased)
 			
 			Section("Theme") {
-				List {
+				List(selection: $selectedTheme) {
 					ForEach(reversiThemes) { theme in
-						NavigationLink(destination: EditReversiThemeView(theme), tag: theme.id!, selection: $navigation.editing) {
+						let themeSelected = reversiTheme == theme.id!.uuidString
+						NavigationLink(value: theme.id) {
 							Label {
 								Text(theme.symbol!)
 							} icon: {
-								Image(systemName: settings.reversiThemeId == theme.id ? "checkmark.circle.fill" : "circle")
-									.foregroundColor(settings.reversiThemeId == theme.id ? .green : .gray)
+								Image(systemName: themeSelected ? "checkmark.circle.fill" : "circle")
+									.foregroundColor(themeSelected ? .green : .gray)
 							}
 						}
 						.swipeActions(edge: .leading) {
 							Button {
-								settings.reversiThemeId = settings.reversiThemeId == theme.id ? nil : theme.id
+								reversiTheme = themeSelected ? "" : theme.id!.uuidString
 							} label: {
-								if settings.reversiThemeId == theme.id {
-									Label("Deselect", systemImage: "xmark")
-								} else {
-									Label("Select", systemImage: "checkmark")
-								}
+								Label(themeSelected ? "Deselect": "Select", systemImage: themeSelected ? "xmark" : "checkmark")
 							}
 						}
-						.tint(settings.reversiThemeId == theme.id ? .gray : .green)
-						.swipeActions(edge: .trailing) {
-							Button(role: .destructive) {
-								deleteReversiTheme(at: [reversiThemes.firstIndex(of: theme)!])
-							} label: {
-								Label("Delete", systemImage: "trash")
-							}
-						}
+						.tint(reversiTheme == theme.id!.uuidString ? .gray : .green)
 					}
-					.onDelete(perform: deleteReversiTheme)
-					.onMove(perform: moveReversiThemeRow)
+					.onDelete { indexSet in
+						deleteTheme(for: Array(reversiThemes), at: indexSet)
+					}
+					.onMove { indexSet, index in
+						moveThemeRow(for: Array(reversiThemes), from: indexSet, to: index)
+					}
 					
 					Button {
-						navigation.sheet = .newReversi
+						sheet = .newReversi
 					} label: {
 						Label("Create theme", systemImage: "plus")
 					}
@@ -249,48 +196,55 @@ struct SettingsView: View {
 			.headerProminence(.increased)
 			
 			Section("Theme") {
-				List {
+				List(selection: $selectedTheme) {
 					ForEach(checkersThemes) { theme in
-						NavigationLink(destination: EditCheckersThemeView(theme), tag: theme.id!, selection: $navigation.editing) {
+						let themeSelected = checkersTheme == theme.id!.uuidString
+						NavigationLink(value: theme.id) {
 							Label {
 								Text(theme.symbol!)
 							} icon: {
-								Image(systemName: settings.checkersThemeId == theme.id ? "checkmark.circle.fill" : "circle")
-									.foregroundColor(settings.checkersThemeId == theme.id ? .green : .gray)
+								Image(systemName: themeSelected ? "checkmark.circle.fill" : "circle")
+									.foregroundColor(themeSelected ? .green : .gray)
 							}
 						}
 						.swipeActions(edge: .leading) {
 							Button {
-								settings.checkersThemeId = settings.checkersThemeId == theme.id ? nil : theme.id
+								checkersTheme = themeSelected ? "" : theme.id!.uuidString
 							} label: {
-								if settings.checkersThemeId == theme.id {
+								if themeSelected {
 									Label("Deselect", systemImage: "xmark")
 								} else {
 									Label("Select", systemImage: "checkmark")
 								}
 							}
 						}
-						.tint(settings.checkersThemeId == theme.id ? .gray : .green)
-						.swipeActions(edge: .trailing) {
-							Button(role: .destructive) {
-								deleteCheckersTheme(at: [checkersThemes.firstIndex(of: theme)!])
-							} label: {
-								Label("Delete", systemImage: "trash")
-							}
-						}
+						.tint(themeSelected ? .gray : .green)
 					}
-					.onDelete(perform: deleteCheckersTheme)
-					.onMove(perform: moveCheckersThemeRow)
+					.onDelete { indexSet in
+						deleteTheme(for: Array(checkersThemes), at: indexSet)
+					}
+					.onMove { indexSet, index in
+						moveThemeRow(for: Array(checkersThemes), from: indexSet, to: index)
+					}
 					
 					Button {
-						navigation.sheet = .newCheckers
+						sheet = .newCheckers
 					} label: {
 						Label("Create theme", systemImage: "plus")
 					}
 				}
 			}
 		}
-		.sheet(item: $navigation.sheet) { sheet in
+		.navigationDestination(for: UUID.self) { themeId in
+			if let theme = chessThemes.first(where: { $0.id == themeId}) {
+				EditChessThemeView(theme)
+			} else if let theme = reversiThemes.first(where: { $0.id == themeId}) {
+				EditReversiThemeView(theme)
+			} else if let theme = checkersThemes.first(where: { $0.id == themeId}) {
+				EditCheckersThemeView(theme)
+			}
+		}
+		.sheet(item: $sheet) { sheet in
 			switch sheet {
 			case .newChess:
 				NewChessThemeView()
@@ -300,11 +254,14 @@ struct SettingsView: View {
 				NewCheckersThemeView()
 			}
 		}
-		.navigationTitle("Settings")
-		.toolbar {
-			if !chessThemes.isEmpty || !reversiThemes.isEmpty {
-				EditButton()
+		.onReceive(navigation.$themeLinkOpened) { themeLinkOpened in
+			guard themeLinkOpened else {
+				return
 			}
+			
+			sheet = nil
+			navigation.themeLinkOpened = false
 		}
+		.navigationTitle("Settings")
 	}
 }

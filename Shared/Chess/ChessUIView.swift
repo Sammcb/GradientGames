@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ChessTimesTimelineView: View {
 	@EnvironmentObject private var game: ChessGame
-	@AppStorage(Settings.Key.chessFlipUI.rawValue) private var flipped = false
+	@AppStorage(Setting.chessFlipUI.rawValue) private var flipped = false
 	
 	var body: some View {
 		TimelineView(.periodic(from: .now, by: 1 / 60)) { timeline in
@@ -23,15 +23,15 @@ struct ChessTimesTimelineView: View {
 struct ChessTimesView: View {
 	@Environment(\.chessTheme) private var theme
 	@EnvironmentObject private var game: ChessGame
-	@AppStorage(Settings.Key.chessEnableTimer.rawValue) private var enableTimer = true
+	@AppStorage(Setting.chessEnableTimer.rawValue) private var enableTimer = true
 	private let cadence: TimeInterval = 1 / 60
 	let date: Date
 	
 	var body: some View {
 		VStack {
-			Text(ChessState.times.stringFor(lightTime: true))
+			Text(ChessState.shared.times.stringFor(lightTime: true))
 				.foregroundColor(theme.pieceLight)
-			Text(ChessState.times.stringFor(lightTime: false))
+			Text(ChessState.shared.times.stringFor(lightTime: false))
 				.foregroundColor(theme.pieceDark)
 		}
 		.opacity(enableTimer ? 1 : 0)
@@ -43,11 +43,11 @@ struct ChessTimesView: View {
 			}
 			
 			if lightTurn {
-				ChessState.times.light += cadence
+				ChessState.shared.times.light += cadence
 			} else {
-				ChessState.times.dark += cadence
+				ChessState.shared.times.dark += cadence
 			}
-			ChessState.times.lastUpdate = date
+			ChessState.shared.times.lastUpdate = date
 		}
 	}
 }
@@ -84,7 +84,7 @@ struct ChessKingStatusView: View {
 
 struct ChessStatusView: View {
 	@EnvironmentObject private var game: ChessGame
-	@AppStorage(Settings.Key.chessFlipUI.rawValue) private var flipped = false
+	@AppStorage(Setting.chessFlipUI.rawValue) private var flipped = false
 	
 	var body: some View {
 		let lightTurn = game.board.lightTurn
@@ -103,8 +103,8 @@ struct ChessStatusView: View {
 
 struct ChessUndoView: View {
 	@EnvironmentObject private var game: ChessGame
-	@AppStorage(Settings.Key.chessEnableUndo.rawValue) private var enableUndo = true
-	@AppStorage(Settings.Key.chessFlipUI.rawValue) private var flipped = false
+	@AppStorage(Setting.chessEnableUndo.rawValue) private var enableUndo = true
+	@AppStorage(Setting.chessFlipUI.rawValue) private var flipped = false
 	
 	var body: some View {
 		Button {
@@ -122,37 +122,28 @@ struct ChessUndoView: View {
 	}
 }
 
-struct ChessPortraitUIView: View {
+struct ChessUIView: View {
+	let vertical: Bool
+	
 	var body: some View {
-		HStack {
-			ChessTimesTimelineView()
-				.frame(maxWidth: .infinity)
-			
-			ChessStatusView()
-				.frame(maxWidth: .infinity)
-			
-			ChessUndoView()
-				.frame(maxWidth: .infinity)
-			
-		}
-		.padding(.bottom)
-		.background(.ultraThinMaterial)
-	}
-}
-
-struct ChessLandscapeUIView: View {
-	var body: some View {
-		VStack {
-			ChessUndoView()
-				.frame(maxHeight: .infinity)
-			
-			ChessStatusView()
-				.frame(maxHeight: .infinity)
+		let layout = vertical ? AnyLayout(HStackLayout()) : AnyLayout(VStackLayout())
+		
+		layout {
+			Spacer()
 			
 			ChessTimesTimelineView()
-				.frame(maxHeight: .infinity)
+			
+			Spacer()
+			
+			ChessStatusView()
+			
+			Spacer()
+			
+			ChessUndoView()
+			
+			Spacer()
 		}
-		.padding(.horizontal)
+		.padding(vertical ? .vertical : .horizontal)
 		.background(.ultraThinMaterial)
 	}
 }

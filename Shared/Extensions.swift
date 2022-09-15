@@ -25,7 +25,7 @@ extension UIColor {
 	}
 }
 
-extension ChessTheme {
+extension ChessTheme: Theme {
 	static func ==(lhs: ChessTheme, rhs: ChessTheme) -> Bool {
 		lhs.id == rhs.id
 	}
@@ -44,7 +44,7 @@ extension ChessTheme {
 	}
 }
 
-extension ReversiTheme {
+extension ReversiTheme: Theme {
 	static func ==(lhs: ReversiTheme, rhs: ReversiTheme) -> Bool {
 		lhs.id == rhs.id
 	}
@@ -63,7 +63,7 @@ extension ReversiTheme {
 	}
 }
 
-extension CheckersTheme {
+extension CheckersTheme: Theme {
 	static func ==(lhs: CheckersTheme, rhs: CheckersTheme) -> Bool {
 		lhs.id == rhs.id
 	}
