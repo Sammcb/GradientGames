@@ -52,7 +52,7 @@ struct CheckersState: GameState {
 	}
 	
 	private func set(_ value: Any?, forKey key: Key) {
-		guard let object = value else {
+		guard let value else {
 			localStorage.setValue(nil, forKey: key.rawValue)
 			return
 		}
@@ -60,11 +60,11 @@ struct CheckersState: GameState {
 		let encodedData: Data?
 		switch key {
 		case .pieces:
-			encodedData = try? JSONEncoder().encode(object as! CheckersPieces)
+			encodedData = try? JSONEncoder().encode(value as! CheckersPieces)
 		case .history:
-			encodedData = try? JSONEncoder().encode(object as! [CheckersMove])
+			encodedData = try? JSONEncoder().encode(value as! [CheckersMove])
 		case .times:
-			encodedData = try? JSONEncoder().encode(object as! Times)
+			encodedData = try? JSONEncoder().encode(value as! Times)
 		}
 		localStorage.setValue(encodedData, forKey: key.rawValue)
 	}
@@ -105,21 +105,21 @@ struct CheckersState: GameState {
 			let data = localStorage.value(forKey: key.rawValue) as! Data
 			let state = try? JSONDecoder().decode(CheckersPieces.self, from: data)
 			
-			guard let state = state else {
+			guard let state else {
 				return error(key: key)
 			}
 			return state
 		case .history:
 			let data = localStorage.value(forKey: key.rawValue) as! Data
 			let history = try? JSONDecoder().decode([CheckersMove].self, from: data)
-			guard let history = history else {
+			guard let history else {
 				return error(key: key)
 			}
 			return history
 		case .times:
 			let data = localStorage.value(forKey: key.rawValue) as! Data
 			let times = try? JSONDecoder().decode(Times.self, from: data)
-			guard let times = times else {
+			guard let times else {
 				return error(key: key)
 			}
 			return times

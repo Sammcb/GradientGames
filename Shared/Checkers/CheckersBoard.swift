@@ -46,7 +46,7 @@ struct CheckersBoard: Equatable {
 		let deltas = [(-1, 1), (-1, -1), (-2, 2), (-2, -2), (1, 1), (1, -1), (2, 2), (2, -2)]
 		
 		for (i, piece) in pieces.enumerated() {
-			guard let piece = piece, piece.isLight == lightTurn else {
+			guard let piece, piece.isLight == lightTurn else {
 				continue
 			}
 			
@@ -66,7 +66,7 @@ struct CheckersBoard: Equatable {
 	
 	private func moveCaptures(with piece: CheckersPiece, from oldSquare: CheckersSquare, to square: CheckersSquare) -> CheckersPiece? {
 		let checkSquare = CheckersSquare(oldSquare, deltaColumn: (square.column - oldSquare.column) / 2, deltaRow: (square.row - oldSquare.row) / 2)
-		guard let checkSquare = checkSquare else {
+		guard let checkSquare else {
 			return nil
 		}
 		

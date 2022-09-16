@@ -323,7 +323,7 @@ struct ChessBoard: Equatable {
 	private func inCheckAt(_ square: ChessSquare, isLight: Bool) -> Bool {
 		for (index, piece) in pieces.enumerated() {
 			let checkSquare = ChessPieces.square(at: index)
-			if let piece = piece, piece.isLight != isLight, attackedFrom(checkSquare).contains(square) {
+			if let piece, piece.isLight != isLight, attackedFrom(checkSquare).contains(square) {
 				return true
 			}
 		}
