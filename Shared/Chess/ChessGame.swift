@@ -6,7 +6,7 @@
 //
 
 import Foundation
-class ChessGame: ObservableObject {
+class ChessGame: ObservableObject, Game {
 	@Published var board = ChessBoard()
 	@Published var selectedSquare: ChessSquare?
 	@Published var pawnSquare: ChessSquare?
@@ -29,7 +29,7 @@ class ChessGame: ObservableObject {
 	}
 	
 	func reset() {
-		ChessState.reset()
+		ChessState.shared.reset()
 		board = ChessBoard()
 		selectedSquare = nil
 		pawnSquare = nil

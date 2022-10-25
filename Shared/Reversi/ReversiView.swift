@@ -7,25 +7,11 @@
 
 import SwiftUI
 
-struct ReversiBoardLengthKey: EnvironmentKey {
-	static let defaultValue: CGFloat = .zero
-}
-
 struct ReversiThemeKey: EnvironmentKey {
 	static let defaultValue = ReversiUITheme()
 }
 
-extension EnvironmentValues {
-	var reversiBoardLength: Double {
-		get {
-			self[ReversiBoardLengthKey.self]
-		}
-		
-		set {
-			self[ReversiBoardLengthKey.self] = newValue
-		}
-	}
-	
+extension EnvironmentValues {	
 	var reversiTheme: ReversiUITheme {
 		get {
 			self[ReversiThemeKey.self]
@@ -58,58 +44,12 @@ struct ReversiUITheme {
 	}
 }
 
-struct ReversiPortraitGameView: View {
-	var body: some View {
-		VStack {
-			ReversiPortraitUIView()
-#if os(tvOS)
-				.focusSection()
-#endif
-			
-			Spacer()
-				.frame(maxHeight: .infinity)
-			
-			HStack {
-				ReversiStatsView()
-			}
-			.frame(maxWidth: .infinity)
-			.padding(.top)
-			.background(.ultraThinMaterial)
-		}
-		.font(.system(.headline, design: .rounded).bold().monospacedDigit())
-		.frame(maxHeight: .infinity)
-	}
-}
-
-struct ReversiLandscapeGameView: View {
-	var body: some View {
-		HStack {
-			VStack {
-				ReversiStatsView()
-			}
-			.frame(maxHeight: .infinity)
-			.padding(.horizontal)
-			.background(.ultraThinMaterial)
-			
-			Spacer()
-				.frame(maxHeight: .infinity)
-			
-			ReversiLandscapeUIView()
-#if os(tvOS)
-				.focusSection()
-#endif
-		}
-		.font(.system(.headline, design: .rounded).bold().monospacedDigit())
-		.frame(maxHeight: .infinity)
-	}
-}
-
 struct ReversiView: View {
-	@EnvironmentObject private var settings: Settings
 	@FetchRequest(sortDescriptors: [SortDescriptor(\ReversiTheme.index, order: .forward)]) private var themes: FetchedResults<ReversiTheme>
-	@StateObject private var game = ReversiGame()
+	@EnvironmentObject private var game: ReversiGame
+	@AppStorage(Setting.reversiTheme.rawValue) private var reversiTheme = ""
 	private var theme: ReversiUITheme {
-		guard let selectedTheme = themes.first(where: { $0.id! == settings.reversiThemeId }) else {
+		guard let selectedTheme = themes.first(where: { $0.id!.uuidString == reversiTheme }) else {
 			return ReversiUITheme()
 		}
 		return ReversiUITheme(theme: selectedTheme)
@@ -117,25 +57,27 @@ struct ReversiView: View {
 	
 	var body: some View {
 		GeometryReader { geometry in
-			let width = geometry.size.width
-			let height = geometry.size.height - geometry.safeAreaInsets.bottom
-			let size = min(width, height)
-			ZStack {
-				LinearGradient(colors: [theme.square, theme.border], startPoint: .top, endPoint: .bottom)
-					.ignoresSafeArea()
-				
-				if width < height {
-					ReversiPortraitGameView()
-				} else {
-					ReversiLandscapeGameView()
-				}
+			let vertical = geometry.size.width < geometry.size.height
+			let layout = vertical ? AnyLayout(VStackLayout()) : AnyLayout(HStackLayout())
+			
+			layout {
+				ReversiUIView(vertical: vertical)
+#if os(tvOS)
+					.focusSection()
+#endif
 				
 				ReversiBoardView()
+					.frame(maxWidth: .infinity, maxHeight: .infinity)
+				
+				ReversiStatsView(vertical: vertical)
 			}
+			.background(.linearGradient(colors: [theme.square, theme.border], startPoint: .top, endPoint: .bottom))
 			.frame(maxWidth: .infinity, maxHeight: .infinity)
-			.environment(\.reversiBoardLength, size)
+			.font(.system(.headline, design: .rounded).bold().monospacedDigit())
 		}
-#if os(tvOS)
+#if os(iOS)
+		.navigationBarTitleDisplayMode(.inline)
+#elseif os(tvOS)
 		.onPlayPauseCommand {
 			if game.board.history.isEmpty {
 				return
@@ -145,6 +87,5 @@ struct ReversiView: View {
 		}
 #endif
 		.environment(\.reversiTheme, theme)
-		.environmentObject(game)
 	}
 }

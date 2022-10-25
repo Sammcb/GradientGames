@@ -88,10 +88,10 @@ struct ChessBoard: Equatable {
 		case stalemate
 	}
 	
-	var history = ChessState.history
-	var pieces = ChessState.pieces
+	var history = ChessState.shared.history
+	var pieces = ChessState.shared.pieces
 	var lightTurn: Bool {
-		ChessState.history.count.isMultiple(of: 2)
+		ChessState.shared.history.count.isMultiple(of: 2)
 	}
 	
 	private mutating func movePiece(_ piece: ChessPiece, to square: ChessSquare) {
@@ -123,8 +123,8 @@ struct ChessBoard: Equatable {
 	mutating func promote(at square: ChessSquare, to piece: ChessPiece) {
 		capture(at: square)
 		movePiece(piece, to: square)
-		ChessState.history = history
-		ChessState.pieces = pieces
+		ChessState.shared.history = history
+		ChessState.shared.pieces = pieces
 	}
 	
 	private func attackedDiagonalsFrom(_ square: ChessSquare) -> [ChessSquare] {
@@ -323,7 +323,7 @@ struct ChessBoard: Equatable {
 	private func inCheckAt(_ square: ChessSquare, isLight: Bool) -> Bool {
 		for (index, piece) in pieces.enumerated() {
 			let checkSquare = ChessPieces.square(at: index)
-			if let piece = piece, piece.isLight != isLight, attackedFrom(checkSquare).contains(square) {
+			if let piece, piece.isLight != isLight, attackedFrom(checkSquare).contains(square) {
 				return true
 			}
 		}
@@ -432,8 +432,8 @@ struct ChessBoard: Equatable {
 		
 		// Wait to save if promoted until promoted piece is chosen
 		if !checkTest && !promoted {
-			ChessState.history = history
-			ChessState.pieces = pieces
+			ChessState.shared.history = history
+			ChessState.shared.pieces = pieces
 		}
 	}
 	
@@ -510,8 +510,8 @@ struct ChessBoard: Equatable {
 		}
 		
 		if !checkTest {
-			ChessState.history = history
-			ChessState.pieces = pieces
+			ChessState.shared.history = history
+			ChessState.shared.pieces = pieces
 		}
 	}
 }

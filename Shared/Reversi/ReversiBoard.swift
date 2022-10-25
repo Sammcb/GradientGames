@@ -38,8 +38,8 @@ extension ReversiPieces {
 
 struct ReversiBoard: Equatable {
 	let maxMoves = 32
-	var history = ReversiState.history
-	var pieces = ReversiState.pieces
+	var history = ReversiState.shared.history
+	var pieces = ReversiState.shared.pieces
 	var lightTurn: Bool {
 		!history.count.isMultiple(of: 2)
 	}
@@ -126,8 +126,8 @@ struct ReversiBoard: Equatable {
 		
 		history.append(move)
 		
-		ReversiState.history = history
-		ReversiState.pieces = pieces
+		ReversiState.shared.history = history
+		ReversiState.shared.pieces = pieces
 		
 		if canMove() {
 			return
@@ -139,7 +139,7 @@ struct ReversiBoard: Equatable {
 	private mutating func skipMove() {
 		history.append(ReversiMove(skip: true))
 		
-		ReversiState.history = history
+		ReversiState.shared.history = history
 	}
 	
 	mutating func undo() {
@@ -156,7 +156,7 @@ struct ReversiBoard: Equatable {
 		pieces[move.square] = nil
 		flank(move.flankedSquares)
 		
-		ReversiState.history = history
-		ReversiState.pieces = pieces
+		ReversiState.shared.history = history
+		ReversiState.shared.pieces = pieces
 	}
 }

@@ -8,15 +8,19 @@
 import Foundation
 
 struct CheckersState {
+	private init() {}
+	
+	static var shared = CheckersState()
+	
 	enum Key: String, CaseIterable {
 		case pieces = "checkersPieces"
 		case history = "checkersHistory"
 		case times = "checkersTimes"
 	}
 	
-	private static let localStorage = UserDefaults.standard
+	private let localStorage = UserDefaults.standard
 	
-	static var pieces: CheckersPieces {
+	var pieces: CheckersPieces {
 		get {
 			get(forKey: .pieces) as! CheckersPieces
 		}
@@ -24,7 +28,7 @@ struct CheckersState {
 			set(newValue, forKey: .pieces)
 		}
 	}
-	static var history: [CheckersMove] {
+	var history: [CheckersMove] {
 		get {
 			get(forKey: .history) as! [CheckersMove]
 		}
@@ -32,7 +36,7 @@ struct CheckersState {
 			set(newValue, forKey: .history)
 		}
 	}
-	static var times: Times {
+	var times: Times {
 		get {
 			get(forKey: .times) as! Times
 		}
@@ -41,14 +45,14 @@ struct CheckersState {
 		}
 	}
 	
-	static func reset() {
+	func reset() {
 		for key in Key.allCases {
 			set(nil, forKey: key)
 		}
 	}
 	
-	private static func set(_ value: Any?, forKey key: Key) {
-		guard let object = value else {
+	private func set(_ value: Any?, forKey key: Key) {
+		guard let value else {
 			localStorage.setValue(nil, forKey: key.rawValue)
 			return
 		}
@@ -56,21 +60,21 @@ struct CheckersState {
 		let encodedData: Data?
 		switch key {
 		case .pieces:
-			encodedData = try? JSONEncoder().encode(object as! CheckersPieces)
+			encodedData = try? JSONEncoder().encode(value as! CheckersPieces)
 		case .history:
-			encodedData = try? JSONEncoder().encode(object as! [CheckersMove])
+			encodedData = try? JSONEncoder().encode(value as! [CheckersMove])
 		case .times:
-			encodedData = try? JSONEncoder().encode(object as! Times)
+			encodedData = try? JSONEncoder().encode(value as! Times)
 		}
 		localStorage.setValue(encodedData, forKey: key.rawValue)
 	}
 	
-	private static func error(key: Key) -> Any {
+	private func error(key: Key) -> Any {
 		reset()
 		return get(forKey: key)
 	}
 	
-	private static func get(forKey key: Key) -> Any {
+	private func get(forKey key: Key) -> Any {
 		if localStorage.value(forKey: key.rawValue) == nil {
 			switch key {
 			case .pieces:
@@ -101,21 +105,21 @@ struct CheckersState {
 			let data = localStorage.value(forKey: key.rawValue) as! Data
 			let state = try? JSONDecoder().decode(CheckersPieces.self, from: data)
 			
-			guard let state = state else {
+			guard let state else {
 				return error(key: key)
 			}
 			return state
 		case .history:
 			let data = localStorage.value(forKey: key.rawValue) as! Data
 			let history = try? JSONDecoder().decode([CheckersMove].self, from: data)
-			guard let history = history else {
+			guard let history else {
 				return error(key: key)
 			}
 			return history
 		case .times:
 			let data = localStorage.value(forKey: key.rawValue) as! Data
 			let times = try? JSONDecoder().decode(Times.self, from: data)
-			guard let times = times else {
+			guard let times else {
 				return error(key: key)
 			}
 			return times

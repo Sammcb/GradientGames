@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ReversiTimesTimelineView: View {
 	@EnvironmentObject private var game: ReversiGame
-	@AppStorage(Settings.Key.reversiFlipUI.rawValue) private var flipped = false
+	@AppStorage(Setting.reversiFlipUI.rawValue) private var flipped = false
 	
 	var body: some View {
 		TimelineView(.periodic(from: .now, by: 1 / 60)) { timeline in
@@ -23,15 +23,15 @@ struct ReversiTimesTimelineView: View {
 struct ReversiTimesView: View {
 	@Environment(\.reversiTheme) private var theme
 	@EnvironmentObject private var game: ReversiGame
-	@AppStorage(Settings.Key.reversiEnableTimer.rawValue) private var enableTimer = true
+	@AppStorage(Setting.reversiEnableTimer.rawValue) private var enableTimer = true
 	private let cadence: TimeInterval = 1 / 60
 	let date: Date
 	
 	var body: some View {
 		VStack {
-			Text(ReversiState.times.stringFor(lightTime: true))
+			Text(ReversiState.shared.times.stringFor(lightTime: true))
 				.foregroundColor(theme.pieceLight)
-			Text(ReversiState.times.stringFor(lightTime: false))
+			Text(ReversiState.shared.times.stringFor(lightTime: false))
 				.foregroundColor(theme.pieceDark)
 		}
 		.opacity(enableTimer ? 1 : 0)
@@ -41,11 +41,11 @@ struct ReversiTimesView: View {
 			}
 			
 			if game.board.lightTurn {
-				ReversiState.times.light += cadence
+				ReversiState.shared.times.light += cadence
 			} else {
-				ReversiState.times.dark += cadence
+				ReversiState.shared.times.dark += cadence
 			}
-			ReversiState.times.lastUpdate = date
+			ReversiState.shared.times.lastUpdate = date
 		}
 	}
 }
@@ -55,14 +55,14 @@ struct ReversiStatusView: View {
 	
 	var body: some View {
 		ReversiPieceView(isLight: game.board.lightTurn)
-			.frame(width: 64, height: 64)
+			.frame(width: 50, height: 50)
 	}
 }
 
 struct ReversiUndoView: View {
 	@EnvironmentObject private var game: ReversiGame
-	@AppStorage(Settings.Key.reversiEnableUndo.rawValue) private var enableUndo = true
-	@AppStorage(Settings.Key.reversiFlipUI.rawValue) private var flipped = false
+	@AppStorage(Setting.reversiEnableUndo.rawValue) private var enableUndo = true
+	@AppStorage(Setting.reversiFlipUI.rawValue) private var flipped = false
 	
 	var body: some View {
 		Button {
@@ -79,37 +79,28 @@ struct ReversiUndoView: View {
 	}
 }
 
-struct ReversiPortraitUIView: View {
+struct ReversiUIView: View {
+	let vertical: Bool
+	
 	var body: some View {
-		HStack {
-			ReversiTimesTimelineView()
-				.frame(maxWidth: .infinity)
-			
-			ReversiStatusView()
-				.frame(maxWidth: .infinity)
-			
-			ReversiUndoView()
-				.frame(maxWidth: .infinity)
-			
-		}
-		.padding(.bottom)
-		.background(.ultraThinMaterial)
-	}
-}
-
-struct ReversiLandscapeUIView: View {
-	var body: some View {
-		VStack {
-			ReversiUndoView()
-				.frame(maxHeight: .infinity)
-			
-			ReversiStatusView()
-				.frame(maxHeight: .infinity)
+		let layout = vertical ? AnyLayout(HStackLayout()) : AnyLayout(VStackLayout())
+		
+		layout {
+			Spacer()
 			
 			ReversiTimesTimelineView()
-				.frame(maxHeight: .infinity)
+			
+			Spacer()
+			
+			ReversiStatusView()
+			
+			Spacer()
+			
+			ReversiUndoView()
+			
+			Spacer()
 		}
-		.padding(.horizontal)
+		.padding(vertical ? .vertical : .horizontal)
 		.background(.ultraThinMaterial)
 	}
 }

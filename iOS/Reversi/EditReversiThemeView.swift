@@ -8,14 +8,12 @@
 import SwiftUI
 
 struct EditReversiThemeView: View {
-	@EnvironmentObject private var navigation: Navigation
 	@State var theme: ReversiTheme
 	@State private var symbol: String
 	@State private var square: Color
 	@State private var border: Color
 	@State private var pieceLight: Color
 	@State private var pieceDark: Color
-	@State private var showShare = false
 	
 	init(_ theme: ReversiTheme) {
 		symbol = theme.symbol!
@@ -89,18 +87,8 @@ struct EditReversiThemeView: View {
 			}
 		}
 		.toolbar {
-			Button {
-				showShare = true
-			} label: {
-				Label("Share", systemImage: "square.and.arrow.up")
-			}
+			ShareLink(item: themeURL())
 		}
-		.onChange(of: navigation.editing) { _ in
-			showShare = false
-		 }
-		 .sheet(isPresented: $showShare) {
-			 ShareSheet(activityItems: [themeURL()])
-		 }
 		.navigationTitle(symbol)
 	}
 }

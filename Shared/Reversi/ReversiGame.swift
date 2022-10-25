@@ -7,14 +7,14 @@
 
 import Foundation
 
-class ReversiGame: ObservableObject {
+class ReversiGame: ObservableObject, Game {
 	@Published var board = ReversiBoard()
 	var pieces: [ReversiPiece] {
 		board.pieces.filter({ $0 != nil}) as! [ReversiPiece]
 	}
 	
 	func reset() {
-		ReversiState.reset()
+		ReversiState.shared.reset()
 		board = ReversiBoard()
 	}
 }

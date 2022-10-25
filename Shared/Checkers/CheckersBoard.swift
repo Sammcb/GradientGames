@@ -37,8 +37,8 @@ extension CheckersPieces {
 }
 
 struct CheckersBoard: Equatable {
-	var history = CheckersState.history
-	var pieces = CheckersState.pieces
+	var history = CheckersState.shared.history
+	var pieces = CheckersState.shared.pieces
 	var lightTurn: Bool {
 		!history.count.isMultiple(of: 2)
 	}
@@ -46,7 +46,7 @@ struct CheckersBoard: Equatable {
 		let deltas = [(-1, 1), (-1, -1), (-2, 2), (-2, -2), (1, 1), (1, -1), (2, 2), (2, -2)]
 		
 		for (i, piece) in pieces.enumerated() {
-			guard let piece = piece, piece.isLight == lightTurn else {
+			guard let piece, piece.isLight == lightTurn else {
 				continue
 			}
 			
@@ -66,7 +66,7 @@ struct CheckersBoard: Equatable {
 	
 	private func moveCaptures(with piece: CheckersPiece, from oldSquare: CheckersSquare, to square: CheckersSquare) -> CheckersPiece? {
 		let checkSquare = CheckersSquare(oldSquare, deltaColumn: (square.column - oldSquare.column) / 2, deltaRow: (square.row - oldSquare.row) / 2)
-		guard let checkSquare = checkSquare else {
+		guard let checkSquare else {
 			return nil
 		}
 		
@@ -132,6 +132,8 @@ struct CheckersBoard: Equatable {
 			
 			if !(-1...1).contains(delta.0) {
 				return moveCaptures(with: piece, from: oldSquare, to: square) != nil
+			} else if let lastMove = history.last, lastMove.skip {
+				return false
 			} else {
 				return true
 			}
@@ -168,8 +170,8 @@ struct CheckersBoard: Equatable {
 		movePiece(at: oldSquare, to: square)
 		history.append(move)
 		
-		CheckersState.history = history
-		CheckersState.pieces = pieces
+		CheckersState.shared.history = history
+		CheckersState.shared.pieces = pieces
 	}
 	
 	mutating func undo() {
@@ -194,7 +196,7 @@ struct CheckersBoard: Equatable {
 			pieces[move.fromSquare]!.kinged = false
 		}
 		
-		CheckersState.history = history
-		CheckersState.pieces = pieces
+		CheckersState.shared.history = history
+		CheckersState.shared.pieces = pieces
 	}
 }
