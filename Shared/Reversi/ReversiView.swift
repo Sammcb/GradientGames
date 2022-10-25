@@ -46,7 +46,7 @@ struct ReversiUITheme {
 
 struct ReversiView: View {
 	@FetchRequest(sortDescriptors: [SortDescriptor(\ReversiTheme.index, order: .forward)]) private var themes: FetchedResults<ReversiTheme>
-	@StateObject private var game = ReversiGame()
+	@EnvironmentObject private var game: ReversiGame
 	@AppStorage(Setting.reversiTheme.rawValue) private var reversiTheme = ""
 	private var theme: ReversiUITheme {
 		guard let selectedTheme = themes.first(where: { $0.id!.uuidString == reversiTheme }) else {
@@ -87,6 +87,5 @@ struct ReversiView: View {
 		}
 #endif
 		.environment(\.reversiTheme, theme)
-		.environmentObject(game)
 	}
 }

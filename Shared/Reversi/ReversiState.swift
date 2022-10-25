@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ReversiState: GameState {
+struct ReversiState {
 	private init() {}
 	
 	static var shared = ReversiState()

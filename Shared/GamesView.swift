@@ -32,7 +32,7 @@ struct GamesView: View, UniversalLinkReciever {
 	private struct ViewInfo {
 		let title: String
 		let symbol: String
-		let state: GameState
+		let game: Game
 	}
 	
 	@Environment(\.managedObjectContext) private var context
@@ -40,17 +40,20 @@ struct GamesView: View, UniversalLinkReciever {
 	@FetchRequest(sortDescriptors: [SortDescriptor(\ReversiTheme.index, order: .forward)]) private var reversiThemes: FetchedResults<ReversiTheme>
 	@FetchRequest(sortDescriptors: [SortDescriptor(\CheckersTheme.index, order: .forward)]) private var checkersThemes: FetchedResults<CheckersTheme>
 	@StateObject private var navigation = Navigation()
+	@StateObject private var chessGame = ChessGame()
+	@StateObject private var reversiGame = ReversiGame()
+	@StateObject private var checkersGame = CheckersGame()
 	@State private var path: [UUID] = []
 	@State private var selectedView: DetailView?
 	
 	private func getViewInfo(for id: GameView) -> ViewInfo {
 		switch id {
 		case .chess:
-			return ViewInfo(title: "Chess", symbol: "crown", state: ChessState.shared)
+			return ViewInfo(title: "Chess", symbol: "crown", game: chessGame)
 		case .reversi:
-			return ViewInfo(title: "Reversi", symbol: "circle", state: ReversiState.shared)
+			return ViewInfo(title: "Reversi", symbol: "circle", game: reversiGame)
 		case .checkers:
-			return ViewInfo(title: "Checkers", symbol: "circle.circle", state: CheckersState.shared)
+			return ViewInfo(title: "Checkers", symbol: "circle.circle", game: checkersGame)
 		}
 	}
 	
@@ -104,11 +107,11 @@ struct GamesView: View, UniversalLinkReciever {
 	var body: some View {
 		NavigationSplitView {
 			List(GameView.allCases, selection: $selectedView) { gameView in
-				NavigationLink(value: DetailView(gameView)) {
+				NavigationLink(value: DetailView(gameView) ) {
 					let viewInfo = getViewInfo(for: gameView)
 					Label(viewInfo.title, systemImage: viewInfo.symbol)
 						.contextMenu {
-							Button(role: .destructive, action: viewInfo.state.reset) {
+							Button(role: .destructive, action: viewInfo.game.reset) {
 								Label("New game", systemImage: "trash")
 							}
 						}
@@ -136,10 +139,13 @@ struct GamesView: View, UniversalLinkReciever {
 				switch selectedView {
 				case .chess, .none:
 					ChessView()
+						.environmentObject(chessGame)
 				case .reversi:
 					ReversiView()
+						.environmentObject(reversiGame)
 				case .checkers:
 					CheckersView()
+						.environmentObject(checkersGame)
 				case .settings:
 					SettingsView()
 				}

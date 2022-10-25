@@ -12,7 +12,7 @@ protocol Theme: NSFetchRequestResult {
 	var index: Int64 { get set }
 }
 
-protocol GameState {
+protocol Game {
 	func reset()
 }
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class CheckersGame: ObservableObject {
+class CheckersGame: ObservableObject, Game {
 	@Published var board = CheckersBoard()
 	@Published var selectedSquare: CheckersSquare?
 	var pieces: [CheckersPiece] {

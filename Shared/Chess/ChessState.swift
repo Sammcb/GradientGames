@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ChessState: GameState {
+struct ChessState {
 	private init() {}
 	
 	static var shared = ChessState()

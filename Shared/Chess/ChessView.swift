@@ -46,7 +46,7 @@ struct ChessUITheme {
 
 struct ChessView: View {
 	@FetchRequest(sortDescriptors: [SortDescriptor(\ChessTheme.index, order: .forward)]) private var themes: FetchedResults<ChessTheme>
-	@StateObject private var game = ChessGame()
+	@EnvironmentObject private var game: ChessGame
 	@AppStorage(Setting.chessTheme.rawValue) private var chessTheme = ""
 	private var theme: ChessUITheme {
 		guard let selectedTheme = themes.first(where: { $0.id!.uuidString == chessTheme }) else {
@@ -95,6 +95,5 @@ struct ChessView: View {
 		}
 #endif
 		.environment(\.chessTheme, theme)
-		.environmentObject(game)
 	}
 }

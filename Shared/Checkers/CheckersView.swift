@@ -48,7 +48,7 @@ struct CheckersUITheme {
 
 struct CheckersView: View {
 	@FetchRequest(sortDescriptors: [SortDescriptor(\CheckersTheme.index, order: .forward)]) private var themes: FetchedResults<CheckersTheme>
-	@StateObject private var game = CheckersGame()
+	@EnvironmentObject private var game: CheckersGame
 	@AppStorage(Setting.checkersTheme.rawValue) private var checkersTheme = ""
 	private var theme: CheckersUITheme {
 		guard let selectedTheme = themes.first(where: { $0.id!.uuidString == checkersTheme }) else {
@@ -88,6 +88,5 @@ struct CheckersView: View {
 		}
 #endif
 		.environment(\.checkersTheme, theme)
-		.environmentObject(game)
 	}
 }

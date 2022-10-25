@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CheckersState: GameState {
+struct CheckersState {
 	private init() {}
 	
 	static var shared = CheckersState()
