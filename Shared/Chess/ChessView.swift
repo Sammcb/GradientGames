@@ -48,6 +48,8 @@ struct ChessView: View {
 	@FetchRequest(sortDescriptors: [SortDescriptor(\ChessTheme.index, order: .forward)]) private var themes: FetchedResults<ChessTheme>
 	@EnvironmentObject private var game: ChessGame
 	@AppStorage(Setting.chessTheme.rawValue) private var chessTheme = ""
+	@AppStorage(Setting.chessEnableUndo.rawValue) private var enableUndo = true
+	@AppStorage(Setting.chessFlipUI.rawValue) private var flipped = false
 	private var theme: ChessUITheme {
 		guard let selectedTheme = themes.first(where: { $0.id!.uuidString == chessTheme }) else {
 			return ChessUITheme()
@@ -63,9 +65,7 @@ struct ChessView: View {
 			layout {
 				ChessUIView(vertical: vertical)
 					.animation(.linear, value: game.pawnSquare)
-#if os(tvOS)
-					.focusSection()
-#endif
+				
 				ChessBoardView()
 					.animation(.linear, value: game.pawnSquare)
 					.frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -78,10 +78,12 @@ struct ChessView: View {
 			.frame(maxWidth: .infinity, maxHeight: .infinity)
 			.font(.system(.headline, design: .rounded).bold().monospacedDigit())
 		}
-#if os(iOS)
-		.navigationBarTitleDisplayMode(.inline)
-#elseif os(tvOS)
+#if os(tvOS)
 		.onPlayPauseCommand {
+			guard enableUndo else {
+				return
+			}
+			
 			guard game.pawnSquare == nil else {
 				return
 			}
@@ -92,6 +94,25 @@ struct ChessView: View {
 			
 			game.selectedSquare = nil
 			game.board.undo()
+		}
+#else
+		.navigationBarTitleDisplayMode(.inline)
+		.navigationTitle("Chess")
+		.toolbar {
+			if enableUndo {
+				ToolbarItem {
+					Button {
+						game.selectedSquare = nil
+						game.board.undo()
+					} label: {
+						Label("Undo", systemImage: "arrow.uturn.backward")
+							.symbolVariant(.circle.fill)
+							.rotationEffect(!game.board.lightTurn && flipped ? .radians(.pi) : .zero)
+							.animation(.easeIn, value: game.board.lightTurn)
+					}
+					.disabled(game.pawnSquare != nil || game.board.history.isEmpty)
+				}
+			}
 		}
 #endif
 		.environment(\.chessTheme, theme)

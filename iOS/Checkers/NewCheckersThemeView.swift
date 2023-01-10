@@ -4,7 +4,7 @@
 //
 //  Created by Sam McBroom on 3/3/22.
 //
-
+#if !os(tvOS)
 import SwiftUI
 
 struct NewCheckersThemeView: View {
@@ -50,3 +50,4 @@ struct NewCheckersThemeView: View {
 		}
 	}
 }
+#endif

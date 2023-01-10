@@ -48,6 +48,8 @@ struct ReversiView: View {
 	@FetchRequest(sortDescriptors: [SortDescriptor(\ReversiTheme.index, order: .forward)]) private var themes: FetchedResults<ReversiTheme>
 	@EnvironmentObject private var game: ReversiGame
 	@AppStorage(Setting.reversiTheme.rawValue) private var reversiTheme = ""
+	@AppStorage(Setting.reversiEnableUndo.rawValue) private var enableUndo = true
+	@AppStorage(Setting.reversiFlipUI.rawValue) private var flipped = false
 	private var theme: ReversiUITheme {
 		guard let selectedTheme = themes.first(where: { $0.id!.uuidString == reversiTheme }) else {
 			return ReversiUITheme()
@@ -62,9 +64,6 @@ struct ReversiView: View {
 			
 			layout {
 				ReversiUIView(vertical: vertical)
-#if os(tvOS)
-					.focusSection()
-#endif
 				
 				ReversiBoardView()
 					.frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -75,15 +74,35 @@ struct ReversiView: View {
 			.frame(maxWidth: .infinity, maxHeight: .infinity)
 			.font(.system(.headline, design: .rounded).bold().monospacedDigit())
 		}
-#if os(iOS)
-		.navigationBarTitleDisplayMode(.inline)
-#elseif os(tvOS)
+#if os(tvOS)
 		.onPlayPauseCommand {
+			guard enableUndo else {
+				return
+			}
+			
 			if game.board.history.isEmpty {
 				return
 			}
 			
 			game.board.undo()
+		}
+#else
+		.navigationBarTitleDisplayMode(.inline)
+		.navigationTitle("Reversi")
+		.toolbar {
+			if enableUndo {
+				ToolbarItem {
+					Button {
+						game.board.undo()
+					} label: {
+						Label("Undo", systemImage: "arrow.uturn.backward")
+							.symbolVariant(.circle.fill)
+							.rotationEffect(game.board.lightTurn && flipped ? .radians(.pi) : .zero)
+							.animation(.easeIn, value: game.board.lightTurn)
+					}
+					.disabled(game.board.history.isEmpty)
+				}
+			}
 		}
 #endif
 		.environment(\.reversiTheme, theme)

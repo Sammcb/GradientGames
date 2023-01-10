@@ -7,13 +7,6 @@
 
 import SwiftUI
 
-struct ReversiSquareStyle: ButtonStyle {
-	func makeBody(configuration: Configuration) -> some View {
-		configuration.label
-			.background(.clear)
-	}
-}
-
 struct ReversiSquareView: View {
 	@Environment(\.reversiTheme) private var theme
 	@EnvironmentObject private var game: ReversiGame
@@ -42,11 +35,11 @@ struct ReversiSquareView: View {
 			
 		}
 		.background(theme.square, in: Rectangle())
-#if os(iOS)
+#if os(tvOS)
+		.buttonStyle(NoneButtonStyle())
+#else
 		.disabled(game.board.gameOver || game.board.pieces[square] != nil)
-#elseif os(tvOS)
-		.disabled(game.board.gameOver)
-		.buttonStyle(ReversiSquareStyle())
+		.buttonStyle(.borderless)
 #endif
 	}
 }

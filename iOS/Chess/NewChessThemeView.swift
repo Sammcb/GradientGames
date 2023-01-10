@@ -5,6 +5,7 @@
 //  Created by Sam McBroom on 2/13/22.
 //
 
+#if !os(tvOS)
 import SwiftUI
 
 struct NewChessThemeView: View {
@@ -50,3 +51,4 @@ struct NewChessThemeView: View {
 		}
 	}
 }
+#endif

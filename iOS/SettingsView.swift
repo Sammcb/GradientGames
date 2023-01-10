@@ -4,7 +4,7 @@
 //
 //  Created by Sam McBroom on 2/13/22.
 //
-
+#if !os(tvOS)
 import SwiftUI
 import CoreData.NSManagedObject
 
@@ -27,15 +27,18 @@ struct SettingsView: View {
 	@AppStorage(Setting.chessTheme.rawValue) private var chessTheme = ""
 	@AppStorage(Setting.chessEnableUndo.rawValue) private var chessEnableUndo = true
 	@AppStorage(Setting.chessEnableTimer.rawValue) private var chessEnableTimer = true
-	@AppStorage(Setting.chessFlipUI.rawValue) private var chessFlipUI = false
 	@AppStorage(Setting.reversiTheme.rawValue) private var reversiTheme = ""
-	@AppStorage(Setting.checkersTheme.rawValue) private var checkersTheme = ""
 	@AppStorage(Setting.reversiEnableUndo.rawValue) private var reversiEnableUndo = true
 	@AppStorage(Setting.reversiEnableTimer.rawValue) private var reversiEnableTimer = true
-	@AppStorage(Setting.reversiFlipUI.rawValue) private var reversiFlipUI = false
+	@AppStorage(Setting.checkersTheme.rawValue) private var checkersTheme = ""
 	@AppStorage(Setting.checkersEnableUndo.rawValue) private var checkersEnableUndo = true
 	@AppStorage(Setting.checkersEnableTimer.rawValue) private var checkersEnableTimer = true
+#if !targetEnvironment(macCatalyst)
+	@AppStorage(Setting.chessFlipUI.rawValue) private var chessFlipUI = false
+	@AppStorage(Setting.reversiFlipUI.rawValue) private var reversiFlipUI = false
 	@AppStorage(Setting.checkersFlipUI.rawValue) private var checkersFlipUI = false
+#endif
+	
 	@State private var sheet: SheetId? = nil
 	@State private var selectedTheme: UUID? = nil
 	
@@ -80,10 +83,12 @@ struct SettingsView: View {
 					Label("Timers", systemImage: "clock")
 						.symbolVariant(.fill)
 				}
+#if !targetEnvironment(macCatalyst)
 				Toggle(isOn: $chessFlipUI) {
 					Label("Flip UI each turn", systemImage: "arrow.up.arrow.down")
 						.symbolVariant(.circle.fill)
 				}
+#endif
 			}
 			.headerProminence(.increased)
 			
@@ -136,10 +141,12 @@ struct SettingsView: View {
 					Label("Timers", systemImage: "clock")
 						.symbolVariant(.fill)
 				}
+#if !targetEnvironment(macCatalyst)
 				Toggle(isOn: $reversiFlipUI) {
 					Label("Flip UI each turn", systemImage: "arrow.up.arrow.down")
 						.symbolVariant(.circle.fill)
 				}
+#endif
 			}
 			.headerProminence(.increased)
 			
@@ -188,10 +195,12 @@ struct SettingsView: View {
 					Label("Timers", systemImage: "clock")
 						.symbolVariant(.fill)
 				}
+#if !targetEnvironment(macCatalyst)
 				Toggle(isOn: $checkersFlipUI) {
 					Label("Flip UI each turn", systemImage: "arrow.up.arrow.down")
 						.symbolVariant(.circle.fill)
 				}
+#endif
 			}
 			.headerProminence(.increased)
 			
@@ -265,3 +274,4 @@ struct SettingsView: View {
 		.navigationTitle("Settings")
 	}
 }
+#endif

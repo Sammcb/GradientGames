@@ -50,6 +50,8 @@ struct CheckersView: View {
 	@FetchRequest(sortDescriptors: [SortDescriptor(\CheckersTheme.index, order: .forward)]) private var themes: FetchedResults<CheckersTheme>
 	@EnvironmentObject private var game: CheckersGame
 	@AppStorage(Setting.checkersTheme.rawValue) private var checkersTheme = ""
+	@AppStorage(Setting.checkersEnableUndo.rawValue) private var enableUndo = true
+	@AppStorage(Setting.checkersFlipUI.rawValue) private var flipped = false
 	private var theme: CheckersUITheme {
 		guard let selectedTheme = themes.first(where: { $0.id!.uuidString == checkersTheme }) else {
 			return CheckersUITheme()
@@ -64,9 +66,6 @@ struct CheckersView: View {
 			
 			layout {
 				CheckersUIView(vertical: vertical)
-#if os(tvOS)
-					.focusSection()
-#endif
 				
 				CheckersBoardView()
 					.frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -75,16 +74,37 @@ struct CheckersView: View {
 			.frame(maxWidth: .infinity, maxHeight: .infinity)
 			.font(.system(.headline, design: .rounded).bold().monospacedDigit())
 		}
-#if os(iOS)
-		.navigationBarTitleDisplayMode(.inline)
-#elseif os(tvOS)
+#if os(tvOS)
 		.onPlayPauseCommand {
+			guard enableUndo else {
+				return
+			}
+			
 			if game.board.history.isEmpty {
 				return
 			}
 			
 			game.selectedSquare = nil
 			game.board.undo()
+		}
+#else
+		.navigationBarTitleDisplayMode(.inline)
+		.navigationTitle("Checkers")
+		.toolbar {
+			if enableUndo {
+				ToolbarItem {
+					Button {
+						game.selectedSquare = nil
+						game.board.undo()
+					} label: {
+						Label("Undo", systemImage: "arrow.uturn.backward")
+							.symbolVariant(.circle.fill)
+							.rotationEffect(game.board.lightTurn && flipped ? .radians(.pi) : .zero)
+							.animation(.easeIn, value: game.board.lightTurn)
+					}
+					.disabled(game.board.history.isEmpty)
+				}
+			}
 		}
 #endif
 		.environment(\.checkersTheme, theme)

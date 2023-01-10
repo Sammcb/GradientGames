@@ -8,21 +8,11 @@
 import SwiftUI
 
 struct GamesView: View, UniversalLinkReciever {
-	private enum DetailView: String {
+	private enum DetailView: String, Identifiable, CaseIterable {
 		case chess
 		case reversi
 		case checkers
 		case settings
-		
-		init(_ gameView: GameView) {
-			self.init(rawValue: gameView.rawValue)!
-		}
-	}
-	
-	private enum GameView: String, Identifiable, CaseIterable {
-		case chess
-		case reversi
-		case checkers
 		
 		var id: String {
 			rawValue
@@ -32,7 +22,7 @@ struct GamesView: View, UniversalLinkReciever {
 	private struct ViewInfo {
 		let title: String
 		let symbol: String
-		let game: Game
+		let game: Game?
 	}
 	
 	@Environment(\.managedObjectContext) private var context
@@ -46,7 +36,7 @@ struct GamesView: View, UniversalLinkReciever {
 	@State private var path: [UUID] = []
 	@State private var selectedView: DetailView?
 	
-	private func getViewInfo(for id: GameView) -> ViewInfo {
+	private func getViewInfo(for id: DetailView) -> ViewInfo {
 		switch id {
 		case .chess:
 			return ViewInfo(title: "Chess", symbol: "crown", game: chessGame)
@@ -54,6 +44,8 @@ struct GamesView: View, UniversalLinkReciever {
 			return ViewInfo(title: "Reversi", symbol: "circle", game: reversiGame)
 		case .checkers:
 			return ViewInfo(title: "Checkers", symbol: "circle.circle", game: checkersGame)
+		case .settings:
+			return ViewInfo(title: "Settings", symbol: "gearshape", game: nil)
 		}
 	}
 	
@@ -106,26 +98,58 @@ struct GamesView: View, UniversalLinkReciever {
 	
 	var body: some View {
 		NavigationSplitView {
-			List(GameView.allCases, selection: $selectedView) { gameView in
-				NavigationLink(value: DetailView(gameView) ) {
-					let viewInfo = getViewInfo(for: gameView)
-					Label(viewInfo.title, systemImage: viewInfo.symbol)
-						.contextMenu {
-							Button(role: .destructive, action: viewInfo.game.reset) {
-								Label("New game", systemImage: "trash")
-							}
+			List(selection: $selectedView) {
+#if targetEnvironment(macCatalyst)
+				Section("Games") {
+					ForEach(DetailView.allCases.filter({ $0 != .settings })) { detailView in
+						let viewInfo = getViewInfo(for: detailView)
+						let action = viewInfo.game?.reset ?? {}
+						NavigationLink(value: detailView) {
+							Label(viewInfo.title, systemImage: viewInfo.symbol)
+								.contextMenu {
+									Button(role: .destructive, action: action) {
+										Label("New game", systemImage: "trash")
+									}
+								}
 						}
+					}
 				}
+				
+				Section("Customization") {
+					let detailView: DetailView = .settings
+					let viewInfo = getViewInfo(for: detailView)
+					NavigationLink(value: detailView) {
+						Label(viewInfo.title, systemImage: viewInfo.symbol)
+					}
+				}
+#else
+				ForEach(DetailView.allCases.filter({ $0 != .settings })) { detailView in
+					NavigationLink(value: detailView) {
+						let viewInfo = getViewInfo(for: detailView)
+						let action = viewInfo.game?.reset ?? {}
+						Label(viewInfo.title, systemImage: viewInfo.symbol)
+							.contextMenu {
+								Button(role: .destructive, action: action) {
+									Label("New game", systemImage: "trash")
+								}
+							}
+					}
+				}
+#endif
 			}
 			.symbolVariant(.fill)
 			.foregroundColor(.primary)
+#if !targetEnvironment(macCatalyst)
 			.toolbar {
-				Button(action: {
-					selectedView = .settings
-				}) {
-					Label("Settings", systemImage: "gearshape")
+				ToolbarItem {
+					Button(action: {
+						selectedView = .settings
+					}) {
+						Label("Settings", systemImage: "gearshape")
+					}
 				}
 			}
+#endif
 			.navigationTitle("Games")
 			.onOpenURL { url in
 				guard let themeField = try? parseUniversalLink(url) else {

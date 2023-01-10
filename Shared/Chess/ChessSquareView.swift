@@ -7,13 +7,6 @@
 
 import SwiftUI
 
-struct ChessSquareStyle: ButtonStyle {
-	func makeBody(configuration: Configuration) -> some View {
-		configuration.label
-			.background(.clear)
-	}
-}
-
 struct ChessSquareView: View {
 	@Environment(\.chessTheme) private var theme
 	@EnvironmentObject private var game: ChessGame
@@ -43,7 +36,9 @@ struct ChessSquareView: View {
 	var body: some View {
 		let square = ChessSquare(file: file, rank: rank)
 		let kingState = game.kingState(isLight: game.board.lightTurn)
+#if !os(tvOS)
 		let gameOver = kingState == .checkmate || kingState == .stalemate
+#endif
 		Button {
 			select(square: square)
 		} label: {
@@ -51,9 +46,12 @@ struct ChessSquareView: View {
 				.frame(maxWidth: .infinity, maxHeight: .infinity)
 		}
 #if os(tvOS)
-		.buttonStyle(CheckersSquareStyle())
+		.buttonStyle(NoneButtonStyle())
+		.disabled(game.pawnSquare != nil || game.selectedSquare == square)
+#else
+		.buttonStyle(.borderless)
+		.disabled(gameOver || game.pawnSquare != nil || game.selectedSquare == square)
 #endif
 		.background((rank + file.rawValue - 1).isMultiple(of: 2) ? theme.squareLight : theme.squareDark, in: Rectangle())
-		.disabled(gameOver || game.pawnSquare != nil || game.selectedSquare == square)
 	}
 }

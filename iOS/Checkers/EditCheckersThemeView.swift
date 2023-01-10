@@ -4,7 +4,7 @@
 //
 //  Created by Sam McBroom on 3/3/22.
 //
-
+#if !os(tvOS)
 import SwiftUI
 
 struct EditCheckersThemeView: View {
@@ -92,3 +92,4 @@ struct EditCheckersThemeView: View {
 		.navigationTitle(symbol)
 	}
 }
+#endif

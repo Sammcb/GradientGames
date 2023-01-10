@@ -7,13 +7,6 @@
 
 import SwiftUI
 
-struct CheckersSquareStyle: ButtonStyle {
-	func makeBody(configuration: Configuration) -> some View {
-		configuration.label
-			.background(.clear)
-	}
-}
-
 struct CheckersSquareView: View {
 	@Environment(\.checkersTheme) private var theme
 	@EnvironmentObject private var game: CheckersGame
@@ -47,9 +40,11 @@ struct CheckersSquareView: View {
 				.frame(maxWidth: .infinity, maxHeight: .infinity)
 		}
 #if os(tvOS)
-		.buttonStyle(CheckersSquareStyle())
+		.buttonStyle(NoneButtonStyle())
+#else
+		.buttonStyle(.borderless)
+		.disabled(game.board.gameOver)
 #endif
 		.background((row + column - 1).isMultiple(of: 2) ? theme.squareLight : theme.squareDark, in: Rectangle())
-		.disabled(game.board.gameOver)
 	}
 }

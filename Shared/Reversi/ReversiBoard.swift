@@ -81,6 +81,10 @@ struct ReversiBoard: Equatable {
 	}
 	
 	func canPlace(at square: ReversiSquare) -> Bool {
+		valid(square) && !gameOver
+	}
+	
+	private func valid(_ square: ReversiSquare) -> Bool {
 		pieces[square] == nil && !squaresFlanked(from: square).isEmpty
 	}
 	
@@ -101,7 +105,7 @@ struct ReversiBoard: Equatable {
 				guard pieces[checkSquare] == nil else {
 					continue
 				}
-				if canPlace(at: checkSquare) {
+				if valid(checkSquare) {
 					return true
 				}
 			}

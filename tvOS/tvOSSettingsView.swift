@@ -4,7 +4,7 @@
 //
 //  Created by Sam McBroom on 2/15/22.
 //
-
+#if os(tvOS)
 import SwiftUI
 
 struct SettingsView: View {
@@ -23,7 +23,7 @@ struct SettingsView: View {
 	
 	var body: some View {
 		Form {
-			Section("Chess") {
+			Section {
 				Toggle(isOn: $chessEnableUndo) {
 					Label("Undos", systemImage: "arrow.uturn.backward")
 						.symbolVariant(.circle.fill)
@@ -32,6 +32,11 @@ struct SettingsView: View {
 					Label("Timers", systemImage: "clock")
 						.symbolVariant(.fill)
 				}
+			} header: {
+				Text("Chess")
+			} footer: {
+				Label("Press the play/pause button to undo.", systemImage: "playpause")
+					.symbolVariant(.circle)
 			}
 			
 			Section("Theme") {
@@ -58,7 +63,7 @@ struct SettingsView: View {
 			}
 			.headerProminence(.increased)
 			
-			Section("Reversi") {
+			Section {
 				Toggle(isOn: $reversiEnableUndo) {
 					Label("Undos", systemImage: "arrow.uturn.backward")
 						.symbolVariant(.circle.fill)
@@ -67,6 +72,11 @@ struct SettingsView: View {
 					Label("Timers", systemImage: "clock")
 						.symbolVariant(.fill)
 				}
+			} header: {
+				Text("Reversi")
+			} footer: {
+				Label("Press the play/pause button to undo.", systemImage: "playpause")
+					.symbolVariant(.circle)
 			}
 			
 			Section("Theme") {
@@ -93,7 +103,7 @@ struct SettingsView: View {
 			}
 			.headerProminence(.increased)
 			
-			Section("Checkers") {
+			Section {
 				Toggle(isOn: $checkersEnableUndo) {
 					Label("Undos", systemImage: "arrow.uturn.backward")
 						.symbolVariant(.circle.fill)
@@ -102,6 +112,11 @@ struct SettingsView: View {
 					Label("Timers", systemImage: "clock")
 						.symbolVariant(.fill)
 				}
+			} header: {
+				Text("Checkers")
+			} footer: {
+				Label("Press the play/pause button to undo.", systemImage: "playpause")
+					.symbolVariant(.circle)
 			}
 			
 			Section("Theme") {
@@ -131,3 +146,4 @@ struct SettingsView: View {
 		.navigationTitle("Settings")
 	}
 }
+#endif

@@ -12,7 +12,7 @@ struct ChessTimesTimelineView: View {
 	@AppStorage(Setting.chessFlipUI.rawValue) private var flipped = false
 	
 	var body: some View {
-		TimelineView(.periodic(from: .now, by: 1 / 60)) { timeline in
+		TimelineView(.periodic(from: .now, by: 1 / 10)) { timeline in
 			ChessTimesView(date: timeline.date)
 		}
 		.rotationEffect(!game.board.lightTurn && flipped ? .radians(.pi) : .zero)
@@ -23,8 +23,6 @@ struct ChessTimesTimelineView: View {
 struct ChessTimesView: View {
 	@Environment(\.chessTheme) private var theme
 	@EnvironmentObject private var game: ChessGame
-	@AppStorage(Setting.chessEnableTimer.rawValue) private var enableTimer = true
-	private let cadence: TimeInterval = 1 / 60
 	let date: Date
 	
 	var body: some View {
@@ -34,7 +32,9 @@ struct ChessTimesView: View {
 			Text(ChessState.shared.times.stringFor(lightTime: false))
 				.foregroundColor(theme.pieceDark)
 		}
-		.opacity(enableTimer ? 1 : 0)
+		.onAppear {
+			ChessState.shared.times.lastUpdate = date
+		}
 		.onChange(of: date) { _ in
 			let lightTurn = game.board.lightTurn
 			let kingState = game.kingState(isLight: lightTurn)
@@ -42,10 +42,12 @@ struct ChessTimesView: View {
 				return
 			}
 			
+			let interval = ChessState.shared.times.lastUpdate.distance(to: date)
+			
 			if lightTurn {
-				ChessState.shared.times.light += cadence
+				ChessState.shared.times.light += interval
 			} else {
-				ChessState.shared.times.dark += cadence
+				ChessState.shared.times.dark += interval
 			}
 			ChessState.shared.times.lastUpdate = date
 		}
@@ -77,8 +79,9 @@ struct ChessKingStatusView: View {
 	
 	var body: some View {
 		Image(systemName: stateSymbol(isLight: isLight))
-			.symbolVariant(isLight ? .circle : .fill.circle)
+			.symbolVariant(.fill.circle)
 			.foregroundColor(isLight ? theme.pieceLight : theme.pieceDark)
+			.font(.largeTitle)
 	}
 }
 
@@ -88,41 +91,14 @@ struct ChessStatusView: View {
 	
 	var body: some View {
 		let lightTurn = game.board.lightTurn
-		HStack {
-			ChessKingStatusView(isLight: true)
-			
-			ChessPieceView(group: .rook, isLight: lightTurn)
-				.font(.system(size: 60))
-			
-			ChessKingStatusView(isLight: false)
-		}
-		.rotationEffect(!lightTurn && flipped ? .radians(.pi) : .zero)
-		.animation(.easeIn, value: lightTurn)
-	}
-}
-
-struct ChessUndoView: View {
-	@EnvironmentObject private var game: ChessGame
-	@AppStorage(Setting.chessEnableUndo.rawValue) private var enableUndo = true
-	@AppStorage(Setting.chessFlipUI.rawValue) private var flipped = false
-	
-	var body: some View {
-		Button {
-			game.selectedSquare = nil
-			game.board.undo()
-		} label: {
-			Image(systemName: "arrow.uturn.backward")
-				.symbolVariant(.circle.fill)
-				.font(.system(size: 50))
-		}
-		.opacity(enableUndo ? 1 : 0)
-		.disabled(game.pawnSquare != nil || game.board.history.isEmpty || !enableUndo)
-		.rotationEffect(!game.board.lightTurn && flipped ? .radians(.pi) : .zero)
-		.animation(.easeIn, value: game.board.lightTurn)
+		ChessKingStatusView(isLight: lightTurn)
+			.rotationEffect(!lightTurn && flipped ? .radians(.pi) : .zero)
+			.animation(.easeIn, value: lightTurn)
 	}
 }
 
 struct ChessUIView: View {
+	@AppStorage(Setting.chessEnableTimer.rawValue) private var enableTimer = true
 	let vertical: Bool
 	
 	var body: some View {
@@ -131,17 +107,15 @@ struct ChessUIView: View {
 		layout {
 			Spacer()
 			
-			ChessTimesTimelineView()
-			
-			Spacer()
-			
 			ChessStatusView()
 			
 			Spacer()
 			
-			ChessUndoView()
-			
-			Spacer()
+			if enableTimer {
+				ChessTimesTimelineView()
+				
+				Spacer()
+			}
 		}
 		.padding(vertical ? .vertical : .horizontal)
 		.background(.ultraThinMaterial)

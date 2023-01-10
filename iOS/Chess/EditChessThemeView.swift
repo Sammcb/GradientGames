@@ -4,7 +4,7 @@
 //
 //  Created by Sam McBroom on 2/13/22.
 //
-
+#if !os(tvOS)
 import SwiftUI
 
 struct EditChessThemeView: View {
@@ -92,3 +92,4 @@ struct EditChessThemeView: View {
 		.navigationTitle(symbol)
 	}
 }
+#endif

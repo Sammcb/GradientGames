@@ -3,41 +3,26 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		226EE7DC27CC510000C8A473 /* CheckersState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7DB27CC510000C8A473 /* CheckersState.swift */; };
-		226EE7DD27CC510300C8A473 /* CheckersState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7DB27CC510000C8A473 /* CheckersState.swift */; };
 		226EE7DF27CC513D00C8A473 /* CheckersBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7DE27CC513D00C8A473 /* CheckersBoard.swift */; };
 		226EE7E127CC514500C8A473 /* CheckersSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7E027CC514500C8A473 /* CheckersSquare.swift */; };
 		226EE7E327CC515000C8A473 /* CheckersPiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7E227CC515000C8A473 /* CheckersPiece.swift */; };
-		226EE7E427CC515400C8A473 /* CheckersBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7DE27CC513D00C8A473 /* CheckersBoard.swift */; };
-		226EE7E527CC515600C8A473 /* CheckersSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7E027CC514500C8A473 /* CheckersSquare.swift */; };
-		226EE7E627CC515800C8A473 /* CheckersPiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7E227CC515000C8A473 /* CheckersPiece.swift */; };
 		226EE7E827CC516200C8A473 /* CheckersMove.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7E727CC516200C8A473 /* CheckersMove.swift */; };
-		226EE7E927CC516200C8A473 /* CheckersMove.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7E727CC516200C8A473 /* CheckersMove.swift */; };
 		226EE7EB27CC516900C8A473 /* CheckersGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7EA27CC516900C8A473 /* CheckersGame.swift */; };
-		226EE7EC27CC516900C8A473 /* CheckersGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7EA27CC516900C8A473 /* CheckersGame.swift */; };
 		226EE7EE27D1202100C8A473 /* CheckersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7ED27D1202100C8A473 /* CheckersView.swift */; };
-		226EE7EF27D1202100C8A473 /* CheckersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7ED27D1202100C8A473 /* CheckersView.swift */; };
 		226EE7F127D1259100C8A473 /* CheckersBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7F027D1259100C8A473 /* CheckersBoardView.swift */; };
-		226EE7F227D1259100C8A473 /* CheckersBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7F027D1259100C8A473 /* CheckersBoardView.swift */; };
 		226EE7F427D125FE00C8A473 /* CheckersSquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7F327D125FE00C8A473 /* CheckersSquareView.swift */; };
-		226EE7F527D125FE00C8A473 /* CheckersSquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7F327D125FE00C8A473 /* CheckersSquareView.swift */; };
 		226EE7F727D1260600C8A473 /* CheckersPieceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7F627D1260600C8A473 /* CheckersPieceView.swift */; };
-		226EE7F827D1260600C8A473 /* CheckersPieceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7F627D1260600C8A473 /* CheckersPieceView.swift */; };
 		226EE7FB27D1296C00C8A473 /* NewCheckersThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7FA27D1296C00C8A473 /* NewCheckersThemeView.swift */; };
 		226EE7FE27D1297400C8A473 /* EditCheckersThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7FD27D1297400C8A473 /* EditCheckersThemeView.swift */; };
 		226EE80127D1547F00C8A473 /* CheckersUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE80027D1547F00C8A473 /* CheckersUIView.swift */; };
-		226EE80227D1547F00C8A473 /* CheckersUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE80027D1547F00C8A473 /* CheckersUIView.swift */; };
-		22B3C69B28D11D6B00E585C9 /* GamesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DA827B9533A002D8312 /* GamesView.swift */; };
 		22B3C69E28D29A4100E585C9 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B3C69D28D29A4100E585C9 /* Protocols.swift */; };
-		22B3C69F28D29A4100E585C9 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B3C69D28D29A4100E585C9 /* Protocols.swift */; };
 		22B3C6A128D29A9200E585C9 /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B3C6A028D29A9200E585C9 /* Navigation.swift */; };
-		22B3C6A228D29A9200E585C9 /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B3C6A028D29A9200E585C9 /* Navigation.swift */; };
 		22BF667E28D3A6C600C13CA3 /* UniversalLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BF667D28D3A6C600C13CA3 /* UniversalLinks.swift */; };
-		22BF667F28D3A6C600C13CA3 /* UniversalLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BF667D28D3A6C600C13CA3 /* UniversalLinks.swift */; };
 		22DB9D9227B95101002D8312 /* GradientGamesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9D9127B95101002D8312 /* GradientGamesApp.swift */; };
 		22DB9DA927B9533A002D8312 /* GamesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DA827B9533A002D8312 /* GamesView.swift */; };
 		22DB9DAE27B95482002D8312 /* ReversiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DAD27B95482002D8312 /* ReversiView.swift */; };
@@ -76,39 +61,8 @@
 		22DB9DFB27B97F81002D8312 /* ReversiStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DFA27B97F81002D8312 /* ReversiStatsView.swift */; };
 		22DB9DFD27B980FE002D8312 /* NewReversiThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DFC27B980FE002D8312 /* NewReversiThemeView.swift */; };
 		22DB9E0127B9810E002D8312 /* EditReversiThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9E0027B9810E002D8312 /* EditReversiThemeView.swift */; };
-		22DB9E1427BC0CFF002D8312 /* GradientGames.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DB127B95F18002D8312 /* GradientGames.xcdatamodeld */; };
-		22DB9E1527BC0D03002D8312 /* GradientGamesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9D9127B95101002D8312 /* GradientGamesApp.swift */; };
-		22DB9E1627BC0D05002D8312 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DB427B95F2E002D8312 /* Extensions.swift */; };
-		22DB9E1727BC0D08002D8312 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DCB27B9698F002D8312 /* Store.swift */; };
-		22DB9E1827BC0D0B002D8312 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DC227B96528002D8312 /* Settings.swift */; };
-		22DB9E1927BC0D0D002D8312 /* Times.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DBE27B96273002D8312 /* Times.swift */; };
-		22DB9E1A27BC0D11002D8312 /* ChessState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DB627B9618F002D8312 /* ChessState.swift */; };
-		22DB9E1B27BC0D13002D8312 /* ChessBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DB827B961CE002D8312 /* ChessBoard.swift */; };
-		22DB9E1C27BC0D15002D8312 /* ChessSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DBC27B9624F002D8312 /* ChessSquare.swift */; };
-		22DB9E1D27BC0D17002D8312 /* ChessPiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DBA27B96234002D8312 /* ChessPiece.swift */; };
-		22DB9E1E27BC0D19002D8312 /* ChessMove.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DC027B96292002D8312 /* ChessMove.swift */; };
-		22DB9E1F27BC0D1B002D8312 /* ChessGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DCD27B96A33002D8312 /* ChessGame.swift */; };
-		22DB9E2027BC0D1D002D8312 /* ChessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DDB27B9710E002D8312 /* ChessView.swift */; };
-		22DB9E2127BC0D1F002D8312 /* ChessBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DD927B970F7002D8312 /* ChessBoardView.swift */; };
-		22DB9E2227BC0D22002D8312 /* ChessSquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DDD27B97132002D8312 /* ChessSquareView.swift */; };
-		22DB9E2327BC0D24002D8312 /* ChessPieceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DDF27B97143002D8312 /* ChessPieceView.swift */; };
-		22DB9E2427BC0D26002D8312 /* ChessUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DE127B97153002D8312 /* ChessUIView.swift */; };
-		22DB9E2527BC0D28002D8312 /* ChessPromoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DE327B97164002D8312 /* ChessPromoteView.swift */; };
-		22DB9E2627BC0D2C002D8312 /* ReversiState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DE627B97CE1002D8312 /* ReversiState.swift */; };
-		22DB9E2727BC0D2E002D8312 /* ReversiBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DE827B97D12002D8312 /* ReversiBoard.swift */; };
-		22DB9E2827BC0D31002D8312 /* ReversiSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DEC27B97D43002D8312 /* ReversiSquare.swift */; };
-		22DB9E2927BC0D33002D8312 /* ReversiPiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DEA27B97D2C002D8312 /* ReversiPiece.swift */; };
-		22DB9E2A27BC0D35002D8312 /* ReversiMove.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DEE27B97D54002D8312 /* ReversiMove.swift */; };
-		22DB9E2B27BC0D37002D8312 /* ReversiGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DF027B97D6A002D8312 /* ReversiGame.swift */; };
-		22DB9E2C27BC0D39002D8312 /* ReversiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DAD27B95482002D8312 /* ReversiView.swift */; };
-		22DB9E2D27BC0D3B002D8312 /* ReversiBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DF227B97EF5002D8312 /* ReversiBoardView.swift */; };
-		22DB9E2E27BC0D3D002D8312 /* ReversiSquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DF427B97F0D002D8312 /* ReversiSquareView.swift */; };
-		22DB9E2F27BC0D40002D8312 /* ReversiPieceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DF627B97F35002D8312 /* ReversiPieceView.swift */; };
-		22DB9E3027BC0D42002D8312 /* ReversiUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DF827B97F53002D8312 /* ReversiUIView.swift */; };
-		22DB9E3127BC0D5F002D8312 /* ReversiStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DFA27B97F81002D8312 /* ReversiStatsView.swift */; };
-		22DB9E3627BC1216002D8312 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9E3527BC1216002D8312 /* SettingsView.swift */; };
-		22DB9E3A27BC1230002D8312 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22DB9E3927BC1230002D8312 /* CloudKit.framework */; };
-		22DB9E3F27BC4819002D8312 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22DB9E3E27BC4819002D8312 /* Assets.xcassets */; };
+		22E750BD29140E5700E9472F /* NoneButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E750BC29140E5700E9472F /* NoneButtonStyle.swift */; };
+		22E832AB2909AF200037397F /* tvOSSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9E3527BC1216002D8312 /* tvOSSettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -169,10 +123,8 @@
 		22DB9DFA27B97F81002D8312 /* ReversiStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversiStatsView.swift; sourceTree = "<group>"; };
 		22DB9DFC27B980FE002D8312 /* NewReversiThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReversiThemeView.swift; sourceTree = "<group>"; };
 		22DB9E0027B9810E002D8312 /* EditReversiThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditReversiThemeView.swift; sourceTree = "<group>"; };
-		22DB9E0627BC0CC6002D8312 /* GradientGamestvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GradientGamestvOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		22DB9E3527BC1216002D8312 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		22DB9E3927BC1230002D8312 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS15.2.sdk/System/Library/Frameworks/CloudKit.framework; sourceTree = DEVELOPER_DIR; };
-		22DB9E3E27BC4819002D8312 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		22DB9E3527BC1216002D8312 /* tvOSSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tvOSSettingsView.swift; sourceTree = "<group>"; };
+		22E750BC29140E5700E9472F /* NoneButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoneButtonStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,14 +133,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				22DB9DC727B96730002D8312 /* CloudKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		22DB9E0327BC0CC6002D8312 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				22DB9E3A27BC1230002D8312 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,7 +181,6 @@
 			isa = PBXGroup;
 			children = (
 				22DB9D8E27B95101002D8312 /* GradientGames.app */,
-				22DB9E0627BC0CC6002D8312 /* GradientGamestvOS.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -298,8 +241,8 @@
 		22DB9DA527B95304002D8312 /* tvOS */ = {
 			isa = PBXGroup;
 			children = (
-				22DB9E3E27BC4819002D8312 /* Assets.xcassets */,
-				22DB9E3527BC1216002D8312 /* SettingsView.swift */,
+				22DB9E3527BC1216002D8312 /* tvOSSettingsView.swift */,
+				22E750BC29140E5700E9472F /* NoneButtonStyle.swift */,
 			);
 			path = tvOS;
 			sourceTree = "<group>";
@@ -335,7 +278,6 @@
 		22DB9DC527B96730002D8312 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				22DB9E3927BC1230002D8312 /* CloudKit.framework */,
 				22DB9DC627B96730002D8312 /* CloudKit.framework */,
 			);
 			name = Frameworks;
@@ -370,23 +312,6 @@
 			productReference = 22DB9D8E27B95101002D8312 /* GradientGames.app */;
 			productType = "com.apple.product-type.application";
 		};
-		22DB9E0527BC0CC6002D8312 /* GradientGamestvOS */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 22DB9E1127BC0CC7002D8312 /* Build configuration list for PBXNativeTarget "GradientGamestvOS" */;
-			buildPhases = (
-				22DB9E0227BC0CC6002D8312 /* Sources */,
-				22DB9E0327BC0CC6002D8312 /* Frameworks */,
-				22DB9E0427BC0CC6002D8312 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = GradientGamestvOS;
-			productName = GradientGamestvOS;
-			productReference = 22DB9E0627BC0CC6002D8312 /* GradientGamestvOS.app */;
-			productType = "com.apple.product-type.application";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -400,13 +325,10 @@
 					22DB9D8D27B95101002D8312 = {
 						CreatedOnToolsVersion = 13.2.1;
 					};
-					22DB9E0527BC0CC6002D8312 = {
-						CreatedOnToolsVersion = 13.2.1;
-					};
 				};
 			};
 			buildConfigurationList = 22DB9D8927B95101002D8312 /* Build configuration list for PBXProject "GradientGames" */;
-			compatibilityVersion = "Xcode 13.0";
+			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -419,7 +341,6 @@
 			projectRoot = "";
 			targets = (
 				22DB9D8D27B95101002D8312 /* GradientGames */,
-				22DB9E0527BC0CC6002D8312 /* GradientGamestvOS */,
 			);
 		};
 /* End PBXProject section */
@@ -430,14 +351,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				22DB9DCA27B9683A002D8312 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		22DB9E0427BC0CC6002D8312 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				22DB9E3F27BC4819002D8312 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,69 +403,18 @@
 				22DB9DF727B97F35002D8312 /* ReversiPieceView.swift in Sources */,
 				22DB9DAE27B95482002D8312 /* ReversiView.swift in Sources */,
 				22DB9DDC27B9710E002D8312 /* ChessView.swift in Sources */,
+				22E750BD29140E5700E9472F /* NoneButtonStyle.swift in Sources */,
 				226EE7DC27CC510000C8A473 /* CheckersState.swift in Sources */,
 				22B3C6A128D29A9200E585C9 /* Navigation.swift in Sources */,
 				22DB9DF527B97F0D002D8312 /* ReversiSquareView.swift in Sources */,
 				22DB9DFD27B980FE002D8312 /* NewReversiThemeView.swift in Sources */,
 				226EE7F127D1259100C8A473 /* CheckersBoardView.swift in Sources */,
 				226EE7F727D1260600C8A473 /* CheckersPieceView.swift in Sources */,
+				22E832AB2909AF200037397F /* tvOSSettingsView.swift in Sources */,
 				226EE7DF27CC513D00C8A473 /* CheckersBoard.swift in Sources */,
 				22DB9DB527B95F2E002D8312 /* Extensions.swift in Sources */,
 				226EE7EB27CC516900C8A473 /* CheckersGame.swift in Sources */,
 				226EE7EE27D1202100C8A473 /* CheckersView.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		22DB9E0227BC0CC6002D8312 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				22DB9E2227BC0D22002D8312 /* ChessSquareView.swift in Sources */,
-				226EE7E527CC515600C8A473 /* CheckersSquare.swift in Sources */,
-				22DB9E1C27BC0D15002D8312 /* ChessSquare.swift in Sources */,
-				22B3C69F28D29A4100E585C9 /* Protocols.swift in Sources */,
-				22DB9E2F27BC0D40002D8312 /* ReversiPieceView.swift in Sources */,
-				22DB9E1927BC0D0D002D8312 /* Times.swift in Sources */,
-				22DB9E2927BC0D33002D8312 /* ReversiPiece.swift in Sources */,
-				22DB9E2027BC0D1D002D8312 /* ChessView.swift in Sources */,
-				22DB9E2527BC0D28002D8312 /* ChessPromoteView.swift in Sources */,
-				22DB9E2B27BC0D37002D8312 /* ReversiGame.swift in Sources */,
-				22DB9E1B27BC0D13002D8312 /* ChessBoard.swift in Sources */,
-				22DB9E2127BC0D1F002D8312 /* ChessBoardView.swift in Sources */,
-				226EE7EF27D1202100C8A473 /* CheckersView.swift in Sources */,
-				22DB9E2327BC0D24002D8312 /* ChessPieceView.swift in Sources */,
-				22DB9E1D27BC0D17002D8312 /* ChessPiece.swift in Sources */,
-				226EE7EC27CC516900C8A473 /* CheckersGame.swift in Sources */,
-				22DB9E2727BC0D2E002D8312 /* ReversiBoard.swift in Sources */,
-				22DB9E1427BC0CFF002D8312 /* GradientGames.xcdatamodeld in Sources */,
-				22DB9E1627BC0D05002D8312 /* Extensions.swift in Sources */,
-				22DB9E1F27BC0D1B002D8312 /* ChessGame.swift in Sources */,
-				22DB9E2C27BC0D39002D8312 /* ReversiView.swift in Sources */,
-				22DB9E3127BC0D5F002D8312 /* ReversiStatsView.swift in Sources */,
-				226EE7F227D1259100C8A473 /* CheckersBoardView.swift in Sources */,
-				22BF667F28D3A6C600C13CA3 /* UniversalLinks.swift in Sources */,
-				22DB9E2427BC0D26002D8312 /* ChessUIView.swift in Sources */,
-				226EE7DD27CC510300C8A473 /* CheckersState.swift in Sources */,
-				226EE7F827D1260600C8A473 /* CheckersPieceView.swift in Sources */,
-				22DB9E1527BC0D03002D8312 /* GradientGamesApp.swift in Sources */,
-				22DB9E2827BC0D31002D8312 /* ReversiSquare.swift in Sources */,
-				22DB9E1A27BC0D11002D8312 /* ChessState.swift in Sources */,
-				22DB9E2E27BC0D3D002D8312 /* ReversiSquareView.swift in Sources */,
-				226EE80227D1547F00C8A473 /* CheckersUIView.swift in Sources */,
-				22DB9E2D27BC0D3B002D8312 /* ReversiBoardView.swift in Sources */,
-				22DB9E1727BC0D08002D8312 /* Store.swift in Sources */,
-				226EE7E627CC515800C8A473 /* CheckersPiece.swift in Sources */,
-				22DB9E2627BC0D2C002D8312 /* ReversiState.swift in Sources */,
-				226EE7E427CC515400C8A473 /* CheckersBoard.swift in Sources */,
-				22DB9E2A27BC0D35002D8312 /* ReversiMove.swift in Sources */,
-				22DB9E3027BC0D42002D8312 /* ReversiUIView.swift in Sources */,
-				22DB9E1827BC0D0B002D8312 /* Settings.swift in Sources */,
-				226EE7E927CC516200C8A473 /* CheckersMove.swift in Sources */,
-				22DB9E3627BC1216002D8312 /* SettingsView.swift in Sources */,
-				22DB9E1E27BC0D19002D8312 /* ChessMove.swift in Sources */,
-				22B3C6A228D29A9200E585C9 /* Navigation.swift in Sources */,
-				22B3C69B28D11D6B00E585C9 /* GamesView.swift in Sources */,
-				226EE7F527D125FE00C8A473 /* CheckersSquareView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -610,14 +472,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TVOS_DEPLOYMENT_TARGET = 16.0;
+				TVOS_DEPLOYMENT_TARGET = 16.1;
 			};
 			name = Debug;
 		};
@@ -666,13 +528,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				TVOS_DEPLOYMENT_TARGET = 16.0;
+				TVOS_DEPLOYMENT_TARGET = 16.1;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -680,7 +542,10 @@
 		22DB9D9D27B95102002D8312 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=appletvos*]" = AppIcontvOS;
+				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=appletvsimulator*]" = AppIcontvOS;
+				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=iphoneos*]" = AppIconiOS;
+				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=iphonesimulator*]" = AppIconiOS;
 				CODE_SIGN_ENTITLEMENTS = Shared/GradientGames.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -690,12 +555,11 @@
 				INFOPLIST_FILE = Shared/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Gradient Games";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.board-games";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -703,16 +567,23 @@
 				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sammcb.GradientGames;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,3,6";
+				TVOS_DEPLOYMENT_TARGET = 16.1;
 			};
 			name = Debug;
 		};
 		22DB9D9E27B95102002D8312 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=*]" = AppIcontvOS;
+				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=appletvos*]" = AppIcontvOS;
+				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=iphoneos*]" = AppIconiOS;
+				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=iphonesimulator*]" = AppIconiOS;
 				CODE_SIGN_ENTITLEMENTS = Shared/GradientGames.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -722,12 +593,11 @@
 				INFOPLIST_FILE = Shared/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Gradient Games";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.board-games";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -735,69 +605,13 @@
 				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sammcb.GradientGames;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		22DB9E1227BC0CC7002D8312 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
-				CODE_SIGN_ENTITLEMENTS = Shared/GradientGames.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = J8P6BA4WGF;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Shared/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Gradient Games";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.board-games";
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.2.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sammcb.GradientGames;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = appletvos;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 16.0;
-			};
-			name = Debug;
-		};
-		22DB9E1327BC0CC7002D8312 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
-				CODE_SIGN_ENTITLEMENTS = Shared/GradientGames.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = J8P6BA4WGF;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Shared/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Gradient Games";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.board-games";
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.2.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sammcb.GradientGames;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = appletvos;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 16.0;
+				TARGETED_DEVICE_FAMILY = "1,2,3,6";
+				TVOS_DEPLOYMENT_TARGET = 16.1;
 			};
 			name = Release;
 		};
@@ -818,15 +632,6 @@
 			buildConfigurations = (
 				22DB9D9D27B95102002D8312 /* Debug */,
 				22DB9D9E27B95102002D8312 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		22DB9E1127BC0CC7002D8312 /* Build configuration list for PBXNativeTarget "GradientGamestvOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				22DB9E1227BC0CC7002D8312 /* Debug */,
-				22DB9E1327BC0CC7002D8312 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
