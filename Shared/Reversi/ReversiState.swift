@@ -87,7 +87,7 @@ struct ReversiState {
 				
 				return pieces
 			case .history:
-				return []
+				return [] as [ReversiMove]
 			case .times:
 				return Times(light: 0, dark: 0, lastUpdate: .now)
 			}

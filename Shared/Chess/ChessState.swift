@@ -99,7 +99,7 @@ struct ChessState {
 				
 				return pieces
 			case .history:
-				return []
+				return [] as [ChessMove]
 			case .times:
 				return Times(light: 0, dark: 0, lastUpdate: .now)
 			}

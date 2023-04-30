@@ -94,7 +94,7 @@ struct CheckersState {
 				
 				return pieces
 			case .history:
-				return []
+				return [] as [CheckersMove]
 			case .times:
 				return Times(light: 0, dark: 0, lastUpdate: .now)
 			}

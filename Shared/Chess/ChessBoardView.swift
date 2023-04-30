@@ -16,9 +16,9 @@ struct ChessBoardView: View {
 	var body: some View {
 		let borderColor = game.board.lightTurn ? theme.pieceLight : theme.pieceDark
 		ZStack {
-			VStack(alignment: .center, spacing: 0) {
+			Grid(horizontalSpacing: 0, verticalSpacing: 0) {
 				ForEach(ChessRanks.reversed(), id: \.self) { rank in
-					HStack(spacing: 0) {
+					GridRow {
 						ForEach(ChessFile.validFiles) { file in
 							let square = ChessSquare(file: file, rank: rank)
 							ChessSquareView(file: file, rank: rank)
