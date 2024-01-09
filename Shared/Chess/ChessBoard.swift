@@ -8,34 +8,18 @@
 import Foundation
 
 enum ChessFile: Int, CaseIterable, Comparable, Codable, Identifiable {
-	case none
-	case a
-	case b
-	case c
-	case d
-	case e
-	case f
-	case g
-	case h
+	case none, a, b, c, d, e, f, g, h
 	
 	static var validFiles: [ChessFile] {
-		get {
-			Array(ChessFile.allCases.dropFirst())
-		}
+		Array(ChessFile.allCases.dropFirst())
 	}
 	
 	static func +(lhs: ChessFile, rhs: Int) -> ChessFile {
-		guard let file = ChessFile(rawValue: lhs.rawValue + rhs) else {
-			return .none
-		}
-		return file
+		ChessFile(rawValue: lhs.rawValue + rhs) ?? .none
 	}
 	
 	static func -(lhs: ChessFile, rhs: Int) -> ChessFile {
-		guard let file = ChessFile(rawValue: lhs.rawValue - rhs) else {
-			return .none
-		}
-		return file
+		ChessFile(rawValue: lhs.rawValue - rhs) ?? .none
 	}
 	
 	static func <(lhs: ChessFile, rhs: ChessFile) -> Bool {
@@ -60,7 +44,7 @@ extension ChessPieces {
 			self[(file.rawValue - 1) * 8 + rank - 1]
 		}
 		
-		set(newValue) {
+		set {
 			self[(file.rawValue - 1) * 8 + rank - 1] = newValue
 		}
 	}
@@ -70,7 +54,7 @@ extension ChessPieces {
 			self[square.file, square.rank]
 		}
 		
-		set(newValue) {
+		set {
 			self[square.file, square.rank] = newValue
 		}
 	}

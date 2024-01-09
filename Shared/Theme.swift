@@ -5,8 +5,6 @@
 //  Created by Sam McBroom on 1/9/24.
 //
 
-import Foundation
-
 import SwiftData
 import SwiftUI
 
