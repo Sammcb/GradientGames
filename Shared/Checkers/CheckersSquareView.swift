@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CheckersSquareView: View {
 	@Environment(\.checkersTheme) private var theme
-	@EnvironmentObject private var game: CheckersGame
+	@Environment(CheckersGame.self) private var game: CheckersGame
 	let column: Int
 	let row: Int
 	

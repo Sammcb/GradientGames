@@ -41,6 +41,6 @@ struct ChessPieceView: View {
 	
 	var body: some View {
 		Text(piece)
-			.foregroundColor(isLight ? theme.pieceLight : theme.pieceDark)
+			.foregroundStyle(isLight ? theme.pieceLight : theme.pieceDark)
 	}
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19574" systemVersion="21D62" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22225" systemVersion="23B92" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
     <entity name="CheckersTheme" representedClassName="CheckersTheme" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="YES"/>
         <attribute name="index" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -27,9 +27,4 @@
         <attribute name="squareRaw" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="symbol" attributeType="String" defaultValueString=""/>
     </entity>
-    <elements>
-        <element name="ChessTheme" positionX="-63" positionY="-18" width="128" height="134"/>
-        <element name="ReversiTheme" positionX="-54" positionY="-9" width="128" height="134"/>
-        <element name="CheckersTheme" positionX="-54" positionY="36" width="128" height="134"/>
-    </elements>
 </model>

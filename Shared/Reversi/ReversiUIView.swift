@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ReversiTimesTimelineView: View {
-	@EnvironmentObject private var game: ReversiGame
-	@AppStorage(Setting.reversiFlipUI.rawValue) private var flipped = false
+	@Environment(ReversiGame.self) private var game: ReversiGame
+	@AppStorage(Setting.flipUI.rawValue) private var flipped = false
 	
 	var body: some View {
 		TimelineView(.periodic(from: .now, by: 1 / 10)) { timeline in
@@ -22,21 +22,21 @@ struct ReversiTimesTimelineView: View {
 
 struct ReversiTimesView: View {
 	@Environment(\.reversiTheme) private var theme
-	@EnvironmentObject private var game: ReversiGame
-	@AppStorage(Setting.reversiEnableTimer.rawValue) private var enableTimer = true
+	@Environment(ReversiGame.self) private var game: ReversiGame
+	@AppStorage(Setting.enableTimer.rawValue) private var enableTimer = true
 	let date: Date
 	
 	var body: some View {
 		VStack {
 			Text(ReversiState.shared.times.stringFor(lightTime: true))
-				.foregroundColor(theme.pieceLight)
+				.foregroundStyle(theme.pieceLight)
 			Text(ReversiState.shared.times.stringFor(lightTime: false))
-				.foregroundColor(theme.pieceDark)
+				.foregroundStyle(theme.pieceDark)
 		}
 		.onAppear {
 			ReversiState.shared.times.lastUpdate = date
 		}
-		.onChange(of: date) { _ in
+		.onChange(of: date) {
 			if game.board.gameOver {
 				return
 			}
@@ -55,8 +55,8 @@ struct ReversiTimesView: View {
 
 struct ReversiStatusView: View {
 	@Environment(\.reversiTheme) private var theme
-	@EnvironmentObject private var game: ReversiGame
-	@AppStorage(Setting.reversiFlipUI.rawValue) private var flipped = false
+	@Environment(ReversiGame.self) private var game: ReversiGame
+	@AppStorage(Setting.flipUI.rawValue) private var flipped = false
 	
 	var body: some View {
 		let lightTurn = game.board.lightTurn
@@ -69,14 +69,14 @@ struct ReversiStatusView: View {
 		Image(systemName: game.board.gameOver ? gameOverSymbol : "circle")
 			.symbolVariant(.fill)
 			.font(.largeTitle)
-			.foregroundColor(symbolColor)
+			.foregroundStyle(symbolColor)
 			.rotationEffect(game.board.lightTurn && flipped ? .radians(.pi) : .zero)
 			.animation(.easeIn, value: game.board.lightTurn)
 	}
 }
 
 struct ReversiUIView: View {
-	@AppStorage(Setting.reversiEnableTimer.rawValue) private var enableTimer = true
+	@AppStorage(Setting.enableTimer.rawValue) private var enableTimer = true
 	let vertical: Bool
 	
 	var body: some View {

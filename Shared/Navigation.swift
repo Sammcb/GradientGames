@@ -7,6 +7,7 @@
 
 import Foundation
 
-class Navigation: ObservableObject {
-	@Published var themeLinkOpened = false
+@Observable
+class Navigation {
+	var themeLinkOpened = false
 }

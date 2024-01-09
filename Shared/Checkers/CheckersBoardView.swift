@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CheckersBoardView: View {
 	@Environment(\.checkersTheme) private var theme
-	@EnvironmentObject private var game: CheckersGame
+	@Environment(CheckersGame.self) private var game: CheckersGame
 	@FocusState private var focusedSquare: CheckersSquare?
 	
 	private func selectSquare() {
@@ -62,7 +62,7 @@ struct CheckersBoardView: View {
 		.onAppear {
 			selectSquare()
 		}
-		.onChange(of: game.board) { _ in
+		.onChange(of: game.board) {
 			selectSquare()
 		}
 	}

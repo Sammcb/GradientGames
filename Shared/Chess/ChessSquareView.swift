@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ChessSquareView: View {
 	@Environment(\.chessTheme) private var theme
-	@EnvironmentObject private var game: ChessGame
+	@Environment(ChessGame.self) private var game: ChessGame
 	let file: ChessFile
 	let rank: Int
 	

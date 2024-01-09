@@ -5,17 +5,13 @@
 //  Created by Sam McBroom on 9/14/22.
 //
 
-import CoreData.NSFetchRequest
-
-protocol Theme: NSFetchRequestResult {
-	var id: UUID? { get set }
-	var index: Int64 { get set }
-}
+import SwiftUI
 
 protocol Game {
 	func reset()
 }
 
-protocol UniversalLinkReciever {
-	func parseUniversalLink(_ url: URL) throws -> ThemeField
+protocol ColorConverter {
+	func colorFrom(_ colorString: String) -> Color
+	func hexFrom(_ color: Color) -> String
 }

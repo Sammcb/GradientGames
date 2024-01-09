@@ -9,9 +9,9 @@ import SwiftUI
 
 struct ChessBoardView: View {
 	@Environment(\.chessTheme) private var theme
-	@EnvironmentObject private var game: ChessGame
+	@Environment(ChessGame.self) private var game: ChessGame
 	@FocusState private var focusedSquare: ChessSquare?
-	@AppStorage(Setting.chessFlipUI.rawValue) private var flipped = false
+	@AppStorage(Setting.flipUI.rawValue) private var flipped = false
 	
 	var body: some View {
 		let borderColor = game.board.lightTurn ? theme.pieceLight : theme.pieceDark

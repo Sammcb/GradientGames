@@ -6,10 +6,12 @@
 //
 
 import Foundation
-class ChessGame: ObservableObject, Game {
-	@Published var board = ChessBoard()
-	@Published var selectedSquare: ChessSquare?
-	@Published var pawnSquare: ChessSquare?
+
+@Observable
+class ChessGame: Game {
+	var board = ChessBoard()
+	var selectedSquare: ChessSquare?
+	var pawnSquare: ChessSquare?
 	var pieces: [ChessPiece] {
 		board.pieces.filter({ $0 != nil}) as! [ChessPiece]
 	}

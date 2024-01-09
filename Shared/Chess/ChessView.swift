@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ChessThemeKey: EnvironmentKey {
 	static let defaultValue = ChessUITheme()
@@ -29,11 +30,11 @@ struct ChessUITheme {
 	let pieceLight: Color
 	let pieceDark: Color
 	
-	init(theme: ChessTheme) {
-		squareLight = Color(theme.squareLight)
-		squareDark = Color(theme.squareDark)
-		pieceLight = Color(theme.pieceLight)
-		pieceDark = Color(theme.pieceDark)
+	init(theme: Theme) {
+		squareLight = theme.colors[.squareLight]
+		squareDark = theme.colors[.squareDark]
+		pieceLight = theme.colors[.pieceLight]
+		pieceDark = theme.colors[.pieceDark]
 	}
 	
 	init() {
@@ -45,13 +46,13 @@ struct ChessUITheme {
 }
 
 struct ChessView: View {
-	@FetchRequest(sortDescriptors: [SortDescriptor(\ChessTheme.index, order: .forward)]) private var themes: FetchedResults<ChessTheme>
-	@EnvironmentObject private var game: ChessGame
+	@Query(sort: \Theme.index) private var themes: [Theme]
+	@Environment(ChessGame.self) private var game: ChessGame
 	@AppStorage(Setting.chessTheme.rawValue) private var chessTheme = ""
-	@AppStorage(Setting.chessEnableUndo.rawValue) private var enableUndo = true
-	@AppStorage(Setting.chessFlipUI.rawValue) private var flipped = false
+	@AppStorage(Setting.enableUndo.rawValue) private var enableUndo = true
+	@AppStorage(Setting.flipUI.rawValue) private var flipped = false
 	private var theme: ChessUITheme {
-		guard let selectedTheme = themes.first(where: { $0.id!.uuidString == chessTheme }) else {
+		guard let selectedTheme = themes.first(where: { $0.id.uuidString == chessTheme }) else {
 			return ChessUITheme()
 		}
 		return ChessUITheme(theme: selectedTheme)
@@ -96,7 +97,7 @@ struct ChessView: View {
 			game.board.undo()
 		}
 #else
-		.navigationBarTitleDisplayMode(.inline)
+//		.navigationBarTitleDisplayMode(.inline)
 		.navigationTitle("Chess")
 		.toolbar {
 			if enableUndo {

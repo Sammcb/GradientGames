@@ -7,9 +7,10 @@
 
 import Foundation
 
-class CheckersGame: ObservableObject, Game {
-	@Published var board = CheckersBoard()
-	@Published var selectedSquare: CheckersSquare?
+@Observable
+class CheckersGame: Game {
+	var board = CheckersBoard()
+	var selectedSquare: CheckersSquare?
 	var pieces: [CheckersPiece] {
 		board.pieces.filter({ $0 != nil}) as! [CheckersPiece]
 	}

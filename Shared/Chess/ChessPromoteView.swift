@@ -9,8 +9,8 @@ import SwiftUI
 
 struct ChessPromoteView: View {
 	@Environment(\.chessTheme) private var theme
-	@EnvironmentObject private var game: ChessGame
-	@AppStorage(Setting.chessFlipUI.rawValue) private var flipped = false
+	@Environment(ChessGame.self) private var game: ChessGame
+	@AppStorage(Setting.flipUI.rawValue) private var flipped = false
 	let isLight: Bool
 	let vertical: Bool
 	

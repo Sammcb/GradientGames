@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		224C10572B23F99E00FF47E7 /* ThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224C10562B23F99E00FF47E7 /* ThemeView.swift */; };
 		226EE7DC27CC510000C8A473 /* CheckersState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7DB27CC510000C8A473 /* CheckersState.swift */; };
 		226EE7DF27CC513D00C8A473 /* CheckersBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7DE27CC513D00C8A473 /* CheckersBoard.swift */; };
 		226EE7E127CC514500C8A473 /* CheckersSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7E027CC514500C8A473 /* CheckersSquare.swift */; };
@@ -17,9 +18,8 @@
 		226EE7F127D1259100C8A473 /* CheckersBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7F027D1259100C8A473 /* CheckersBoardView.swift */; };
 		226EE7F427D125FE00C8A473 /* CheckersSquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7F327D125FE00C8A473 /* CheckersSquareView.swift */; };
 		226EE7F727D1260600C8A473 /* CheckersPieceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7F627D1260600C8A473 /* CheckersPieceView.swift */; };
-		226EE7FB27D1296C00C8A473 /* NewCheckersThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7FA27D1296C00C8A473 /* NewCheckersThemeView.swift */; };
-		226EE7FE27D1297400C8A473 /* EditCheckersThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7FD27D1297400C8A473 /* EditCheckersThemeView.swift */; };
 		226EE80127D1547F00C8A473 /* CheckersUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE80027D1547F00C8A473 /* CheckersUIView.swift */; };
+		22A4FE8B2B4D995B00882E87 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A4FE8A2B4D995B00882E87 /* Theme.swift */; };
 		22B3C69E28D29A4100E585C9 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B3C69D28D29A4100E585C9 /* Protocols.swift */; };
 		22B3C6A128D29A9200E585C9 /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B3C6A028D29A9200E585C9 /* Navigation.swift */; };
 		22BF667E28D3A6C600C13CA3 /* UniversalLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BF667D28D3A6C600C13CA3 /* UniversalLinks.swift */; };
@@ -27,7 +27,6 @@
 		22DB9DA927B9533A002D8312 /* GamesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DA827B9533A002D8312 /* GamesView.swift */; };
 		22DB9DAE27B95482002D8312 /* ReversiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DAD27B95482002D8312 /* ReversiView.swift */; };
 		22DB9DB027B95DF3002D8312 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DAF27B95DF3002D8312 /* SettingsView.swift */; };
-		22DB9DB327B95F18002D8312 /* GradientGames.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DB127B95F18002D8312 /* GradientGames.xcdatamodeld */; };
 		22DB9DB527B95F2E002D8312 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DB427B95F2E002D8312 /* Extensions.swift */; };
 		22DB9DB727B9618F002D8312 /* ChessState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DB627B9618F002D8312 /* ChessState.swift */; };
 		22DB9DB927B961CE002D8312 /* ChessBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DB827B961CE002D8312 /* ChessBoard.swift */; };
@@ -38,10 +37,7 @@
 		22DB9DC327B96528002D8312 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DC227B96528002D8312 /* Settings.swift */; };
 		22DB9DC727B96730002D8312 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22DB9DC627B96730002D8312 /* CloudKit.framework */; };
 		22DB9DCA27B9683A002D8312 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22DB9DC927B9683A002D8312 /* Assets.xcassets */; };
-		22DB9DCC27B9698F002D8312 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DCB27B9698F002D8312 /* Store.swift */; };
 		22DB9DCE27B96A33002D8312 /* ChessGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DCD27B96A33002D8312 /* ChessGame.swift */; };
-		22DB9DD227B96E37002D8312 /* NewChessThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DD127B96E37002D8312 /* NewChessThemeView.swift */; };
-		22DB9DD627B96F1F002D8312 /* EditChessThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DD527B96F1F002D8312 /* EditChessThemeView.swift */; };
 		22DB9DDA27B970F7002D8312 /* ChessBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DD927B970F7002D8312 /* ChessBoardView.swift */; };
 		22DB9DDC27B9710E002D8312 /* ChessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DDB27B9710E002D8312 /* ChessView.swift */; };
 		22DB9DDE27B97132002D8312 /* ChessSquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DDD27B97132002D8312 /* ChessSquareView.swift */; };
@@ -59,13 +55,12 @@
 		22DB9DF727B97F35002D8312 /* ReversiPieceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DF627B97F35002D8312 /* ReversiPieceView.swift */; };
 		22DB9DF927B97F53002D8312 /* ReversiUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DF827B97F53002D8312 /* ReversiUIView.swift */; };
 		22DB9DFB27B97F81002D8312 /* ReversiStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DFA27B97F81002D8312 /* ReversiStatsView.swift */; };
-		22DB9DFD27B980FE002D8312 /* NewReversiThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DFC27B980FE002D8312 /* NewReversiThemeView.swift */; };
-		22DB9E0127B9810E002D8312 /* EditReversiThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9E0027B9810E002D8312 /* EditReversiThemeView.swift */; };
 		22E750BD29140E5700E9472F /* NoneButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E750BC29140E5700E9472F /* NoneButtonStyle.swift */; };
 		22E832AB2909AF200037397F /* tvOSSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9E3527BC1216002D8312 /* tvOSSettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		224C10562B23F99E00FF47E7 /* ThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeView.swift; sourceTree = "<group>"; };
 		226EE7DB27CC510000C8A473 /* CheckersState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckersState.swift; sourceTree = "<group>"; };
 		226EE7DE27CC513D00C8A473 /* CheckersBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckersBoard.swift; sourceTree = "<group>"; };
 		226EE7E027CC514500C8A473 /* CheckersSquare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckersSquare.swift; sourceTree = "<group>"; };
@@ -76,9 +71,8 @@
 		226EE7F027D1259100C8A473 /* CheckersBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckersBoardView.swift; sourceTree = "<group>"; };
 		226EE7F327D125FE00C8A473 /* CheckersSquareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckersSquareView.swift; sourceTree = "<group>"; };
 		226EE7F627D1260600C8A473 /* CheckersPieceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckersPieceView.swift; sourceTree = "<group>"; };
-		226EE7FA27D1296C00C8A473 /* NewCheckersThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCheckersThemeView.swift; sourceTree = "<group>"; };
-		226EE7FD27D1297400C8A473 /* EditCheckersThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCheckersThemeView.swift; sourceTree = "<group>"; };
 		226EE80027D1547F00C8A473 /* CheckersUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckersUIView.swift; sourceTree = "<group>"; };
+		22A4FE8A2B4D995B00882E87 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		22B3C69D28D29A4100E585C9 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		22B3C6A028D29A9200E585C9 /* Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigation.swift; sourceTree = "<group>"; };
 		22BF667D28D3A6C600C13CA3 /* UniversalLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversalLinks.swift; sourceTree = "<group>"; };
@@ -87,7 +81,6 @@
 		22DB9DA827B9533A002D8312 /* GamesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesView.swift; sourceTree = "<group>"; };
 		22DB9DAD27B95482002D8312 /* ReversiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversiView.swift; sourceTree = "<group>"; };
 		22DB9DAF27B95DF3002D8312 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		22DB9DB227B95F18002D8312 /* GradientGames.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GradientGames.xcdatamodel; sourceTree = "<group>"; };
 		22DB9DB427B95F2E002D8312 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		22DB9DB627B9618F002D8312 /* ChessState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessState.swift; sourceTree = "<group>"; };
 		22DB9DB827B961CE002D8312 /* ChessBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessBoard.swift; sourceTree = "<group>"; };
@@ -100,10 +93,7 @@
 		22DB9DC627B96730002D8312 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		22DB9DC827B9675F002D8312 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		22DB9DC927B9683A002D8312 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		22DB9DCB27B9698F002D8312 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		22DB9DCD27B96A33002D8312 /* ChessGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessGame.swift; sourceTree = "<group>"; };
-		22DB9DD127B96E37002D8312 /* NewChessThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChessThemeView.swift; sourceTree = "<group>"; };
-		22DB9DD527B96F1F002D8312 /* EditChessThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditChessThemeView.swift; sourceTree = "<group>"; };
 		22DB9DD927B970F7002D8312 /* ChessBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessBoardView.swift; sourceTree = "<group>"; };
 		22DB9DDB27B9710E002D8312 /* ChessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessView.swift; sourceTree = "<group>"; };
 		22DB9DDD27B97132002D8312 /* ChessSquareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessSquareView.swift; sourceTree = "<group>"; };
@@ -121,8 +111,6 @@
 		22DB9DF627B97F35002D8312 /* ReversiPieceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversiPieceView.swift; sourceTree = "<group>"; };
 		22DB9DF827B97F53002D8312 /* ReversiUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversiUIView.swift; sourceTree = "<group>"; };
 		22DB9DFA27B97F81002D8312 /* ReversiStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversiStatsView.swift; sourceTree = "<group>"; };
-		22DB9DFC27B980FE002D8312 /* NewReversiThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReversiThemeView.swift; sourceTree = "<group>"; };
-		22DB9E0027B9810E002D8312 /* EditReversiThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditReversiThemeView.swift; sourceTree = "<group>"; };
 		22DB9E3527BC1216002D8312 /* tvOSSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tvOSSettingsView.swift; sourceTree = "<group>"; };
 		22E750BC29140E5700E9472F /* NoneButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoneButtonStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -157,15 +145,6 @@
 			path = Checkers;
 			sourceTree = "<group>";
 		};
-		226EE7F927D1295000C8A473 /* Checkers */ = {
-			isa = PBXGroup;
-			children = (
-				226EE7FA27D1296C00C8A473 /* NewCheckersThemeView.swift */,
-				226EE7FD27D1297400C8A473 /* EditCheckersThemeView.swift */,
-			);
-			path = Checkers;
-			sourceTree = "<group>";
-		};
 		22DB9D8527B95101002D8312 = {
 			isa = PBXGroup;
 			children = (
@@ -190,16 +169,15 @@
 			children = (
 				22DB9DC427B96720002D8312 /* GradientGames.entitlements */,
 				22DB9DC827B9675F002D8312 /* Info.plist */,
-				22DB9DB127B95F18002D8312 /* GradientGames.xcdatamodeld */,
 				22DB9D9127B95101002D8312 /* GradientGamesApp.swift */,
 				22BF667D28D3A6C600C13CA3 /* UniversalLinks.swift */,
 				22DB9DA827B9533A002D8312 /* GamesView.swift */,
 				22DB9DB427B95F2E002D8312 /* Extensions.swift */,
 				22B3C69D28D29A4100E585C9 /* Protocols.swift */,
-				22DB9DCB27B9698F002D8312 /* Store.swift */,
 				22DB9DC227B96528002D8312 /* Settings.swift */,
 				22B3C6A028D29A9200E585C9 /* Navigation.swift */,
 				22DB9DBE27B96273002D8312 /* Times.swift */,
+				22A4FE8A2B4D995B00882E87 /* Theme.swift */,
 				22DB9DA027B9528E002D8312 /* Chess */,
 				226EE7DA27CBEF9A00C8A473 /* Checkers */,
 				22DB9DAC27B9546B002D8312 /* Reversi */,
@@ -231,9 +209,7 @@
 			children = (
 				22DB9DC927B9683A002D8312 /* Assets.xcassets */,
 				22DB9DAF27B95DF3002D8312 /* SettingsView.swift */,
-				22DB9DA627B9530B002D8312 /* Chess */,
-				22DB9DE527B97C59002D8312 /* Reversi */,
-				226EE7F927D1295000C8A473 /* Checkers */,
+				224C10562B23F99E00FF47E7 /* ThemeView.swift */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -245,15 +221,6 @@
 				22E750BC29140E5700E9472F /* NoneButtonStyle.swift */,
 			);
 			path = tvOS;
-			sourceTree = "<group>";
-		};
-		22DB9DA627B9530B002D8312 /* Chess */ = {
-			isa = PBXGroup;
-			children = (
-				22DB9DD127B96E37002D8312 /* NewChessThemeView.swift */,
-				22DB9DD527B96F1F002D8312 /* EditChessThemeView.swift */,
-			);
-			path = Chess;
 			sourceTree = "<group>";
 		};
 		22DB9DAC27B9546B002D8312 /* Reversi */ = {
@@ -283,15 +250,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		22DB9DE527B97C59002D8312 /* Reversi */ = {
-			isa = PBXGroup;
-			children = (
-				22DB9DFC27B980FE002D8312 /* NewReversiThemeView.swift */,
-				22DB9E0027B9810E002D8312 /* EditReversiThemeView.swift */,
-			);
-			path = Reversi;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -308,6 +266,8 @@
 			dependencies = (
 			);
 			name = GradientGames;
+			packageProductDependencies = (
+			);
 			productName = GradientGames;
 			productReference = 22DB9D8E27B95101002D8312 /* GradientGames.app */;
 			productType = "com.apple.product-type.application";
@@ -320,7 +280,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1320;
-				LastUpgradeCheck = 1320;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					22DB9D8D27B95101002D8312 = {
 						CreatedOnToolsVersion = 13.2.1;
@@ -328,7 +288,7 @@
 				};
 			};
 			buildConfigurationList = 22DB9D8927B95101002D8312 /* Build configuration list for PBXProject "GradientGames" */;
-			compatibilityVersion = "Xcode 14.0";
+			compatibilityVersion = "Xcode 15.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -336,6 +296,8 @@
 				Base,
 			);
 			mainGroup = 22DB9D8527B95101002D8312;
+			packageReferences = (
+			);
 			productRefGroup = 22DB9D8F27B95101002D8312 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -361,9 +323,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				226EE7FB27D1296C00C8A473 /* NewCheckersThemeView.swift in Sources */,
 				22BF667E28D3A6C600C13CA3 /* UniversalLinks.swift in Sources */,
-				22DB9DCC27B9698F002D8312 /* Store.swift in Sources */,
 				226EE7F427D125FE00C8A473 /* CheckersSquareView.swift in Sources */,
 				22DB9DE927B97D12002D8312 /* ReversiBoard.swift in Sources */,
 				22DB9DBF27B96273002D8312 /* Times.swift in Sources */,
@@ -375,28 +335,25 @@
 				22DB9DE227B97153002D8312 /* ChessUIView.swift in Sources */,
 				22DB9DFB27B97F81002D8312 /* ReversiStatsView.swift in Sources */,
 				22DB9DB927B961CE002D8312 /* ChessBoard.swift in Sources */,
-				226EE7FE27D1297400C8A473 /* EditCheckersThemeView.swift in Sources */,
 				22DB9DC127B96292002D8312 /* ChessMove.swift in Sources */,
 				22DB9DC327B96528002D8312 /* Settings.swift in Sources */,
 				22DB9DA927B9533A002D8312 /* GamesView.swift in Sources */,
 				22DB9DBB27B96234002D8312 /* ChessPiece.swift in Sources */,
 				226EE80127D1547F00C8A473 /* CheckersUIView.swift in Sources */,
-				22DB9E0127B9810E002D8312 /* EditReversiThemeView.swift in Sources */,
 				226EE7E327CC515000C8A473 /* CheckersPiece.swift in Sources */,
 				226EE7E127CC514500C8A473 /* CheckersSquare.swift in Sources */,
 				22DB9DB727B9618F002D8312 /* ChessState.swift in Sources */,
 				22DB9DE427B97164002D8312 /* ChessPromoteView.swift in Sources */,
-				22DB9DD227B96E37002D8312 /* NewChessThemeView.swift in Sources */,
 				22DB9DE027B97143002D8312 /* ChessPieceView.swift in Sources */,
 				226EE7E827CC516200C8A473 /* CheckersMove.swift in Sources */,
-				22DB9DD627B96F1F002D8312 /* EditChessThemeView.swift in Sources */,
+				22A4FE8B2B4D995B00882E87 /* Theme.swift in Sources */,
 				22DB9DF327B97EF5002D8312 /* ReversiBoardView.swift in Sources */,
 				22DB9DCE27B96A33002D8312 /* ChessGame.swift in Sources */,
 				22DB9DEB27B97D2C002D8312 /* ReversiPiece.swift in Sources */,
 				22DB9DED27B97D43002D8312 /* ReversiSquare.swift in Sources */,
-				22DB9DB327B95F18002D8312 /* GradientGames.xcdatamodeld in Sources */,
 				22DB9DDE27B97132002D8312 /* ChessSquareView.swift in Sources */,
 				22DB9DEF27B97D54002D8312 /* ReversiMove.swift in Sources */,
+				224C10572B23F99E00FF47E7 /* ThemeView.swift in Sources */,
 				22DB9DE727B97CE1002D8312 /* ReversiState.swift in Sources */,
 				22DB9DBD27B9624F002D8312 /* ChessSquare.swift in Sources */,
 				22DB9D9227B95101002D8312 /* GradientGamesApp.swift in Sources */,
@@ -407,7 +364,6 @@
 				226EE7DC27CC510000C8A473 /* CheckersState.swift in Sources */,
 				22B3C6A128D29A9200E585C9 /* Navigation.swift in Sources */,
 				22DB9DF527B97F0D002D8312 /* ReversiSquareView.swift in Sources */,
-				22DB9DFD27B980FE002D8312 /* NewReversiThemeView.swift in Sources */,
 				226EE7F127D1259100C8A473 /* CheckersBoardView.swift in Sources */,
 				226EE7F727D1260600C8A473 /* CheckersPieceView.swift in Sources */,
 				22E832AB2909AF200037397F /* tvOSSettingsView.swift in Sources */,
@@ -425,6 +381,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -458,6 +415,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -472,14 +430,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TVOS_DEPLOYMENT_TARGET = 16.4;
+				TVOS_DEPLOYMENT_TARGET = 17.0;
 			};
 			name = Debug;
 		};
@@ -487,6 +445,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -520,6 +479,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -528,13 +488,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				TVOS_DEPLOYMENT_TARGET = 16.4;
+				TVOS_DEPLOYMENT_TARGET = 17.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -559,7 +519,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -567,13 +527,13 @@
 				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sammcb.GradientGames;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = YES;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,3,6";
-				TVOS_DEPLOYMENT_TARGET = 16.4;
+				TVOS_DEPLOYMENT_TARGET = 17.2;
 			};
 			name = Debug;
 		};
@@ -597,7 +557,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -605,13 +565,13 @@
 				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sammcb.GradientGames;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = YES;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,3,6";
-				TVOS_DEPLOYMENT_TARGET = 16.4;
+				TVOS_DEPLOYMENT_TARGET = 17.2;
 			};
 			name = Release;
 		};
@@ -637,19 +597,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		22DB9DB127B95F18002D8312 /* GradientGames.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				22DB9DB227B95F18002D8312 /* GradientGames.xcdatamodel */,
-			);
-			currentVersion = 22DB9DB227B95F18002D8312 /* GradientGames.xcdatamodel */;
-			path = GradientGames.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 22DB9D8627B95101002D8312 /* Project object */;
 }

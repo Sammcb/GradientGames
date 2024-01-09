@@ -7,8 +7,9 @@
 
 import Foundation
 
-class ReversiGame: ObservableObject, Game {
-	@Published var board = ReversiBoard()
+@Observable
+class ReversiGame: Game {
+	var board = ReversiBoard()
 	var pieces: [ReversiPiece] {
 		board.pieces.filter({ $0 != nil}) as! [ReversiPiece]
 	}

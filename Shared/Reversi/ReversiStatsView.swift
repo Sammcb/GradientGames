@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ReversiScoreStatusView: View {
 	@Environment(\.reversiTheme) private var theme
-	@EnvironmentObject private var game: ReversiGame
+	@Environment(ReversiGame.self) private var game: ReversiGame
 	let isLight: Bool
 	
 	var body: some View {
@@ -21,20 +21,20 @@ struct ReversiScoreStatusView: View {
 			Image(systemName: "crown")
 				.symbolVariant(.fill)
 				.imageScale(.medium)
-				.foregroundColor(game.board.gameOver && winner ? crownColor : .clear)
+				.foregroundStyle(game.board.gameOver && winner ? crownColor : .clear)
 				.padding(5)
-				.background(Circle().foregroundColor(isLight ? theme.pieceLight : theme.pieceDark))
+				.background(Circle().foregroundStyle(isLight ? theme.pieceLight : theme.pieceDark))
 			
 			Text("\(isLight ? lightScore : darkScore)")
-				.foregroundColor(isLight ? theme.pieceLight : theme.pieceDark)
+				.foregroundStyle(isLight ? theme.pieceLight : theme.pieceDark)
 		}
 	}
 }
 
 struct ReversiStatsView: View {
 	@Environment(\.reversiTheme) private var theme
-	@EnvironmentObject private var game: ReversiGame
-	@AppStorage(Setting.reversiFlipUI.rawValue) private var flipped = false
+	@Environment(ReversiGame.self) private var game: ReversiGame
+	@AppStorage(Setting.flipUI.rawValue) private var flipped = false
 	let vertical: Bool
 	
 	var body: some View {
@@ -50,13 +50,13 @@ struct ReversiStatsView: View {
 			Spacer()
 			
 			Text("\(lightMoves + 2)/\(game.board.maxMoves)")
-				.foregroundColor(theme.pieceLight)
+				.foregroundStyle(theme.pieceLight)
 				.rotationEffect(game.board.lightTurn && flipped ? .radians(.pi) : .zero)
 			
 			Spacer()
 			
 			Text("\(darkMoves + 2)/\(game.board.maxMoves)")
-				.foregroundColor(theme.pieceDark)
+				.foregroundStyle(theme.pieceDark)
 				.rotationEffect(game.board.lightTurn && flipped ? .radians(.pi) : .zero)
 			
 			Spacer()

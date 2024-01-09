@@ -55,7 +55,7 @@ struct SettingsView: View {
 								Text(theme.symbol!)
 							} icon: {
 								Image(systemName: themeSelected ? "checkmark.circle.fill" : "circle")
-									.foregroundColor(themeSelected ? .green : .gray)
+									.foregroundStyle(themeSelected ? .green : .gray)
 							}
 						}
 					}
@@ -95,7 +95,7 @@ struct SettingsView: View {
 								Text(theme.symbol!)
 							} icon: {
 								Image(systemName: themeSelected ? "checkmark.circle.fill" : "circle")
-									.foregroundColor(themeSelected ? .green : .gray)
+									.foregroundStyle(themeSelected ? .green : .gray)
 							}
 						}
 					}
@@ -135,7 +135,7 @@ struct SettingsView: View {
 								Text(theme.symbol!)
 							} icon: {
 								Image(systemName: themeSelected ? "checkmark.circle.fill" : "circle")
-									.foregroundColor(themeSelected ? .green : .gray)
+									.foregroundStyle(themeSelected ? .green : .gray)
 							}
 						}
 					}

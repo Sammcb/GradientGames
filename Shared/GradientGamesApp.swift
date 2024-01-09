@@ -6,13 +6,27 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct GradientGamesApp: App {
+	let container: ModelContainer
+	
 	var body: some Scene {
 		WindowGroup {
 			GamesView()
-				.environment(\.managedObjectContext, Store.shared.container.viewContext)
+		}
+		.modelContainer(container)
+	}
+	
+	init() {
+		let schema = Schema([Theme.self])
+		let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+		
+		do {
+			container = try ModelContainer(for: schema, configurations: [modelConfiguration])
+		} catch {
+			fatalError("Could not create ModelContainer: \(error)")
 		}
 	}
 }

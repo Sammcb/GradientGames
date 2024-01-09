@@ -6,8 +6,7 @@
 //
 
 import SwiftUI
-
-import SwiftUI
+import SwiftData
 
 struct CheckersThemeKey: EnvironmentKey {
 	static let defaultValue = CheckersUITheme()
@@ -31,11 +30,15 @@ struct CheckersUITheme {
 	let pieceLight: Color
 	let pieceDark: Color
 	
-	init(theme: CheckersTheme) {
-		squareLight = Color(theme.squareLight)
-		squareDark = Color(theme.squareDark)
-		pieceLight = Color(theme.pieceLight)
-		pieceDark = Color(theme.pieceDark)
+	init(theme: Theme) {
+//		squareLight = Color(theme.squareLight)
+//		squareDark = Color(theme.squareDark)
+//		pieceLight = Color(theme.pieceLight)
+//		pieceDark = Color(theme.pieceDark)
+		squareLight = theme.colors[.squareLight]
+		squareDark = theme.colors[.squareDark]
+		pieceLight = theme.colors[.pieceLight]
+		pieceDark = theme.colors[.pieceDark]
 	}
 	
 	init() {
@@ -47,13 +50,13 @@ struct CheckersUITheme {
 }
 
 struct CheckersView: View {
-	@FetchRequest(sortDescriptors: [SortDescriptor(\CheckersTheme.index, order: .forward)]) private var themes: FetchedResults<CheckersTheme>
-	@EnvironmentObject private var game: CheckersGame
+	@Query(sort: \Theme.index) private var themes: [Theme]
+	@Environment(CheckersGame.self) private var game: CheckersGame
 	@AppStorage(Setting.checkersTheme.rawValue) private var checkersTheme = ""
-	@AppStorage(Setting.checkersEnableUndo.rawValue) private var enableUndo = true
-	@AppStorage(Setting.checkersFlipUI.rawValue) private var flipped = false
+	@AppStorage(Setting.enableUndo.rawValue) private var enableUndo = true
+	@AppStorage(Setting.flipUI.rawValue) private var flipped = false
 	private var theme: CheckersUITheme {
-		guard let selectedTheme = themes.first(where: { $0.id!.uuidString == checkersTheme }) else {
+		guard let selectedTheme = themes.first(where: { $0.id.uuidString == checkersTheme }) else {
 			return CheckersUITheme()
 		}
 		return CheckersUITheme(theme: selectedTheme)
@@ -88,7 +91,7 @@ struct CheckersView: View {
 			game.board.undo()
 		}
 #else
-		.navigationBarTitleDisplayMode(.inline)
+//		.navigationBarTitleDisplayMode(.inline)
 		.navigationTitle("Checkers")
 		.toolbar {
 			if enableUndo {

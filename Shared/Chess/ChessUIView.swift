@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ChessTimesTimelineView: View {
-	@EnvironmentObject private var game: ChessGame
-	@AppStorage(Setting.chessFlipUI.rawValue) private var flipped = false
+	@Environment(ChessGame.self) private var game: ChessGame
+	@AppStorage(Setting.flipUI.rawValue) private var flipped = false
 	
 	var body: some View {
 		TimelineView(.periodic(from: .now, by: 1 / 10)) { timeline in
@@ -22,20 +22,20 @@ struct ChessTimesTimelineView: View {
 
 struct ChessTimesView: View {
 	@Environment(\.chessTheme) private var theme
-	@EnvironmentObject private var game: ChessGame
+	@Environment(ChessGame.self) private var game: ChessGame
 	let date: Date
 	
 	var body: some View {
 		VStack {
 			Text(ChessState.shared.times.stringFor(lightTime: true))
-				.foregroundColor(theme.pieceLight)
+				.foregroundStyle(theme.pieceLight)
 			Text(ChessState.shared.times.stringFor(lightTime: false))
-				.foregroundColor(theme.pieceDark)
+				.foregroundStyle(theme.pieceDark)
 		}
 		.onAppear {
 			ChessState.shared.times.lastUpdate = date
 		}
-		.onChange(of: date) { _ in
+		.onChange(of: date) {
 			let lightTurn = game.board.lightTurn
 			let kingState = game.kingState(isLight: lightTurn)
 			guard kingState == .ok || kingState == .check else {
@@ -56,7 +56,7 @@ struct ChessTimesView: View {
 
 struct ChessKingStatusView: View {
 	@Environment(\.chessTheme) private var theme
-	@EnvironmentObject private var game: ChessGame
+	@Environment(ChessGame.self) private var game: ChessGame
 	let isLight: Bool
 	
 	private func stateSymbol(isLight: Bool) -> String {
@@ -80,14 +80,14 @@ struct ChessKingStatusView: View {
 	var body: some View {
 		Image(systemName: stateSymbol(isLight: isLight))
 			.symbolVariant(.fill.circle)
-			.foregroundColor(isLight ? theme.pieceLight : theme.pieceDark)
+			.foregroundStyle(isLight ? theme.pieceLight : theme.pieceDark)
 			.font(.largeTitle)
 	}
 }
 
 struct ChessStatusView: View {
-	@EnvironmentObject private var game: ChessGame
-	@AppStorage(Setting.chessFlipUI.rawValue) private var flipped = false
+	@Environment(ChessGame.self) private var game: ChessGame
+	@AppStorage(Setting.flipUI.rawValue) private var flipped = false
 	
 	var body: some View {
 		let lightTurn = game.board.lightTurn
@@ -98,7 +98,7 @@ struct ChessStatusView: View {
 }
 
 struct ChessUIView: View {
-	@AppStorage(Setting.chessEnableTimer.rawValue) private var enableTimer = true
+	@AppStorage(Setting.enableTimer.rawValue) private var enableTimer = true
 	let vertical: Bool
 	
 	var body: some View {

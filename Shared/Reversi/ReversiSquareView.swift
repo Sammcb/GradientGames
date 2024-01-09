@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ReversiSquareView: View {
 	@Environment(\.reversiTheme) private var theme
-	@EnvironmentObject private var game: ReversiGame
+	@Environment(ReversiGame.self) private var game: ReversiGame
 	let column: Int
 	let row: Int
 	

@@ -15,7 +15,7 @@ struct CheckersPieceView: View {
 	var body: some View {
 		GeometryReader { geometry in
 			Circle()
-				.foregroundColor(isLight ? theme.pieceLight : theme.pieceDark)
+				.foregroundStyle(isLight ? theme.pieceLight : theme.pieceDark)
 				.overlay {
 					Circle()
 						.scale(0.5)

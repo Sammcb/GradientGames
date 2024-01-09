@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct GamesView: View, UniversalLinkReciever {
 	private enum DetailView: String, Identifiable, CaseIterable {
@@ -25,14 +26,12 @@ struct GamesView: View, UniversalLinkReciever {
 		let game: Game?
 	}
 	
-	@Environment(\.managedObjectContext) private var context
-	@FetchRequest(sortDescriptors: [SortDescriptor(\ChessTheme.index, order: .forward)]) private var chessThemes: FetchedResults<ChessTheme>
-	@FetchRequest(sortDescriptors: [SortDescriptor(\ReversiTheme.index, order: .forward)]) private var reversiThemes: FetchedResults<ReversiTheme>
-	@FetchRequest(sortDescriptors: [SortDescriptor(\CheckersTheme.index, order: .forward)]) private var checkersThemes: FetchedResults<CheckersTheme>
-	@StateObject private var navigation = Navigation()
-	@StateObject private var chessGame = ChessGame()
-	@StateObject private var reversiGame = ReversiGame()
-	@StateObject private var checkersGame = CheckersGame()
+	@Environment(\.modelContext) private var context
+	@Query(sort: \Theme.index) private var themes: [Theme]
+	@State private var navigation = Navigation()
+	@State private var chessGame = ChessGame()
+	@State private var reversiGame = ReversiGame()
+	@State private var checkersGame = CheckersGame()
 	@State private var path: [UUID] = []
 	@State private var selectedView: DetailView?
 	
@@ -49,51 +48,34 @@ struct GamesView: View, UniversalLinkReciever {
 		}
 	}
 	
-	private func present(_ theme: Theme) {
+	private func present(_ themeId: UUID) {
 		selectedView = .settings
 		navigation.themeLinkOpened = true
 		path = []
 	}
 	
 	private func createTheme(with themeField: ThemeField) {
-		let theme: Theme
-		let themes: [Theme]
-		switch themeField {
-		case .chess(let symbol, let pieceLight, let pieceDark, let squareLight, let squareDark):
-			themes = Array(chessThemes)
-			let chessTheme = ChessTheme(context: context)
-			chessTheme.symbol = symbol
-			chessTheme.pieceLightRaw = pieceLight
-			chessTheme.pieceDarkRaw = pieceDark
-			chessTheme.squareLightRaw = squareLight
-			chessTheme.squareDarkRaw = squareDark
-			theme = chessTheme
-		case .reversi(let symbol, let pieceLight, let pieceDark, let square, let border):
-			themes = Array(reversiThemes)
-			let reversiTheme = ReversiTheme(context: context)
-			reversiTheme.symbol = symbol
-			reversiTheme.pieceLightRaw = pieceLight
-			reversiTheme.pieceDarkRaw = pieceDark
-			reversiTheme.squareRaw = square
-			reversiTheme.borderRaw = border
-			theme = reversiTheme
-		case .checkers(let symbol, let pieceLight, let pieceDark, let squareLight, let squareDark):
-			themes = Array(checkersThemes)
-			let checkersTheme = CheckersTheme(context: context)
-			checkersTheme.symbol = symbol
-			checkersTheme.pieceLightRaw = pieceLight
-			checkersTheme.pieceDarkRaw = pieceDark
-			checkersTheme.squareLightRaw = squareLight
-			checkersTheme.squareDarkRaw = squareDark
-			theme = checkersTheme
-		}
+//		let theme: Theme
+//		switch themeField {
+//		case .chess(let symbol, let pieceLight, let pieceDark, let squareLight, let squareDark):
+//			let lastThemeIndex = chessThemes.last?.index ?? -1
+//			let themeIndex = lastThemeIndex + 1
+//			let chessTheme = ChessTheme(index: themeIndex, symbol: symbol, pieceDark: pieceDark, pieceLight: pieceLight, squareDark: squareDark, squareLight: squareLight)
+//			context.insert(chessTheme)
+//		case .reversi(let symbol, let pieceLight, let pieceDark, let square, let border):
+//			let lastThemeIndex = reversiThemes.last?.index ?? -1
+//			let themeIndex = lastThemeIndex + 1
+//			let reversiTheme = ReversiTheme(index: themeIndex, symbol: symbol, pieceDark: pieceDark, pieceLight: pieceLight, border: border, square: square)
+//			context.insert(reversiTheme)
+//		case .checkers(let symbol, let pieceLight, let pieceDark, let squareLight, let squareDark):
+//			let lastThemeIndex = checkersThemes.last?.index ?? -1
+//			let themeIndex = lastThemeIndex + 1
+//			let checkersTheme = CheckersTheme(index: themeIndex, symbol: symbol, pieceDark: pieceDark, pieceLight: pieceLight, squareDark: squareDark, squareLight: squareLight)
+//			context.insert(checkersTheme)
+//		}
+//		try? context.save()
 		
-		theme.id = UUID()
-		let lastThemeIndex = themes.last?.index ?? -1
-		theme.index = lastThemeIndex + 1
-		Store.shared.save()
-		
-		present(theme)
+//		present(theme)
 	}
 	
 	var body: some View {
@@ -138,7 +120,7 @@ struct GamesView: View, UniversalLinkReciever {
 #endif
 			}
 			.symbolVariant(.fill)
-			.foregroundColor(.primary)
+			.foregroundStyle(.primary)
 #if !targetEnvironment(macCatalyst)
 			.toolbar {
 				ToolbarItem {
@@ -163,18 +145,18 @@ struct GamesView: View, UniversalLinkReciever {
 				switch selectedView {
 				case .chess, .none:
 					ChessView()
-						.environmentObject(chessGame)
+						.environment(chessGame)
 				case .reversi:
 					ReversiView()
-						.environmentObject(reversiGame)
+						.environment(reversiGame)
 				case .checkers:
 					CheckersView()
-						.environmentObject(checkersGame)
+						.environment (checkersGame)
 				case .settings:
 					SettingsView()
 				}
 			}
 		}
-		.environmentObject(navigation)
+		.environment(navigation)
 	}
 }

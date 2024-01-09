@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ReversiThemeKey: EnvironmentKey {
 	static let defaultValue = ReversiUITheme()
@@ -29,11 +30,15 @@ struct ReversiUITheme {
 	let pieceLight: Color
 	let pieceDark: Color
 	
-	init(theme: ReversiTheme) {
-		square = Color(theme.square)
-		border = Color(theme.border)
-		pieceLight = Color(theme.pieceLight)
-		pieceDark = Color(theme.pieceDark)
+	init(theme: Theme) {
+//		square = Color(theme.square)
+//		border = Color(theme.border)
+//		pieceLight = Color(theme.pieceLight)
+//		pieceDark = Color(theme.pieceDark)
+		square = theme.colors[.squares]
+		border = theme.colors[.borders]
+		pieceLight = theme.colors[.pieceLight]
+		pieceDark = theme.colors[.pieceDark]
 	}
 	
 	init() {
@@ -45,13 +50,13 @@ struct ReversiUITheme {
 }
 
 struct ReversiView: View {
-	@FetchRequest(sortDescriptors: [SortDescriptor(\ReversiTheme.index, order: .forward)]) private var themes: FetchedResults<ReversiTheme>
-	@EnvironmentObject private var game: ReversiGame
+	@Query(sort: \Theme.index, order: .forward) private var themes: [Theme]
+	@Environment(ReversiGame.self) private var game: ReversiGame
 	@AppStorage(Setting.reversiTheme.rawValue) private var reversiTheme = ""
-	@AppStorage(Setting.reversiEnableUndo.rawValue) private var enableUndo = true
-	@AppStorage(Setting.reversiFlipUI.rawValue) private var flipped = false
+	@AppStorage(Setting.enableUndo.rawValue) private var enableUndo = true
+	@AppStorage(Setting.flipUI.rawValue) private var flipped = false
 	private var theme: ReversiUITheme {
-		guard let selectedTheme = themes.first(where: { $0.id!.uuidString == reversiTheme }) else {
+		guard let selectedTheme = themes.first(where: { $0.id.uuidString == reversiTheme }) else {
 			return ReversiUITheme()
 		}
 		return ReversiUITheme(theme: selectedTheme)
@@ -87,7 +92,7 @@ struct ReversiView: View {
 			game.board.undo()
 		}
 #else
-		.navigationBarTitleDisplayMode(.inline)
+//		.navigationBarTitleDisplayMode(.inline)
 		.navigationTitle("Reversi")
 		.toolbar {
 			if enableUndo {

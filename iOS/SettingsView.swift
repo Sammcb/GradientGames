@@ -6,85 +6,66 @@
 //
 #if !os(tvOS)
 import SwiftUI
-import CoreData.NSManagedObject
+import SwiftData
 
 struct SettingsView: View {
-	private enum SheetId: String, Identifiable {
-		case newChess
-		case newReversi
-		case newCheckers
-		
-		var id: String {
-			rawValue
-		}
+	private struct SelectedTheme: Identifiable {
+		let id: UUID
 	}
 	
-	@Environment(\.managedObjectContext) private var context
-	@EnvironmentObject private var navigation: Navigation
-	@FetchRequest(sortDescriptors: [SortDescriptor(\ChessTheme.index, order: .forward)]) private var chessThemes: FetchedResults<ChessTheme>
-	@FetchRequest(sortDescriptors: [SortDescriptor(\ReversiTheme.index, order: .forward)]) private var reversiThemes: FetchedResults<ReversiTheme>
-	@FetchRequest(sortDescriptors: [SortDescriptor(\CheckersTheme.index, order: .forward)]) private var checkersThemes: FetchedResults<CheckersTheme>
-	@AppStorage(Setting.chessTheme.rawValue) private var chessTheme = ""
-	@AppStorage(Setting.chessEnableUndo.rawValue) private var chessEnableUndo = true
-	@AppStorage(Setting.chessEnableTimer.rawValue) private var chessEnableTimer = true
-	@AppStorage(Setting.reversiTheme.rawValue) private var reversiTheme = ""
-	@AppStorage(Setting.reversiEnableUndo.rawValue) private var reversiEnableUndo = true
-	@AppStorage(Setting.reversiEnableTimer.rawValue) private var reversiEnableTimer = true
-	@AppStorage(Setting.checkersTheme.rawValue) private var checkersTheme = ""
-	@AppStorage(Setting.checkersEnableUndo.rawValue) private var checkersEnableUndo = true
-	@AppStorage(Setting.checkersEnableTimer.rawValue) private var checkersEnableTimer = true
+	@Environment(\.modelContext) private var context
+	@Environment(Navigation.self) private var navigation: Navigation
+	@Query(sort: \Theme.index) private var themes: [Theme]
+	@AppStorage(Setting.enableUndo.rawValue) private var enableUndo = true
+	@AppStorage(Setting.enableTimer.rawValue) private var enableTimer = true
 #if !targetEnvironment(macCatalyst)
-	@AppStorage(Setting.chessFlipUI.rawValue) private var chessFlipUI = false
-	@AppStorage(Setting.reversiFlipUI.rawValue) private var reversiFlipUI = false
-	@AppStorage(Setting.checkersFlipUI.rawValue) private var checkersFlipUI = false
+	@AppStorage(Setting.flipUI.rawValue) private var flipUI = false
 #endif
+	@AppStorage(Setting.chessTheme.rawValue) private var chessTheme = ""
+	@AppStorage(Setting.reversiTheme.rawValue) private var reversiTheme = ""
+	@AppStorage(Setting.checkersTheme.rawValue) private var checkersTheme = ""
+	@State private var sheetTheme: SelectedTheme? = nil
 	
-	@State private var sheet: SheetId? = nil
-	@State private var selectedTheme: UUID? = nil
-	
-	private func deleteTheme(for themeObjects: [NSManagedObject], at indexSet: IndexSet) {
-		for index in indexSet {
-			context.delete(themeObjects[index])
-		}
-		
-		var deleted = 0
-		let themes = themeObjects as! [Theme]
-		for (index, theme) in themes.enumerated() {
-			guard !indexSet.contains(index) else {
-				deleted += 1
+	private func deleteTheme(for game: Theme.Game, at indexSet: IndexSet) {
+		let gameThemes = themes.filter({ $0.game == game })
+		for gameThemeIndex in indexSet {
+			let id = gameThemes[gameThemeIndex].id
+			guard let theme = themes.first(where: { $0.id == id }) else {
 				continue
 			}
-			if theme.index != index - deleted {
-				theme.index = Int64(index - deleted)
-			}
+			
+			context.delete(theme)
 		}
-		Store.shared.save()
+		for (index, theme) in themes.filter({ $0.game == game }).enumerated() {
+			theme.index = index
+		}
 	}
 	
-	private func moveThemeRow(for themes: [any Theme], from offsets: IndexSet, to offset: Int) {
-		var themes = themes
-		themes.move(fromOffsets: offsets, toOffset: offset)
-		for (index, themeRow) in themes.enumerated() {
-			if themeRow.index != index {
-				themeRow.index = Int64(index)
+	private func moveTheme(for game: Theme.Game, from offsets: IndexSet, to offset: Int) {
+		var ids = themes.filter({ $0.game == game }).map({ $0.id })
+		ids.move(fromOffsets: offsets, toOffset: offset)
+		for (index, id) in ids.enumerated() {
+			guard let theme = themes.first(where: { $0.id == id }) else {
+				continue
 			}
+			
+			theme.index = index
 		}
-		Store.shared.save()
 	}
 	
 	var body: some View {
 		Form {
-			Section("Chess") {
-				Toggle(isOn: $chessEnableUndo) {
+			Section("General") {
+				Toggle(isOn: $enableUndo) {
 					Label("Undos", systemImage: "arrow.uturn.backward")
 						.symbolVariant(.circle.fill)
 				}
-				Toggle(isOn: $chessEnableTimer) {
+				Toggle(isOn: $enableTimer) {
 					Label("Timers", systemImage: "clock")
 						.symbolVariant(.fill)
 				}
 #if !targetEnvironment(macCatalyst)
-				Toggle(isOn: $chessFlipUI) {
+				Toggle(isOn: $flipUI) {
 					Label("Flip UI each turn", systemImage: "arrow.up.arrow.down")
 						.symbolVariant(.circle.fill)
 				}
@@ -92,185 +73,160 @@ struct SettingsView: View {
 			}
 			.headerProminence(.increased)
 			
-			Section("Theme") {
-				List(selection: $selectedTheme) {
+			Section("Chess") {
+				let chessThemes = themes.filter({ $0.game == .chess })
+				List {
 					ForEach(chessThemes) { theme in
-						let themeSelected = chessTheme == theme.id!.uuidString
-						NavigationLink(value: theme.id) {
-							Label {
-								Text(theme.symbol!)
-							} icon: {
-								Image(systemName: themeSelected ? "checkmark.circle.fill" : "circle")
-									.foregroundColor(themeSelected ? .green : .gray)
+						let themeSelected = chessTheme == theme.id.uuidString
+						HStack {
+							Text(theme.symbol)
+							Spacer()
+							Button {
+								chessTheme = themeSelected ? "" : theme.id.uuidString
+							} label: {
+								Label("Selected", systemImage: "checkmark.circle.fill")
+									.labelStyle(.iconOnly)
+									.opacity(themeSelected ? 1 : 0)
+									.foregroundStyle(.green)
 							}
 						}
 						.swipeActions(edge: .leading) {
 							Button {
-								chessTheme = themeSelected ? "" : theme.id!.uuidString
+								sheetTheme = SelectedTheme(id: theme.id)
 							} label: {
-								if themeSelected {
-									Label("Deselect", systemImage: "xmark")
-								} else {
-									Label("Select", systemImage: "checkmark")
-								}
+								Label("Edit", systemImage: "pencil")
+									.tint(.blue)
 							}
 						}
-						.tint(chessTheme == theme.id!.uuidString ? .gray : .green)
 					}
 					.onDelete { indexSet in
-						deleteTheme(for: Array(chessThemes), at: indexSet)
+						deleteTheme(for: .chess, at: indexSet)
 					}
 					.onMove { indexSet, index in
-						moveThemeRow(for: Array(chessThemes), from: indexSet, to: index)
+						moveTheme(for: .chess, from: indexSet, to: index)
 					}
 				}
 				
 				Button {
-					sheet = .newChess
+					let theme = Theme(game: .chess)
+					if let lastThemeIndex = chessThemes.last?.index {
+						theme.index = lastThemeIndex + 1
+					}
+					context.insert(theme)
+					sheetTheme = SelectedTheme(id: theme.id)
 				} label: {
 					Label("Create theme", systemImage: "plus")
 				}
 			}
+			.headerProminence(.increased)
 			
 			Section("Reversi") {
-				Toggle(isOn: $reversiEnableUndo) {
-					Label("Undos", systemImage: "arrow.uturn.backward")
-						.symbolVariant(.circle.fill)
-				}
-				Toggle(isOn: $reversiEnableTimer) {
-					Label("Timers", systemImage: "clock")
-						.symbolVariant(.fill)
-				}
-#if !targetEnvironment(macCatalyst)
-				Toggle(isOn: $reversiFlipUI) {
-					Label("Flip UI each turn", systemImage: "arrow.up.arrow.down")
-						.symbolVariant(.circle.fill)
-				}
-#endif
-			}
-			.headerProminence(.increased)
-			
-			Section("Theme") {
-				List(selection: $selectedTheme) {
+				let reversiThemes = themes.filter({ $0.game == .reversi })
+				List {
 					ForEach(reversiThemes) { theme in
-						let themeSelected = reversiTheme == theme.id!.uuidString
-						NavigationLink(value: theme.id) {
-							Label {
-								Text(theme.symbol!)
-							} icon: {
-								Image(systemName: themeSelected ? "checkmark.circle.fill" : "circle")
-									.foregroundColor(themeSelected ? .green : .gray)
+						let themeSelected = reversiTheme == theme.id.uuidString
+						HStack {
+							Text(theme.symbol)
+							Spacer()
+							Button {
+								reversiTheme = themeSelected ? "" : theme.id.uuidString
+							} label: {
+								Label("Selected", systemImage: "checkmark.circle.fill")
+									.labelStyle(.iconOnly)
+									.opacity(themeSelected ? 1 : 0)
+									.foregroundStyle(.green)
 							}
 						}
 						.swipeActions(edge: .leading) {
 							Button {
-								reversiTheme = themeSelected ? "" : theme.id!.uuidString
+								sheetTheme = SelectedTheme(id: theme.id)
 							} label: {
-								Label(themeSelected ? "Deselect": "Select", systemImage: themeSelected ? "xmark" : "checkmark")
+								Label("Edit", systemImage: "pencil")
+									.tint(.blue)
 							}
 						}
-						.tint(reversiTheme == theme.id!.uuidString ? .gray : .green)
 					}
 					.onDelete { indexSet in
-						deleteTheme(for: Array(reversiThemes), at: indexSet)
+						deleteTheme(for: .reversi, at: indexSet)
 					}
 					.onMove { indexSet, index in
-						moveThemeRow(for: Array(reversiThemes), from: indexSet, to: index)
+						moveTheme(for: .reversi, from: indexSet, to: index)
 					}
 					
 					Button {
-						sheet = .newReversi
+						let theme = Theme(game: .reversi)
+						if let lastThemeIndex = reversiThemes.last?.index {
+							theme.index = lastThemeIndex + 1
+						}
+						context.insert(theme)
+						sheetTheme = SelectedTheme(id: theme.id)
 					} label: {
 						Label("Create theme", systemImage: "plus")
 					}
 				}
 			}
+			.headerProminence(.increased)
 			
 			Section("Checkers") {
-				Toggle(isOn: $checkersEnableUndo) {
-					Label("Undos", systemImage: "arrow.uturn.backward")
-						.symbolVariant(.circle.fill)
-				}
-				Toggle(isOn: $checkersEnableTimer) {
-					Label("Timers", systemImage: "clock")
-						.symbolVariant(.fill)
-				}
-#if !targetEnvironment(macCatalyst)
-				Toggle(isOn: $checkersFlipUI) {
-					Label("Flip UI each turn", systemImage: "arrow.up.arrow.down")
-						.symbolVariant(.circle.fill)
-				}
-#endif
-			}
-			.headerProminence(.increased)
-			
-			Section("Theme") {
-				List(selection: $selectedTheme) {
+				let checkersThemes = themes.filter({ $0.game == .checkers })
+				List {
 					ForEach(checkersThemes) { theme in
-						let themeSelected = checkersTheme == theme.id!.uuidString
-						NavigationLink(value: theme.id) {
-							Label {
-								Text(theme.symbol!)
-							} icon: {
-								Image(systemName: themeSelected ? "checkmark.circle.fill" : "circle")
-									.foregroundColor(themeSelected ? .green : .gray)
+						let themeSelected = checkersTheme == theme.id.uuidString
+						HStack {
+							Text(theme.symbol)
+							Spacer()
+							Button {
+								checkersTheme = themeSelected ? "" : theme.id.uuidString
+							} label: {
+								Label("Selected", systemImage: "checkmark.circle.fill")
+									.labelStyle(.iconOnly)
+									.opacity(themeSelected ? 1 : 0)
+									.foregroundStyle(.green)
 							}
 						}
 						.swipeActions(edge: .leading) {
 							Button {
-								checkersTheme = themeSelected ? "" : theme.id!.uuidString
+								sheetTheme = SelectedTheme(id: theme.id)
 							} label: {
-								if themeSelected {
-									Label("Deselect", systemImage: "xmark")
-								} else {
-									Label("Select", systemImage: "checkmark")
-								}
+								Label("Edit", systemImage: "pencil")
+									.tint(.blue)
 							}
 						}
-						.tint(themeSelected ? .gray : .green)
 					}
 					.onDelete { indexSet in
-						deleteTheme(for: Array(checkersThemes), at: indexSet)
+						deleteTheme(for: .checkers, at: indexSet)
 					}
 					.onMove { indexSet, index in
-						moveThemeRow(for: Array(checkersThemes), from: indexSet, to: index)
+						moveTheme(for: .checkers, from: indexSet, to: index)
 					}
 					
 					Button {
-						sheet = .newCheckers
+						let theme = Theme(game: .checkers)
+						if let lastThemeIndex = checkersThemes.last?.index {
+							theme.index = lastThemeIndex + 1
+						}
+						context.insert(theme)
+						sheetTheme = SelectedTheme(id: theme.id)
 					} label: {
 						Label("Create theme", systemImage: "plus")
 					}
 				}
 			}
+			.headerProminence(.increased)
 		}
-		.navigationDestination(for: UUID.self) { themeId in
-			if let theme = chessThemes.first(where: { $0.id == themeId}) {
-				EditChessThemeView(theme)
-			} else if let theme = reversiThemes.first(where: { $0.id == themeId}) {
-				EditReversiThemeView(theme)
-			} else if let theme = checkersThemes.first(where: { $0.id == themeId}) {
-				EditCheckersThemeView(theme)
+		.sheet(item: $sheetTheme) { selectedTheme in
+			if let theme = themes.first(where: { $0.id == selectedTheme.id }) {
+				ThemeView(theme: theme)
 			}
 		}
-		.sheet(item: $sheet) { sheet in
-			switch sheet {
-			case .newChess:
-				NewChessThemeView()
-			case .newReversi:
-				NewReversiThemeView()
-			case .newCheckers:
-				NewCheckersThemeView()
-			}
-		}
-		.onReceive(navigation.$themeLinkOpened) { themeLinkOpened in
-			guard themeLinkOpened else {
-				return
-			}
-			
-			sheet = nil
-			navigation.themeLinkOpened = false
-		}
+//		.onReceive(navigation.themeLinkOpened) { themeLinkOpened in
+//			guard themeLinkOpened else {
+//				return
+//			}
+//			
+//			sheetTheme = nil
+//			navigation.themeLinkOpened = false
+//		}
 		.navigationTitle("Settings")
 	}
 }

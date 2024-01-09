@@ -13,6 +13,6 @@ struct ReversiPieceView: View {
 	
 	var body: some View {
 		Circle()
-			.foregroundColor(isLight ? theme.pieceLight : theme.pieceDark)
+			.foregroundStyle(isLight ? theme.pieceLight : theme.pieceDark)
 	}
 }

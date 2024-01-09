@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct CheckersTimesTimelineView: View {
-	@EnvironmentObject private var game: CheckersGame
-	@AppStorage(Setting.checkersFlipUI.rawValue) private var flipped = false
+	@Environment(CheckersGame.self) private var game: CheckersGame
+	@AppStorage(Setting.flipUI.rawValue) private var flipped = false
 	
 	var body: some View {
 		TimelineView(.periodic(from: .now, by: 1 / 10)) { timeline in
@@ -22,20 +22,20 @@ struct CheckersTimesTimelineView: View {
 
 struct CheckersTimesView: View {
 	@Environment(\.checkersTheme) private var theme
-	@EnvironmentObject private var game: CheckersGame
+	@Environment(CheckersGame.self) private var game: CheckersGame
 	let date: Date
 	
 	var body: some View {
 		VStack {
 			Text(CheckersState.shared.times.stringFor(lightTime: true))
-				.foregroundColor(theme.pieceLight)
+				.foregroundStyle(theme.pieceLight)
 			Text(CheckersState.shared.times.stringFor(lightTime: false))
-				.foregroundColor(theme.pieceDark)
+				.foregroundStyle(theme.pieceDark)
 		}
 		.onAppear {
 			CheckersState.shared.times.lastUpdate = date
 		}
-		.onChange(of: date) { _ in
+		.onChange(of: date) {
 			if game.board.gameOver {
 				return
 			}
@@ -54,8 +54,8 @@ struct CheckersTimesView: View {
 
 struct CheckersStateView: View {
 	@Environment(\.checkersTheme) private var theme
-	@EnvironmentObject private var game: CheckersGame
-	@AppStorage(Setting.checkersFlipUI.rawValue) private var flipped = false
+	@Environment(CheckersGame.self) private var game: CheckersGame
+	@AppStorage(Setting.flipUI.rawValue) private var flipped = false
 	
 	var body: some View {
 		let lightTurn = game.board.lightTurn
@@ -63,14 +63,14 @@ struct CheckersStateView: View {
 		Image(systemName: game.board.gameOver ? "crown" : "circle.circle")
 			.symbolVariant(.fill)
 			.font(.largeTitle)
-			.foregroundColor(toggleColor ? theme.pieceLight : theme.pieceDark)
+			.foregroundStyle(toggleColor ? theme.pieceLight : theme.pieceDark)
 			.rotationEffect(game.board.lightTurn && flipped ? .radians(.pi) : .zero)
 			.animation(.easeIn, value: game.board.lightTurn)
 	}
 }
 
 struct CheckersUIView: View {
-	@AppStorage(Setting.checkersEnableTimer.rawValue) private var enableTimer = true
+	@AppStorage(Setting.enableTimer.rawValue) private var enableTimer = true
 	let vertical: Bool
 	
 	var body: some View {
