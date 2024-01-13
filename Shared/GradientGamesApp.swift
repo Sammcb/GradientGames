@@ -20,8 +20,8 @@ struct GradientGamesApp: App {
 	}
 	
 	init() {
-		let schema = Schema([Theme.self])
-		let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+		let schema = Schema([Theme.self, ChessBoardTest.self])
+		let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
 		
 		do {
 			container = try ModelContainer(for: schema, configurations: [modelConfiguration])

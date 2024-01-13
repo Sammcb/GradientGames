@@ -9,12 +9,7 @@ import Foundation
 
 struct ChessPiece: Codable, Equatable, Identifiable {
 	enum Group: String, Codable, Identifiable {
-		case pawn
-		case knight
-		case bishop
-		case rook
-		case queen
-		case king
+		case pawn, knight, bishop, rook, queen, king
 		
 		var id: String {
 			rawValue

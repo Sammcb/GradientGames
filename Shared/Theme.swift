@@ -69,7 +69,7 @@ extension ThemeColors {
 }
 
 @Model
-final class Theme: ColorConverter {
+class Theme: ColorConverter {
 	enum Game: String, Codable {
 		case chess, reversi, checkers
 	}

@@ -8,22 +8,22 @@
 import SwiftUI
 
 struct ChessTimesTimelineView: View {
-	@Environment(ChessGame.self) private var game: ChessGame
-	@AppStorage(Setting.flipUI.rawValue) private var flipped = false
+	var board: ChessBoardTest
+	var flipped: Bool
 	
 	var body: some View {
 		TimelineView(.periodic(from: .now, by: 1 / 10)) { timeline in
-			ChessTimesView(date: timeline.date)
+			ChessTimesView(board: board, date: timeline.date)
 		}
-		.rotationEffect(!game.board.lightTurn && flipped ? .radians(.pi) : .zero)
-		.animation(.easeIn, value: game.board.lightTurn)
+		.rotationEffect(!board.lightTurn && flipped ? .radians(.pi) : .zero)
+		.animation(.easeIn, value: board.lightTurn)
 	}
 }
 
 struct ChessTimesView: View {
 	@Environment(\.chessTheme) private var theme
-	@Environment(ChessGame.self) private var game: ChessGame
-	let date: Date
+	var board: ChessBoardTest
+	@State var date: Date
 	
 	var body: some View {
 		VStack {
@@ -36,15 +36,13 @@ struct ChessTimesView: View {
 			ChessState.shared.times.lastUpdate = date
 		}
 		.onChange(of: date) {
-			let lightTurn = game.board.lightTurn
-			let kingState = game.kingState(isLight: lightTurn)
-			guard kingState == .ok || kingState == .check else {
+			if board.gameOver {
 				return
 			}
 			
 			let interval = ChessState.shared.times.lastUpdate.distance(to: date)
 			
-			if lightTurn {
+			if board.lightTurn {
 				ChessState.shared.times.light += interval
 			} else {
 				ChessState.shared.times.dark += interval
@@ -56,16 +54,16 @@ struct ChessTimesView: View {
 
 struct ChessKingStatusView: View {
 	@Environment(\.chessTheme) private var theme
-	@Environment(ChessGame.self) private var game: ChessGame
-	let isLight: Bool
+	var board: ChessBoardTest
 	
 	private func stateSymbol(isLight: Bool) -> String {
-		let opponentKingState = game.kingState(isLight: !isLight)
+		let opponentKingState = board.lightTurn ? board.kingStates.dark : board.kingStates.light
 		if opponentKingState == .stalemate {
 			return "minus"
 		}
 		
-		switch game.kingState(isLight: isLight) {
+		let kingState = board.lightTurn ? board.kingStates.light : board.kingStates.dark
+		switch kingState {
 		case .ok:
 			return "checkmark"
 		case .check:
@@ -78,27 +76,17 @@ struct ChessKingStatusView: View {
 	}
 	
 	var body: some View {
-		Image(systemName: stateSymbol(isLight: isLight))
+		Image(systemName: stateSymbol(isLight: board.lightTurn))
 			.symbolVariant(.fill.circle)
-			.foregroundStyle(isLight ? theme.pieceLight : theme.pieceDark)
+			.foregroundStyle(board.lightTurn ? theme.pieceLight : theme.pieceDark)
 			.font(.largeTitle)
 	}
 }
 
-struct ChessStatusView: View {
-	@Environment(ChessGame.self) private var game: ChessGame
-	@AppStorage(Setting.flipUI.rawValue) private var flipped = false
-	
-	var body: some View {
-		let lightTurn = game.board.lightTurn
-		ChessKingStatusView(isLight: lightTurn)
-			.rotationEffect(!lightTurn && flipped ? .radians(.pi) : .zero)
-			.animation(.easeIn, value: lightTurn)
-	}
-}
-
 struct ChessUIView: View {
-	@AppStorage(Setting.enableTimer.rawValue) private var enableTimer = true
+	var board: ChessBoardTest
+	var enableTimer: Bool
+	var flipped: Bool
 	let vertical: Bool
 	
 	var body: some View {
@@ -107,12 +95,20 @@ struct ChessUIView: View {
 		layout {
 			Spacer()
 			
-			ChessStatusView()
+			ChessKingStatusView(board: board)
+				.rotationEffect(!board.lightTurn && flipped ? .radians(.pi) : .zero)
+				.animation(.easeIn, value: board.lightTurn)
+			
+			// might be nice to have the timers layed out like: 00:00     00:00
+			// right under the title, then have the king status not shown if .ok
+			// otherwise, it appears in a rounded box right under with transparent background
+			// maybe could even share space with the promotion UI
+			// promotion UI as a menu popup from the pawn could be cool too
 			
 			Spacer()
 			
 			if enableTimer {
-				ChessTimesTimelineView()
+				ChessTimesTimelineView(board: board, flipped: flipped)
 				
 				Spacer()
 			}

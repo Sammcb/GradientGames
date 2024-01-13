@@ -33,6 +33,10 @@ enum ChessFile: Int, CaseIterable, Comparable, Codable, Identifiable {
 	var id: Int {
 		rawValue
 	}
+	
+	func delta(file: ChessFile) -> Int {
+		rawValue - file.rawValue
+	}
 }
 
 let ChessRanks = 1...8

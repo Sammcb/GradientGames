@@ -9,19 +9,22 @@ import SwiftUI
 
 struct ChessBoardView: View {
 	@Environment(\.chessTheme) private var theme
-	@Environment(ChessGame.self) private var game: ChessGame
+	var board: ChessBoardTest
+	var flipped: Bool
 	@FocusState private var focusedSquare: ChessSquare?
-	@AppStorage(Setting.flipUI.rawValue) private var flipped = false
+	@State private var selectedSquare: ChessSquare?
+	
+	@Namespace private var pieceAnimation
 	
 	var body: some View {
-		let borderColor = game.board.lightTurn ? theme.pieceLight : theme.pieceDark
+		let borderColor = board.lightTurn ? theme.pieceLight : theme.pieceDark
 		ZStack {
 			Grid(horizontalSpacing: 0, verticalSpacing: 0) {
 				ForEach(ChessRanks.reversed(), id: \.self) { rank in
 					GridRow {
 						ForEach(ChessFile.validFiles) { file in
 							let square = ChessSquare(file: file, rank: rank)
-							ChessSquareView(file: file, rank: rank)
+							ChessSquareView(board: board, selected: $selectedSquare, file: file, rank: rank)
 								.focused($focusedSquare, equals: square)
 								.border(focusedSquare == square ? borderColor : .clear, width: 5)
 						}
@@ -29,28 +32,25 @@ struct ChessBoardView: View {
 				}
 			}
 			
-			GeometryReader { geometry in
-				let boardLength = geometry.size.width
-				ForEach(game.pieces) { piece in
-					let pieceIndex = game.board.pieces.firstIndex(of: piece)!
-					let pieceColor = piece.isLight ? theme.pieceLight : theme.pieceDark
-					let square = ChessPieces.square(at: pieceIndex)
-					ChessPieceView(piece: piece)
-						.allowsHitTesting(false)
-						.font(.system(size: boardLength / 12))
-						.frame(width: boardLength / 8, height: boardLength / 8)
-						.background {
-							Circle()
-								.stroke(game.selectedSquare == square ? pieceColor : .clear, lineWidth: boardLength / 128)
-								.frame(width: boardLength / 10, height: boardLength / 10)
+			Grid(horizontalSpacing: 0, verticalSpacing: 0) {
+				ForEach(ChessRanks.reversed(), id: \.self) { rank in
+					GridRow {
+						ForEach(ChessFile.validFiles) { file in
+							if let piece = board.pieces[file, rank] {
+								ChessPieceView(piece: piece)
+									.matchedGeometryEffect(id: piece.id, in: pieceAnimation)
+									.allowsHitTesting(false)
+									.rotationEffect(!piece.isLight && flipped ? .radians(.pi) : .zero)
+							} else {
+								Spacer()
+									.frame(maxWidth: .infinity, maxHeight: .infinity)
+							}
 						}
-						.rotationEffect(!piece.isLight && flipped ? .radians(.pi) : .zero)
-						.offset(x: CGFloat(square.file.rawValue - 1) * boardLength / 8, y: CGFloat(8 - square.rank) * boardLength / 8)
-						.transition(.opacity.animation(.linear))
-						.animation(.linear, value: game.board)
-						.zIndex(1)
+					}
 				}
 			}
+			.animation(.linear, value: board.history)
+			.transition(.opacity.animation(.linear))
 		}
 		.aspectRatio(1, contentMode: .fit)
 	}

@@ -20,6 +20,7 @@
 		226EE7F727D1260600C8A473 /* CheckersPieceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7F627D1260600C8A473 /* CheckersPieceView.swift */; };
 		226EE80127D1547F00C8A473 /* CheckersUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE80027D1547F00C8A473 /* CheckersUIView.swift */; };
 		22A4FE8B2B4D995B00882E87 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A4FE8A2B4D995B00882E87 /* Theme.swift */; };
+		22A4FE8F2B4DDA5D00882E87 /* ChessBoardTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A4FE8E2B4DDA5D00882E87 /* ChessBoardTest.swift */; };
 		22B3C69E28D29A4100E585C9 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B3C69D28D29A4100E585C9 /* Protocols.swift */; };
 		22B3C6A128D29A9200E585C9 /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B3C6A028D29A9200E585C9 /* Navigation.swift */; };
 		22BF667E28D3A6C600C13CA3 /* UniversalLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BF667D28D3A6C600C13CA3 /* UniversalLinks.swift */; };
@@ -73,6 +74,7 @@
 		226EE7F627D1260600C8A473 /* CheckersPieceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckersPieceView.swift; sourceTree = "<group>"; };
 		226EE80027D1547F00C8A473 /* CheckersUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckersUIView.swift; sourceTree = "<group>"; };
 		22A4FE8A2B4D995B00882E87 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		22A4FE8E2B4DDA5D00882E87 /* ChessBoardTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessBoardTest.swift; sourceTree = "<group>"; };
 		22B3C69D28D29A4100E585C9 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		22B3C6A028D29A9200E585C9 /* Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigation.swift; sourceTree = "<group>"; };
 		22BF667D28D3A6C600C13CA3 /* UniversalLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversalLinks.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 		22DB9DA027B9528E002D8312 /* Chess */ = {
 			isa = PBXGroup;
 			children = (
+				22A4FE8E2B4DDA5D00882E87 /* ChessBoardTest.swift */,
 				22DB9DB627B9618F002D8312 /* ChessState.swift */,
 				22DB9DB827B961CE002D8312 /* ChessBoard.swift */,
 				22DB9DBC27B9624F002D8312 /* ChessSquare.swift */,
@@ -353,6 +356,7 @@
 				22DB9DED27B97D43002D8312 /* ReversiSquare.swift in Sources */,
 				22DB9DDE27B97132002D8312 /* ChessSquareView.swift in Sources */,
 				22DB9DEF27B97D54002D8312 /* ReversiMove.swift in Sources */,
+				22A4FE8F2B4DDA5D00882E87 /* ChessBoardTest.swift in Sources */,
 				224C10572B23F99E00FF47E7 /* ThemeView.swift in Sources */,
 				22DB9DE727B97CE1002D8312 /* ReversiState.swift in Sources */,
 				22DB9DBD27B9624F002D8312 /* ChessSquare.swift in Sources */,
