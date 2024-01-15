@@ -30,37 +30,20 @@ struct ReversiUITheme {
 	let pieceLight: Color
 	let pieceDark: Color
 	
-	init(theme: Theme) {
-//		square = Color(theme.square)
-//		border = Color(theme.border)
-//		pieceLight = Color(theme.pieceLight)
-//		pieceDark = Color(theme.pieceDark)
-		square = theme.colors[.squares]
-		border = theme.colors[.borders]
-		pieceLight = theme.colors[.pieceLight]
-		pieceDark = theme.colors[.pieceDark]
-	}
-	
-	init() {
-		square = Color(red: 32 / 255, green: 168 / 255, blue: 96 / 255)
-		border = Color(red: 68 / 255, green: 220 / 255, blue: 138 / 255)
-		pieceLight = .white
-		pieceDark = .black
+	init(theme: Theme? = nil) {
+		square = theme?.colors[.squares] ?? Color(red: 32 / 255, green: 168 / 255, blue: 96 / 255)
+		border = theme?.colors[.borders] ?? Color(red: 68 / 255, green: 220 / 255, blue: 138 / 255)
+		pieceLight = theme?.colors[.pieceLight] ?? .white
+		pieceDark = theme?.colors[.pieceDark] ?? .black
 	}
 }
 
 struct ReversiView: View {
-	@Query(sort: \Theme.index, order: .forward) private var themes: [Theme]
-	@Environment(ReversiGame.self) private var game: ReversiGame
-	@AppStorage(Setting.reversiTheme.rawValue) private var reversiTheme = ""
-	@AppStorage(Setting.enableUndo.rawValue) private var enableUndo = true
-	@AppStorage(Setting.flipUI.rawValue) private var flipped = false
-	private var theme: ReversiUITheme {
-		guard let selectedTheme = themes.first(where: { $0.id.uuidString == reversiTheme }) else {
-			return ReversiUITheme()
-		}
-		return ReversiUITheme(theme: selectedTheme)
-	}
+	@Environment(\.reversiTheme) private var theme
+	var board: ReversiBoard
+	var enableUndo: Bool
+	var flipped: Bool
+	var enableTimer: Bool
 	
 	var body: some View {
 		GeometryReader { geometry in
@@ -68,16 +51,17 @@ struct ReversiView: View {
 			let layout = vertical ? AnyLayout(VStackLayout()) : AnyLayout(HStackLayout())
 			
 			layout {
-				ReversiUIView(vertical: vertical)
+				ReversiUIView(board: board, enableTimer: enableTimer, flipped: flipped, vertical: vertical)
 				
-				ReversiBoardView()
+				ReversiBoardView(board: board, flipped: flipped)
 					.frame(maxWidth: .infinity, maxHeight: .infinity)
-				
-				ReversiStatsView(vertical: vertical)
 			}
 			.background(.linearGradient(colors: [theme.square, theme.border], startPoint: .top, endPoint: .bottom))
 			.frame(maxWidth: .infinity, maxHeight: .infinity)
-			.font(.system(.headline, design: .rounded).bold().monospacedDigit())
+			.font(.system(.headline, design: .rounded).bold().monospaced())
+		}
+		.onAppear {
+			board.times.lastUpdate = Date()
 		}
 #if os(tvOS)
 		.onPlayPauseCommand {
@@ -85,31 +69,24 @@ struct ReversiView: View {
 				return
 			}
 			
-			if game.board.history.isEmpty {
-				return
-			}
-			
-			game.board.undo()
+			board.undo()
 		}
 #else
-//		.navigationBarTitleDisplayMode(.inline)
+		.navigationBarTitleDisplayMode(.inline)
 		.navigationTitle("Reversi")
 		.toolbar {
 			if enableUndo {
 				ToolbarItem {
-					Button {
-						game.board.undo()
-					} label: {
-						Label("Undo", systemImage: "arrow.uturn.backward")
+					Button(action: board.undo) {
+						Image(systemName: "arrow.uturn.backward")
 							.symbolVariant(.circle.fill)
-							.rotationEffect(game.board.lightTurn && flipped ? .radians(.pi) : .zero)
-							.animation(.easeIn, value: game.board.lightTurn)
+							.rotationEffect(board.lightTurn && flipped ? .radians(.pi) : .zero)
+							.animation(.easeIn, value: board.lightTurn)
 					}
-					.disabled(game.board.history.isEmpty)
+					.disabled(!board.undoEnabled)
 				}
 			}
 		}
 #endif
-		.environment(\.reversiTheme, theme)
 	}
 }

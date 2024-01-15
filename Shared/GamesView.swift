@@ -37,12 +37,13 @@ struct GamesView: View, UniversalLinkReciever {
 	@Environment(\.modelContext) private var context
 	@Query(sort: \Theme.index) private var themes: [Theme]
 	@Query private var chessBoards: [ChessBoard]
+	@Query private var reversiBoards: [ReversiBoard]
 	@State private var navigation = Navigation()
-	@State private var reversiGame = ReversiGame()
 	@State private var checkersGame = CheckersGame()
 	@State private var path: [UUID] = []
 	@State private var selectedView: DetailView?
 	@AppStorage(Setting.chessTheme.rawValue) private var chessTheme = ""
+	@AppStorage(Setting.reversiTheme.rawValue) private var reversiTheme = ""
 	@AppStorage(Setting.enableUndo.rawValue) private var enableUndo = true
 	@AppStorage(Setting.flipUI.rawValue) private var flipped = false
 	@AppStorage(Setting.enableTimer.rawValue) private var enableTimer = false
@@ -65,6 +66,15 @@ struct GamesView: View, UniversalLinkReciever {
 	private func chessBoard() -> ChessBoard {
 		guard let board = chessBoards.first else {
 			let newBoard = ChessBoard()
+			context.insert(newBoard)
+			return newBoard
+		}
+		return board
+	}
+	
+	private func reversiBoard() -> ReversiBoard {
+		guard let board = reversiBoards.first else {
+			let newBoard = ReversiBoard()
 			context.insert(newBoard)
 			return newBoard
 		}
@@ -171,8 +181,9 @@ struct GamesView: View, UniversalLinkReciever {
 					ChessView(board: chessBoard(), enableUndo: enableUndo, flipped: flipped, enableTimer: enableTimer)
 						.environment(\.chessTheme, theme)
 				case .reversi:
-					ReversiView()
-						.environment(reversiGame)
+					let theme = ReversiUITheme(theme: themes.first(where: { $0.id.uuidString == reversiTheme }))
+					ReversiView(board: reversiBoard(), enableUndo: enableUndo, flipped: flipped, enableTimer: enableTimer)
+						.environment(\.reversiTheme, theme)
 				case .checkers:
 					CheckersView()
 						.environment (checkersGame)

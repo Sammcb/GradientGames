@@ -84,8 +84,13 @@ struct ChessUIView: View {
 			if enableTimer {
 				timersLayout {
 					Spacer()
+					
 					ChessTimeView(board: board, flipped: flipped, isLight: true)
+					
+					Spacer()
+					
 					ChessTimeView(board: board, flipped: flipped, isLight: false)
+					
 					Spacer()
 				}
 				.padding()
@@ -93,7 +98,6 @@ struct ChessUIView: View {
 			}
 			
 			ChessKingStatusView(board: board, flipped: flipped)
-				.transition(.opacity.animation(.linear))
 		}
 		.ignoresSafeArea(edges: vertical ? .horizontal : .vertical)
 	}

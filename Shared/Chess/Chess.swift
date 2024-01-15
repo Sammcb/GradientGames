@@ -10,6 +10,29 @@ import Foundation
 struct Chess {
 	private init() {}
 	
+	static var startingPieces: Pieces {
+		var pieces = Pieces(repeating: nil, count: File.validFiles.count * Ranks.count)
+		
+		for rank in [1, 8] {
+			pieces[.a, rank] = Piece(isLight: rank == 1, group: .rook)
+			pieces[.b, rank] = Piece(isLight: rank == 1, group: .knight)
+			pieces[.c, rank] = Piece(isLight: rank == 1, group: .bishop)
+			pieces[.d, rank] = Piece(isLight: rank == 1, group: .queen)
+			pieces[.e, rank] = Piece(isLight: rank == 1, group: .king)
+			pieces[.f, rank] = Piece(isLight: rank == 1, group: .bishop)
+			pieces[.g, rank] = Piece(isLight: rank == 1, group: .knight)
+			pieces[.h, rank] = Piece(isLight: rank == 1, group: .rook)
+		}
+		
+		for rank in [2, 7] {
+			for file in File.validFiles {
+				pieces[file, rank] = Piece(isLight: rank == 2, group: .pawn)
+			}
+		}
+		
+		return pieces
+	}
+	
 	enum KingState {
 		case ok, check, checkmate, stalemate
 	}
@@ -50,7 +73,7 @@ struct Chess {
 	
 	static let Ranks = 1...8
 	
-	typealias Pieces = [Chess.Piece?]
+	typealias Pieces = [Piece?]
 }
 
 extension Chess.Pieces {

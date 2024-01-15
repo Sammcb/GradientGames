@@ -38,13 +38,6 @@ struct ChessUITheme {
 	}
 }
 
-extension View {
-		func printOutput(_ value: Any) -> Self {
-				print(value)
-				return self
-		}
-}
-
 struct ChessView: View {
 	@Environment(\.chessTheme) private var theme
 	var board: ChessBoard
@@ -81,6 +74,7 @@ struct ChessView: View {
 			guard enableUndo else {
 				return
 			}
+			
 			board.undo()
 		}
 #else

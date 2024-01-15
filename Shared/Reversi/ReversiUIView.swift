@@ -7,95 +7,126 @@
 
 import SwiftUI
 
-struct ReversiTimesTimelineView: View {
-	@Environment(ReversiGame.self) private var game: ReversiGame
-	@AppStorage(Setting.flipUI.rawValue) private var flipped = false
-	
-	var body: some View {
-		TimelineView(.periodic(from: .now, by: 1 / 10)) { timeline in
-			ReversiTimesView(date: timeline.date)
-		}
-		.rotationEffect(game.board.lightTurn && flipped ? .radians(.pi) : .zero)
-		.animation(.easeIn, value: game.board.lightTurn)
-	}
-}
-
-struct ReversiTimesView: View {
+struct ReversiTimeView: View {
 	@Environment(\.reversiTheme) private var theme
-	@Environment(ReversiGame.self) private var game: ReversiGame
-	@AppStorage(Setting.enableTimer.rawValue) private var enableTimer = true
-	let date: Date
+	var board: ReversiBoard
+	var flipped: Bool
+	let isLight: Bool
+	let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 	
 	var body: some View {
-		VStack {
-			Text(ReversiState.shared.times.stringFor(lightTime: true))
-				.foregroundStyle(theme.pieceLight)
-			Text(ReversiState.shared.times.stringFor(lightTime: false))
-				.foregroundStyle(theme.pieceDark)
-		}
-		.onAppear {
-			ReversiState.shared.times.lastUpdate = date
-		}
-		.onChange(of: date) {
-			if game.board.gameOver {
-				return
+		Text(board.times.stringFor(lightTime: isLight))
+			.foregroundStyle(isLight ? theme.pieceLight : theme.pieceDark)
+			.rotationEffect(board.lightTurn && flipped ? .radians(.pi) : .zero)
+			.onReceive(timer) { currentDate in
+				guard board.lightTurn == isLight else {
+					return
+				}
+				
+				if board.gameOver {
+					return
+				}
+				
+				let interval = board.times.lastUpdate.distance(to: currentDate)
+				
+				guard interval > 0 else {
+					return
+				}
+				
+				if isLight {
+					board.times.light += interval
+				} else {
+					board.times.dark += interval
+				}
+				
+				board.times.lastUpdate = currentDate
 			}
-			
-			let interval = ReversiState.shared.times.lastUpdate.distance(to: date)
-			
-			if game.board.lightTurn {
-				ReversiState.shared.times.light += interval
-			} else {
-				ReversiState.shared.times.dark += interval
-			}
-			ReversiState.shared.times.lastUpdate = date
-		}
 	}
 }
 
 struct ReversiStatusView: View {
 	@Environment(\.reversiTheme) private var theme
-	@Environment(ReversiGame.self) private var game: ReversiGame
-	@AppStorage(Setting.flipUI.rawValue) private var flipped = false
+	var board: ReversiBoard
+	var flipped: Bool
 	
 	var body: some View {
-		let lightTurn = game.board.lightTurn
-		let lightScore = game.pieces.filter({ $0.isLight }).count
-		let darkScore = game.pieces.filter({ !$0.isLight }).count
+		let pieces = board.pieces.compactMap({ piece in piece })
+		let lightScore = pieces.filter({ piece in piece.isLight }).count
+		let darkScore = pieces.filter({ piece in !piece.isLight }).count
 		let gameOverSymbol = lightScore == darkScore ? "minus.circle" : "crown"
 		let gameOverColor = lightScore > darkScore ? theme.pieceLight : theme.pieceDark
-		let turnColor = lightTurn ? theme.pieceLight : theme.pieceDark
-		let symbolColor = game.board.gameOver ? gameOverColor : turnColor
-		Image(systemName: game.board.gameOver ? gameOverSymbol : "circle")
+		let turnColor = board.lightTurn ? theme.pieceLight : theme.pieceDark
+		let symbolColor = board.gameOver ? gameOverColor : turnColor
+		Image(systemName: board.gameOver ? gameOverSymbol : "circle")
+			.padding()
 			.symbolVariant(.fill)
-			.font(.largeTitle)
 			.foregroundStyle(symbolColor)
-			.rotationEffect(game.board.lightTurn && flipped ? .radians(.pi) : .zero)
-			.animation(.easeIn, value: game.board.lightTurn)
+			.font(.largeTitle)
+			.rotationEffect(board.lightTurn && flipped ? .radians(.pi) : .zero)
+			.background(.ultraThinMaterial)
+			.clipShape(RoundedRectangle(cornerRadius: 10))
+	}
+}
+
+struct ReversiScoreStatusView: View {
+	@Environment(\.reversiTheme) private var theme
+	var board: ReversiBoard
+	var flipped: Bool
+	var isLight: Bool
+	
+	var body: some View {
+		let pieces = board.pieces.compactMap({ piece in piece })
+		let lightScore = pieces.filter({ piece in piece.isLight }).count
+		let darkScore = pieces.filter({ piece in !piece.isLight }).count
+		let initialMoves = 2
+		let moves = board.history.filter({ move in !move.skip }).filter({ move in move.piece.isLight == isLight }).count
+		VStack(spacing: 0) {
+			ZStack {
+				ReversiPieceView(isLight: isLight)
+					.frame(width: 25, height: 25)
+				Text("\(isLight ? lightScore : darkScore)")
+					.blendMode(.destinationOut)
+			}
+			.compositingGroup()
+			
+			Text("\(moves + initialMoves)/\(board.maxMoves)")
+				.foregroundStyle(isLight ? theme.pieceLight : theme.pieceDark)
+		}
+		.rotationEffect(board.lightTurn && flipped ? .radians(.pi) : .zero)
 	}
 }
 
 struct ReversiUIView: View {
-	@AppStorage(Setting.enableTimer.rawValue) private var enableTimer = true
-	let vertical: Bool
+	@Environment(\.reversiTheme) private var theme
+	var board: ReversiBoard
+	var enableTimer: Bool
+	var flipped: Bool
+	var vertical: Bool
 	
 	var body: some View {
-		let layout = vertical ? AnyLayout(HStackLayout()) : AnyLayout(VStackLayout())
+		let layout = vertical ? AnyLayout(VStackLayout()) : AnyLayout(HStackLayout())
+		let statsLayout = vertical ? AnyLayout(HStackLayout()) : AnyLayout(VStackLayout())
 		
 		layout {
-			Spacer()
-			
-			ReversiStatusView()
-			
-			Spacer()
-			
-			if enableTimer {
-				ReversiTimesTimelineView()
-				
+			statsLayout {
+				Spacer()
+				ReversiScoreStatusView(board: board, flipped: flipped, isLight: false)
+				Spacer()
+				if enableTimer {
+					ReversiTimeView(board: board, flipped: flipped, isLight: false)
+					Spacer()
+					ReversiTimeView(board: board, flipped: flipped, isLight: true)
+					Spacer()
+				}
+				ReversiScoreStatusView(board: board, flipped: flipped, isLight: true)
 				Spacer()
 			}
+			.padding()
+			.background(.ultraThinMaterial)
+			
+			ReversiStatusView(board: board, flipped: flipped)
 		}
-		.padding(vertical ? .vertical : .horizontal)
-		.background(.ultraThinMaterial)
+		.animation(.easeIn, value: board.lightTurn)
+		.ignoresSafeArea(edges: vertical ? .horizontal : .vertical)
 	}
 }

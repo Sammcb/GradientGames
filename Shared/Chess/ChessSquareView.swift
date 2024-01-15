@@ -37,7 +37,7 @@ struct ChessSquareView: View {
 					.opacity(board.selectedSquare == square ? 1 : 0)
 					.frame(maxWidth: .infinity, maxHeight: .infinity)
 					.scaledToFit()
-					.scaleEffect(x: 0.8, y: 0.8)
+					.scaleEffect(0.8)
 			}
 		}
 #if os(tvOS)
@@ -52,7 +52,7 @@ struct ChessSquareView: View {
 			if board.validSquares.contains(square) {
 				Circle()
 					.fill(board.lightTurn ? theme.pieceLight : theme.pieceDark)
-					.scaleEffect(x: 0.25, y: 0.25)
+					.scaleEffect(0.25)
 					.transition(.opacity.animation(.linear))
 			}
 		}

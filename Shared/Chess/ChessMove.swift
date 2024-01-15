@@ -9,20 +9,18 @@ import Foundation
 
 extension Chess {
 	struct Move: Codable, Equatable {
-		let piece: Chess.Piece
-		let fromSquare: Chess.Square
-		let toSquare: Chess.Square
-		let capturedPiece: Chess.Piece?
-		let capturedSquare: Chess.Square?
+		let piece: Piece
+		let fromSquare: Square
+		let toSquare: Square
+		let capturedSquare: Square?
 		let promoted: Bool
-		var promotedPiece: Chess.Piece?
+		var promotedPiece: Piece?
 		
-		init(piece: Chess.Piece, from oldSquare: Chess.Square, to square: Chess.Square, captured capturedPiece: Chess.Piece?, at capturedSquare: Chess.Square, promoted: Bool = false) {
+		init(piece: Piece, from oldSquare: Square, to square: Square, capturedAt capturedSquare: Square?, promoted: Bool) {
 			self.piece = piece
 			self.fromSquare = oldSquare
 			self.toSquare = square
-			self.capturedPiece = capturedPiece
-			self.capturedSquare = capturedPiece == nil ? nil : capturedSquare
+			self.capturedSquare = capturedSquare
 			self.promoted = promoted
 		}
 	}

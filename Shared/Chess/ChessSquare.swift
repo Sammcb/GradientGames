@@ -9,10 +9,10 @@ import Foundation
 
 extension Chess {
 	struct Square: Equatable, Codable, Hashable {
-		let file: Chess.File
+		let file: File
 		let rank: Int
 		
-		init(file: Chess.File, rank: Int) {
+		init(file: File, rank: Int) {
 			self.file = file
 			self.rank = rank
 		}

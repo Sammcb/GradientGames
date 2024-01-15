@@ -46,7 +46,8 @@ extension ChessEngine {
 	
 	private func attackedLineFrom(_ square: Chess.Square, with fileStep: Int, _ rankStep: Int, for state: Chess.Pieces) -> [Chess.Square] {
 		var attackedSquares: [Chess.Square] = []
-		for delta in 1...7 {
+		let upperBound = max(Chess.File.validFiles.count, Chess.Ranks.upperBound)
+		for delta in 1..<upperBound {
 			guard let attackedSquare = Chess.Square(square, deltaFile: delta * fileStep, deltaRank: delta * rankStep) else {
 				return attackedSquares
 			}
@@ -176,7 +177,8 @@ extension ChessEngine {
 		switch piece.group {
 		case .pawn:
 			let rankOffset = piece.isLight ? 1 : -1
-			let startRank = piece.isLight ? 2 : 7
+			let baseRank = piece.isLight ? Chess.Ranks.lowerBound : Chess.Ranks.upperBound
+			let startRank = baseRank + rankOffset
 			
 			// Check if attack squares are valid
 			var validSquares = attackedSquares.filter({ state[$0] != nil || canEnPassant(to: $0, with: rankOffset, for: moves) })
@@ -197,7 +199,7 @@ extension ChessEngine {
 			return validSquares
 		case .knight, .bishop, .rook, .queen: return attackedSquares
 		case .king:
-			let startRank = piece.isLight ? 1 : 8
+			let startRank = piece.isLight ? Chess.Ranks.lowerBound : Chess.Ranks.upperBound
 			// Check if castle squares are valid
 			let castleFiles: [Chess.File] = [.g, .c]
 			let castleSquares = castleFiles.map({ file in Chess.Square(file: file, rank: startRank) })
@@ -248,13 +250,13 @@ extension ChessEngine {
 		let enPassant = piece.group == .pawn && square.file != oldSquare.file && state[square] == nil
 		let enPassantOffset = piece.isLight ? -1 : 1
 		let enPassantSquare = Chess.Square(square, deltaRank: enPassantOffset) ?? square
-		let capturedSquare = enPassant ? enPassantSquare : square
+		let potentialCapturedSquare = enPassant ? enPassantSquare : square
 		
-		let rank = piece.isLight ? 8 : 1
+		let rank = piece.isLight ? Chess.Ranks.upperBound : Chess.Ranks.lowerBound
 		let promoted = piece.group == .pawn && square.rank == rank
 		
-		let capturedPiece = state[capturedSquare]
-		return Chess.Move(piece: piece, from: oldSquare, to: square, captured: capturedPiece, at: capturedSquare, promoted: promoted)
+		let capturedSquare = state[potentialCapturedSquare] == nil ? nil : potentialCapturedSquare
+		return Chess.Move(piece: piece, from: oldSquare, to: square, capturedAt: capturedSquare, promoted: promoted)
 	}
 	
 	func canMove(from oldSquare: Chess.Square, to newSquare: Chess.Square, for lightTurn: Bool, _ state: Chess.Pieces, _ moves: [Chess.Move]) -> Bool {

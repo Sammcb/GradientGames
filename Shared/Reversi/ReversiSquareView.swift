@@ -9,25 +9,25 @@ import SwiftUI
 
 struct ReversiSquareView: View {
 	@Environment(\.reversiTheme) private var theme
-	@Environment(ReversiGame.self) private var game: ReversiGame
+	var board: ReversiBoard
 	let column: Int
 	let row: Int
 	
 	var body: some View {
-		let square = ReversiSquare(column: column, row: row)
+		let square = Reversi.Square(column: column, row: row)
 		Button {
-			guard game.board.canPlace(at: square) else {
+			guard board.canPlace(at: square) else {
 				return
 			}
 			
-			game.board.place(at: square)
+			board.place(at: square)
 		} label: {
-			if let piece = game.board.pieces[square] {
+			if let piece = board.pieces[square] {
 				ReversiPieceView(isLight: piece.isLight)
-					.scaleEffect(0.5)
 					.frame(maxWidth: .infinity, maxHeight: .infinity)
+					.scaleEffect(0.5)
 					.transition(.opacity.animation(.linear))
-					.animation(.linear, value: game.board)
+					.animation(.linear, value: board.history)
 			} else {
 				Text("")
 					.frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -35,10 +35,18 @@ struct ReversiSquareView: View {
 			
 		}
 		.background(theme.square, in: Rectangle())
+		.overlay {
+			if board.validSquares.contains(square) {
+				Circle()
+					.fill(board.lightTurn ? theme.pieceLight : theme.pieceDark)
+					.scaleEffect(0.25)
+					.transition(.opacity.animation(.linear))
+			}
+		}
 #if os(tvOS)
 		.buttonStyle(NoneButtonStyle())
 #else
-		.disabled(game.board.gameOver || game.board.pieces[square] != nil)
+		.disabled(board.gameOver || board.pieces[square] != nil)
 		.buttonStyle(.borderless)
 #endif
 	}

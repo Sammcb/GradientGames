@@ -17,17 +17,17 @@ struct ChessPromoteView: View {
 	var body: some View {
 		let layout = vertical ? AnyLayout(HStackLayout()) : AnyLayout(VStackLayout())
 		layout {
-//			Spacer()
+			Spacer()
 			ForEach(groups) { group in
 				Button {
 					board.promote(to: group)
 				} label: {
 					ChessPieceView(group: group, isLight: board.lightTurn)
-						.font(.system(size: 60))
+//						.font(.system(size: 60))
 				}
 				.rotationEffect(!board.lightTurn && flipped ? .radians(.pi) : .zero)
 				
-//				Spacer()
+				Spacer()
 			}
 		}
 		.disabled(!board.promoting)

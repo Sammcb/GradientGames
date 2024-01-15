@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ReversiPieceView: View {
 	@Environment(\.reversiTheme) private var theme
-	let isLight: Bool
+	var isLight: Bool
 	
 	var body: some View {
 		Circle()

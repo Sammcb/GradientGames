@@ -59,26 +59,7 @@ class ChessBoard: ChessEngine {
 	}
 	
 	init() {
-		var pieces = Chess.Pieces(repeating: nil, count: Chess.File.validFiles.count * Chess.Ranks.count)
-		
-		for rank in [1, 8] {
-			pieces[.a, rank] = Chess.Piece(isLight: rank == 1, group: .rook)
-			pieces[.b, rank] = Chess.Piece(isLight: rank == 1, group: .knight)
-			pieces[.c, rank] = Chess.Piece(isLight: rank == 1, group: .bishop)
-			pieces[.d, rank] = Chess.Piece(isLight: rank == 1, group: .queen)
-			pieces[.e, rank] = Chess.Piece(isLight: rank == 1, group: .king)
-			pieces[.f, rank] = Chess.Piece(isLight: rank == 1, group: .bishop)
-			pieces[.g, rank] = Chess.Piece(isLight: rank == 1, group: .knight)
-			pieces[.h, rank] = Chess.Piece(isLight: rank == 1, group: .rook)
-		}
-		
-		for rank in [2, 7] {
-			for file in Chess.File.validFiles {
-				pieces[file, rank] = Chess.Piece(isLight: rank == 2, group: .pawn)
-			}
-		}
-		
-		self.startingPieces = pieces
+		self.startingPieces = Chess.startingPieces
 	}
 	
 	func canMove(from oldSquare: Chess.Square, to newSquare: Chess.Square) -> Bool {
