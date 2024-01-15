@@ -9,10 +9,9 @@ import SwiftUI
 
 struct ChessBoardView: View {
 	@Environment(\.chessTheme) private var theme
-	var board: ChessBoardTest
+	var board: ChessBoard
 	var flipped: Bool
-	@FocusState private var focusedSquare: ChessSquare?
-	@State private var selectedSquare: ChessSquare?
+	@FocusState private var focusedSquare: Chess.Square?
 	
 	@Namespace private var pieceAnimation
 	
@@ -20,11 +19,11 @@ struct ChessBoardView: View {
 		let borderColor = board.lightTurn ? theme.pieceLight : theme.pieceDark
 		ZStack {
 			Grid(horizontalSpacing: 0, verticalSpacing: 0) {
-				ForEach(ChessRanks.reversed(), id: \.self) { rank in
+				ForEach(Chess.Ranks.reversed(), id: \.self) { rank in
 					GridRow {
-						ForEach(ChessFile.validFiles) { file in
-							let square = ChessSquare(file: file, rank: rank)
-							ChessSquareView(board: board, selected: $selectedSquare, file: file, rank: rank)
+						ForEach(Chess.File.validFiles) { file in
+							let square = Chess.Square(file: file, rank: rank)
+							ChessSquareView(board: board, file: file, rank: rank)
 								.focused($focusedSquare, equals: square)
 								.border(focusedSquare == square ? borderColor : .clear, width: 5)
 						}
@@ -33,9 +32,9 @@ struct ChessBoardView: View {
 			}
 			
 			Grid(horizontalSpacing: 0, verticalSpacing: 0) {
-				ForEach(ChessRanks.reversed(), id: \.self) { rank in
+				ForEach(Chess.Ranks.reversed(), id: \.self) { rank in
 					GridRow {
-						ForEach(ChessFile.validFiles) { file in
+						ForEach(Chess.File.validFiles) { file in
 							if let piece = board.pieces[file, rank] {
 								ChessPieceView(piece: piece)
 									.matchedGeometryEffect(id: piece.id, in: pieceAnimation)

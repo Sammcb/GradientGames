@@ -8,29 +8,36 @@
 import SwiftUI
 import SwiftData
 
-struct GamesView: View, UniversalLinkReciever {
-	private enum DetailView: String, Identifiable, CaseIterable {
-		case chess
-		case reversi
-		case checkers
-		case settings
-		
-		var id: String {
-			rawValue
+private enum DetailView: String, Identifiable, CaseIterable {
+	case chess, reversi, checkers, settings
+	
+	var id: String {
+		rawValue
+	}
+	
+	static var allGames: [Self] {
+		allCases.filter({ $0 != .settings })
+	}
+	
+	var title: String {
+		rawValue.capitalized
+	}
+	
+	var symbol: String {
+		switch self {
+		case .chess: "crown"
+		case .reversi: "circle"
+		case .checkers: "circle.circle"
+		case .settings: "gearshape"
 		}
 	}
-	
-	private struct ViewInfo {
-		let title: String
-		let symbol: String
-		let game: Game?
-	}
-	
+}
+
+struct GamesView: View, UniversalLinkReciever {
 	@Environment(\.modelContext) private var context
 	@Query(sort: \Theme.index) private var themes: [Theme]
-	@Query private var chessBoards: [ChessBoardTest]
+	@Query private var chessBoards: [ChessBoard]
 	@State private var navigation = Navigation()
-	@State private var chessGame = ChessGame()
 	@State private var reversiGame = ReversiGame()
 	@State private var checkersGame = CheckersGame()
 	@State private var path: [UUID] = []
@@ -40,17 +47,28 @@ struct GamesView: View, UniversalLinkReciever {
 	@AppStorage(Setting.flipUI.rawValue) private var flipped = false
 	@AppStorage(Setting.enableTimer.rawValue) private var enableTimer = false
 	
-	private func getViewInfo(for id: DetailView) -> ViewInfo {
-		switch id {
+	private func resetGame(for detailView: DetailView) {
+		switch detailView {
 		case .chess:
-			return ViewInfo(title: "Chess", symbol: "crown", game: chessGame)
+			chessBoards.forEach({ board in context.delete(board) })
+			context.insert(ChessBoard())
+			return
 		case .reversi:
-			return ViewInfo(title: "Reversi", symbol: "circle", game: reversiGame)
+			return
 		case .checkers:
-			return ViewInfo(title: "Checkers", symbol: "circle.circle", game: checkersGame)
+			return
 		case .settings:
-			return ViewInfo(title: "Settings", symbol: "gearshape", game: nil)
+			return
 		}
+	}
+	
+	private func chessBoard() -> ChessBoard {
+		guard let board = chessBoards.first else {
+			let newBoard = ChessBoard()
+			context.insert(newBoard)
+			return newBoard
+		}
+		return board
 	}
 	
 	private func present(_ themeId: UUID) {
@@ -110,13 +128,13 @@ struct GamesView: View, UniversalLinkReciever {
 					}
 				}
 #else
-				ForEach(DetailView.allCases.filter({ $0 != .settings })) { detailView in
+				ForEach(DetailView.allGames) { detailView in
 					NavigationLink(value: detailView) {
-						let viewInfo = getViewInfo(for: detailView)
-						let action = viewInfo.game?.reset ?? {}
-						Label(viewInfo.title, systemImage: viewInfo.symbol)
+						Label(detailView.title, systemImage: detailView.symbol)
 							.contextMenu {
-								Button(role: .destructive, action: action) {
+								Button(role: .destructive) {
+									resetGame(for: detailView)
+								} label: {
 									Label("New game", systemImage: "trash")
 								}
 							}
@@ -145,20 +163,12 @@ struct GamesView: View, UniversalLinkReciever {
 				
 				createTheme(with: themeField)
 			}
-			.onAppear {
-				guard chessBoards.isEmpty else {
-					return
-				}
-				context.insert(ChessBoardTest())
-			}
 		} detail: {
 			NavigationStack(path: $path) {
 				switch selectedView {
-				case .none:
-					EmptyView()
-				case .chess:
+				case .chess, .none:
 					let theme = ChessUITheme(theme: themes.first(where: { $0.id.uuidString == chessTheme }))
-					ChessView(board: chessBoards.first!, enableUndo: enableUndo, flipped: flipped, enableTimer: enableTimer)
+					ChessView(board: chessBoard(), enableUndo: enableUndo, flipped: flipped, enableTimer: enableTimer)
 						.environment(\.chessTheme, theme)
 				case .reversi:
 					ReversiView()

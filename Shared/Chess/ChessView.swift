@@ -47,7 +47,7 @@ extension View {
 
 struct ChessView: View {
 	@Environment(\.chessTheme) private var theme
-	var board: ChessBoardTest
+	var board: ChessBoard
 	var enableUndo: Bool
 	var flipped: Bool
 	var enableTimer: Bool
@@ -59,10 +59,9 @@ struct ChessView: View {
 			
 			layout {
 				ChessUIView(board: board, enableTimer: enableTimer, flipped: flipped, vertical: vertical)
-					.animation(.linear, value: board.promoting)
 				
 				ChessBoardView(board: board, flipped: flipped)
-					.animation(.linear, value: board.promoting)
+					.animation(.linear, value: board.history)
 					.frame(maxWidth: .infinity, maxHeight: .infinity)
 				
 				if board.promoting {
@@ -72,6 +71,10 @@ struct ChessView: View {
 			.background(.linearGradient(colors: [theme.squareLight, theme.squareDark], startPoint: .top, endPoint: .bottom))
 			.frame(maxWidth: .infinity, maxHeight: .infinity)
 			.font(.system(.headline, design: .rounded).bold().monospaced())
+		}
+		.onAppear {
+			board.selectedSquare = nil
+			board.times.lastUpdate = Date()
 		}
 #if os(tvOS)
 		.onPlayPauseCommand {
@@ -87,7 +90,7 @@ struct ChessView: View {
 			if enableUndo {
 				ToolbarItem {
 					Button(action: board.undo) {
-						Label("Undo", systemImage: "arrow.uturn.backward")
+						Image(systemName: "arrow.uturn.backward")
 							.symbolVariant(.circle.fill)
 							.rotationEffect(!board.lightTurn && flipped ? .radians(.pi) : .zero)
 							.animation(.easeIn, value: board.lightTurn)

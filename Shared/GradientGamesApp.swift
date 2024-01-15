@@ -20,7 +20,7 @@ struct GradientGamesApp: App {
 	}
 	
 	init() {
-		let schema = Schema([Theme.self, ChessBoardTest.self])
+		let schema = Schema([Theme.self, ChessBoard.self])
 		let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
 		
 		do {

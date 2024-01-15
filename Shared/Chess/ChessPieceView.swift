@@ -9,14 +9,14 @@ import SwiftUI
 
 struct ChessPieceView: View {
 	@Environment(\.chessTheme) private var theme
-	let group: ChessPiece.Group
+	let group: Chess.Piece.Group
 	let isLight: Bool
 	
-	init(piece: ChessPiece) {
+	init(piece: Chess.Piece) {
 		self.init(group: piece.group, isLight: piece.isLight)
 	}
 	
-	init(group: ChessPiece.Group, isLight: Bool) {
+	init(group: Chess.Piece.Group, isLight: Bool) {
 		self.group = group
 		self.isLight = isLight
 	}
