@@ -30,37 +30,20 @@ struct CheckersUITheme {
 	let pieceLight: Color
 	let pieceDark: Color
 	
-	init(theme: Theme) {
-//		squareLight = Color(theme.squareLight)
-//		squareDark = Color(theme.squareDark)
-//		pieceLight = Color(theme.pieceLight)
-//		pieceDark = Color(theme.pieceDark)
-		squareLight = theme.colors[.squareLight]
-		squareDark = theme.colors[.squareDark]
-		pieceLight = theme.colors[.pieceLight]
-		pieceDark = theme.colors[.pieceDark]
-	}
-	
-	init() {
-		squareLight = Color(red: 196 / 255, green: 180 / 255, blue: 151 / 255)
-		squareDark = Color(red: 168 / 255, green: 128 / 255, blue: 99 / 255)
-		pieceLight = Color(red: 230 / 255, green: 212 / 255, blue: 162 / 255)
-		pieceDark = Color(red: 64 / 255, green: 57 / 255, blue: 52 / 255)
+	init(theme: Theme? = nil) {
+		squareLight = theme?.colors[.squareLight] ?? Color(red: 196 / 255, green: 180 / 255, blue: 151 / 255)
+		squareDark = theme?.colors[.squareDark] ?? Color(red: 168 / 255, green: 128 / 255, blue: 99 / 255)
+		pieceLight = theme?.colors[.pieceLight] ?? Color(red: 230 / 255, green: 212 / 255, blue: 162 / 255)
+		pieceDark = theme?.colors[.pieceDark] ?? Color(red: 64 / 255, green: 57 / 255, blue: 52 / 255)
 	}
 }
 
 struct CheckersView: View {
-	@Query(sort: \Theme.index) private var themes: [Theme]
-	@Environment(CheckersGame.self) private var game: CheckersGame
-	@AppStorage(Setting.checkersTheme.rawValue) private var checkersTheme = ""
-	@AppStorage(Setting.enableUndo.rawValue) private var enableUndo = true
-	@AppStorage(Setting.flipUI.rawValue) private var flipped = false
-	private var theme: CheckersUITheme {
-		guard let selectedTheme = themes.first(where: { $0.id.uuidString == checkersTheme }) else {
-			return CheckersUITheme()
-		}
-		return CheckersUITheme(theme: selectedTheme)
-	}
+	@Environment(\.checkersTheme) private var theme
+	var board: CheckersBoard
+	var enableUndo: Bool
+	var flipped: Bool
+	var enableTimer: Bool
 	
 	var body: some View {
 		GeometryReader { geometry in
@@ -68,14 +51,18 @@ struct CheckersView: View {
 			let layout = vertical ? AnyLayout(VStackLayout()) : AnyLayout(HStackLayout())
 			
 			layout {
-				CheckersUIView(vertical: vertical)
+				CheckersUIView(board: board, enableTimer: enableTimer, flipped: flipped, vertical: vertical)
 				
-				CheckersBoardView()
+				CheckersBoardView(board: board)
 					.frame(maxWidth: .infinity, maxHeight: .infinity)
 			}
 			.background(.linearGradient(colors: [theme.squareLight, theme.squareDark], startPoint: .top, endPoint: .bottom))
 			.frame(maxWidth: .infinity, maxHeight: .infinity)
-			.font(.system(.headline, design: .rounded).bold().monospacedDigit())
+			.font(.system(.headline, design: .rounded).bold().monospaced())
+		}
+		.onAppear {
+			board.selectedSquare = board.forcedSelectedSquare
+			board.times.lastUpdate = Date()
 		}
 #if os(tvOS)
 		.onPlayPauseCommand {
@@ -83,33 +70,24 @@ struct CheckersView: View {
 				return
 			}
 			
-			if game.board.history.isEmpty {
-				return
-			}
-			
-			game.selectedSquare = nil
-			game.board.undo()
+			board.undo()
 		}
 #else
-//		.navigationBarTitleDisplayMode(.inline)
+		.navigationBarTitleDisplayMode(.inline)
 		.navigationTitle("Checkers")
 		.toolbar {
 			if enableUndo {
 				ToolbarItem {
-					Button {
-						game.selectedSquare = nil
-						game.board.undo()
-					} label: {
+					Button(action: board.undo) {
 						Label("Undo", systemImage: "arrow.uturn.backward")
 							.symbolVariant(.circle.fill)
-							.rotationEffect(game.board.lightTurn && flipped ? .radians(.pi) : .zero)
-							.animation(.easeIn, value: game.board.lightTurn)
+							.rotationEffect(board.lightTurn && flipped ? .radians(.pi) : .zero)
+							.animation(.easeIn, value: board.lightTurn)
 					}
-					.disabled(game.board.history.isEmpty)
+					.disabled(!board.undoEnabled)
 				}
 			}
 		}
 #endif
-		.environment(\.checkersTheme, theme)
 	}
 }

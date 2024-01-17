@@ -14,6 +14,10 @@ extension ChessEngine {
 		var pieces = state
 		
 		for move in moves {
+			guard let piece = pieces[move.fromSquare] else {
+				continue
+			}
+			
 			// Capture piece
 			if let capturedSquare = move.capturedSquare {
 				pieces[capturedSquare] = nil
@@ -25,7 +29,7 @@ extension ChessEngine {
 			
 			// Move rook in a castle
 			let deltaFile = move.fromSquare.file.delta(file: move.toSquare.file)
-			if move.piece.group == .king && abs(deltaFile) == 2 {
+			if piece.group == .king && abs(deltaFile) == 2 {
 				let rank = move.fromSquare.rank
 				let rookFile: Chess.File = deltaFile > 0 ? .a : .h
 				let newRookFile = move.toSquare.file + deltaFile.signum()
@@ -96,16 +100,22 @@ extension ChessEngine {
 		return squares.filter({ square in state[square]?.isLight != piece.isLight })
 	}
 	
-	private func canEnPassant(to square: Chess.Square, with offset: Int, for moves: [Chess.Move]) -> Bool {
+	private func canEnPassant(to square: Chess.Square, with offset: Int, for state: Chess.Pieces, _ moves: [Chess.Move]) -> Bool {
 		guard let move = moves.last else {
 			return false
 		}
 		
 		let fromSquare = Chess.Square(square, deltaRank: offset)
-		let toSquare = Chess.Square(square, deltaRank: -offset)
+		guard let toSquare = Chess.Square(square, deltaRank: -offset) else {
+			return false
+		}
+		
+		guard let piece = state[toSquare] else {
+			return false
+		}
 		
 		// Make sure opponent pawn moved two squares last turn
-		return move.piece.group == .pawn && move.fromSquare == fromSquare && move.toSquare == toSquare
+		return piece.group == .pawn && move.fromSquare == fromSquare && move.toSquare == toSquare
 	}
 	
 	private func attackedSquares(from state: Chess.Pieces, for lightTurn: Bool) -> Set<Chess.Square> {
@@ -181,7 +191,7 @@ extension ChessEngine {
 			let startRank = baseRank + rankOffset
 			
 			// Check if attack squares are valid
-			var validSquares = attackedSquares.filter({ state[$0] != nil || canEnPassant(to: $0, with: rankOffset, for: moves) })
+			var validSquares = attackedSquares.filter({ state[$0] != nil || canEnPassant(to: $0, with: rankOffset, for: state, moves) })
 			
 			// Check if forward one square is valid
 			guard let oneForward = Chess.Square(square, deltaRank: rankOffset), state[oneForward] == nil else {
@@ -230,14 +240,15 @@ extension ChessEngine {
 		return possibleMoveSquares.filter({ toSquare in validMoveSquare(from: square, to: toSquare, for: lightTurn, state) })
 	}
 	
-	private func allValidSquares(for lightTurn: Bool, _ state: Chess.Pieces, _ moves: [Chess.Move]) -> [Chess.Piece: [Chess.Square]] {
-		var validSquares: [Chess.Piece: [Chess.Square]] = [:]
+	private func allValidSquares(for lightTurn: Bool, _ state: Chess.Pieces, _ moves: [Chess.Move]) -> [Chess.Square] {
+		var validSquares: [Chess.Square] = []
 		for (index, piece) in state.enumerated() {
 			guard let piece, piece.isLight == lightTurn else {
 				continue
 			}
 			let square = Chess.Pieces.square(at: index)
-			validSquares[piece] = validMoveSquares(from: square, for: lightTurn, state, moves)
+			let validMoveSquares = validMoveSquares(from: square, for: lightTurn, state, moves)
+			validSquares.append(contentsOf: validMoveSquares)
 		}
 		return validSquares
 	}
@@ -256,7 +267,7 @@ extension ChessEngine {
 		let promoted = piece.group == .pawn && square.rank == rank
 		
 		let capturedSquare = state[potentialCapturedSquare] == nil ? nil : potentialCapturedSquare
-		return Chess.Move(piece: piece, from: oldSquare, to: square, capturedAt: capturedSquare, promoted: promoted)
+		return Chess.Move(from: oldSquare, to: square, capturedAt: capturedSquare, promoted: promoted)
 	}
 	
 	func canMove(from oldSquare: Chess.Square, to newSquare: Chess.Square, for lightTurn: Bool, _ state: Chess.Pieces, _ moves: [Chess.Move]) -> Bool {
@@ -264,11 +275,7 @@ extension ChessEngine {
 			return false
 		}
 		
-		let allValidSquares = allValidSquares(for: lightTurn, state, moves)
-		guard let validSquares = allValidSquares[piece] else {
-			return false
-		}
-		
+		let validSquares = validMoveSquares(from: oldSquare, for: lightTurn, state, moves)
 		return validSquares.contains(newSquare)
 	}
 	
@@ -284,8 +291,7 @@ extension ChessEngine {
 		
 		// Check checkmate
 		let allPieceMoves = allValidSquares(for: lightTurn, state, moves)
-		let allMovesCount = allPieceMoves.values.reduce(0, { movesCount, moves in movesCount + moves.count })
-		let canMoveSomePiece = allMovesCount > 0
+		let canMoveSomePiece = !allPieceMoves.isEmpty
 		let opponentAttackedSquares = attackedSquares(from: state, for: lightTurn)
 		let kingSafe = !opponentAttackedSquares.contains(kingSquare)
 		guard kingSafe else {

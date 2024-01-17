@@ -9,42 +9,53 @@ import SwiftUI
 
 struct CheckersSquareView: View {
 	@Environment(\.checkersTheme) private var theme
-	@Environment(CheckersGame.self) private var game: CheckersGame
+	var board: CheckersBoard
 	let column: Int
 	let row: Int
 	
-	private func select(square: CheckersSquare) {
-		if game.board.history.last?.skip ?? false, game.board.pieces[square] != nil {
+	private func select(square: Checkers.Square) {
+		if let piece = board.pieces[square], piece.isLight == board.lightTurn, board.forcedSelectedSquare == nil {
+			board.selectedSquare = square
 			return
 		}
 		
-		if let piece = game.board.pieces[square], piece.isLight == game.board.lightTurn {
-			game.selectedSquare = square
+		guard let selectedSquare = board.selectedSquare, board.canMove(from: selectedSquare, to: square) else {
 			return
 		}
 		
-		guard let selectedSquare = game.selectedSquare, game.board.canMove(from: selectedSquare, to: square) else {
-			return
-		}
-		
-		game.selectedSquare = nil
-		game.board.move(from: selectedSquare, to: square)
+		board.move(from: selectedSquare, to: square)
+		board.selectedSquare = board.forcedSelectedSquare
 	}
 	
 	var body: some View {
-		let square = CheckersSquare(column: column, row: row)
+		let square = Checkers.Square(column: column, row: row)
 		Button {
 			select(square: square)
 		} label: {
-			Text("")
-				.frame(maxWidth: .infinity, maxHeight: .infinity)
+			// Needs to appear/disapper not use opacity
+			GeometryReader { geometry in
+				Circle()
+					.stroke(board.lightTurn ? theme.pieceLight : theme.pieceDark, lineWidth: geometry.size.width / 10)
+					.opacity(board.selectedSquare == square ? 1 : 0)
+					.frame(maxWidth: .infinity, maxHeight: .infinity)
+					.scaledToFit()
+					.scaleEffect(0.8)
+			}
 		}
 #if os(tvOS)
 		.buttonStyle(NoneButtonStyle())
 #else
 		.buttonStyle(.borderless)
-		.disabled(game.board.gameOver)
+		.disabled(board.gameOver)
 #endif
 		.background((row + column - 1).isMultiple(of: 2) ? theme.squareLight : theme.squareDark, in: Rectangle())
+		.overlay {
+			if board.validSquares.contains(square) {
+				Circle()
+					.fill(board.lightTurn ? theme.pieceLight : theme.pieceDark)
+					.scaleEffect(0.25)
+					.transition(.opacity.animation(.linear))
+			}
+		}
 	}
 }

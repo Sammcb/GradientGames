@@ -50,7 +50,7 @@ class ChessBoard: ChessEngine {
 	}
 	
 	@Transient var undoEnabled: Bool {
-		!history.isEmpty && !promoting
+		!history.isEmpty
 	}
 	
 	@Transient var gameOver: Bool {
@@ -80,7 +80,11 @@ class ChessBoard: ChessEngine {
 			return
 		}
 		
-		move.promotedPiece = Chess.Piece(isLight: lightTurn, group: group, id: move.piece.id)
+		guard let piece = pieces[move.toSquare] else {
+			return
+		}
+		
+		move.promotedPiece = Chess.Piece(isLight: lightTurn, group: group, id: piece.id)
 		history.append(move)
 	}
 	

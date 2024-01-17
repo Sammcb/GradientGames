@@ -18,10 +18,12 @@ struct CheckersPieceView: View {
 				.foregroundStyle(isLight ? theme.pieceLight : theme.pieceDark)
 				.overlay {
 					Circle()
-						.scale(0.5)
 						.stroke(isLight ? theme.pieceDark : theme.pieceLight, style: StrokeStyle(lineWidth: geometry.size.width / 16))
+						.frame(maxWidth: .infinity, maxHeight: .infinity)
+						.scaleEffect(0.5)
 						.opacity(kinged ? 1 : 0)
 				}
+				.scaleEffect(0.5)
 		}
 	}
 }

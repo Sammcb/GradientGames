@@ -7,89 +7,87 @@
 
 import SwiftUI
 
-struct CheckersTimesTimelineView: View {
-	@Environment(CheckersGame.self) private var game: CheckersGame
-	@AppStorage(Setting.flipUI.rawValue) private var flipped = false
-	
-	var body: some View {
-		TimelineView(.periodic(from: .now, by: 1 / 10)) { timeline in
-			CheckersTimesView(date: timeline.date)
-		}
-		.rotationEffect(game.board.lightTurn && flipped ? .radians(.pi) : .zero)
-		.animation(.easeIn, value: game.board.lightTurn)
-	}
-}
-
-struct CheckersTimesView: View {
+struct CheckersTimeView: View {
 	@Environment(\.checkersTheme) private var theme
-	@Environment(CheckersGame.self) private var game: CheckersGame
-	let date: Date
+	var board: CheckersBoard
+	var flipped: Bool
+	let isLight: Bool
+	let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 	
 	var body: some View {
-		VStack {
-			Text(CheckersState.shared.times.stringFor(lightTime: true))
-				.foregroundStyle(theme.pieceLight)
-			Text(CheckersState.shared.times.stringFor(lightTime: false))
-				.foregroundStyle(theme.pieceDark)
-		}
-		.onAppear {
-			CheckersState.shared.times.lastUpdate = date
-		}
-		.onChange(of: date) {
-			if game.board.gameOver {
-				return
+		Text(board.times.stringFor(lightTime: isLight))
+			.foregroundStyle(isLight ? theme.pieceLight : theme.pieceDark)
+			.rotationEffect(board.lightTurn && flipped ? .radians(.pi) : .zero)
+			.onReceive(timer) { currentDate in
+				guard board.lightTurn == isLight else {
+					return
+				}
+				
+				if board.gameOver {
+					return
+				}
+				
+				let interval = board.times.lastUpdate.distance(to: currentDate)
+				
+				guard interval > 0 else {
+					return
+				}
+				
+				if isLight {
+					board.times.light += interval
+				} else {
+					board.times.dark += interval
+				}
+				
+				board.times.lastUpdate = currentDate
 			}
-			
-			let interval = CheckersState.shared.times.lastUpdate.distance(to: date)
-			
-			if game.board.lightTurn {
-				CheckersState.shared.times.light += interval
-			} else {
-				CheckersState.shared.times.dark += interval
-			}
-			CheckersState.shared.times.lastUpdate = date
-		}
 	}
 }
 
 struct CheckersStateView: View {
 	@Environment(\.checkersTheme) private var theme
-	@Environment(CheckersGame.self) private var game: CheckersGame
-	@AppStorage(Setting.flipUI.rawValue) private var flipped = false
+	var board: CheckersBoard
+	var flipped: Bool
 	
 	var body: some View {
-		let lightTurn = game.board.lightTurn
-		let toggleColor = game.board.gameOver ? !lightTurn : lightTurn
-		Image(systemName: game.board.gameOver ? "crown" : "circle.circle")
+		let toggleColor = board.gameOver ? !board.lightTurn : board.lightTurn
+		Image(systemName: board.gameOver ? "crown" : "circle.circle")
+			.padding()
 			.symbolVariant(.fill)
-			.font(.largeTitle)
 			.foregroundStyle(toggleColor ? theme.pieceLight : theme.pieceDark)
-			.rotationEffect(game.board.lightTurn && flipped ? .radians(.pi) : .zero)
-			.animation(.easeIn, value: game.board.lightTurn)
+			.font(.largeTitle)
+			.rotationEffect(board.lightTurn && flipped ? .radians(.pi) : .zero)
+			.animation(.easeIn, value: board.lightTurn)
+			.background(.ultraThinMaterial)
+			.clipShape(RoundedRectangle(cornerRadius: 10))
 	}
 }
 
 struct CheckersUIView: View {
-	@AppStorage(Setting.enableTimer.rawValue) private var enableTimer = true
+	var board: CheckersBoard
+	var enableTimer: Bool
+	var flipped: Bool
 	let vertical: Bool
 	
 	var body: some View {
-		let layout = vertical ? AnyLayout(HStackLayout()) : AnyLayout(VStackLayout())
+		let layout = vertical ? AnyLayout(VStackLayout()) : AnyLayout(HStackLayout())
+		let timersLayout = vertical ? AnyLayout(HStackLayout()) : AnyLayout(VStackLayout())
 		
 		layout {
-			Spacer()
-			
-			CheckersStateView()
-			
-			Spacer()
-			
 			if enableTimer {
-				CheckersTimesTimelineView()
-				
-				Spacer()
+				timersLayout {
+					Spacer()
+					CheckersTimeView(board: board, flipped: flipped, isLight: true)
+					Spacer()
+					CheckersTimeView(board: board, flipped: flipped, isLight: false)
+					Spacer()
+				}
+				.padding()
+				.background(.ultraThinMaterial)
 			}
+			
+			CheckersStateView(board: board, flipped: flipped)
 		}
-		.padding(vertical ? .vertical : .horizontal)
-		.background(.ultraThinMaterial)
+		.ignoresSafeArea(edges: vertical ? .horizontal : .vertical)
 	}
 }

@@ -21,7 +21,7 @@ class ReversiBoard: ReversiEngine {
 	}
 	
 	@Transient var lightTurn: Bool {
-		isLightTurn(history)
+		!history.count.isMultiple(of: 2)
 	}
 	
 	@Transient var gameOver: Bool {
@@ -49,7 +49,7 @@ class ReversiBoard: ReversiEngine {
 		let piece = Reversi.Piece(isLight: lightTurn)
 		
 		
-		let move = Reversi.Move(piece: piece, at: square)
+		let move = Reversi.Move(light: piece.isLight, at: square)
 		let futureMoves = history + [move]
 		let futurePieces = computeState(for: futureMoves, from: pieces)
 		let nextPlayerCanMove = canMove(for: lightTurn, futurePieces, futureMoves, with: maxMoves)

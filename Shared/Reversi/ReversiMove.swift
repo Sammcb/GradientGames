@@ -9,18 +9,18 @@ import Foundation
 
 extension Reversi {
 	struct Move: Codable, Equatable {
-		let piece: Piece
+		let light: Bool
 		let square: Square
 		let skip: Bool
 		
-		init(piece: Piece, at square: Square) {
-			self.piece = piece
+		init(light: Bool, at square: Square) {
+			self.light = light
 			self.square = square
 			self.skip = false
 		}
 		
 		init(skip: Bool) {
-			self.piece = Piece(isLight: true)
+			self.light = true
 			self.square = Square(column: 1, row: 1)
 			self.skip = skip
 		}

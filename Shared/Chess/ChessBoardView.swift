@@ -12,7 +12,6 @@ struct ChessBoardView: View {
 	var board: ChessBoard
 	var flipped: Bool
 	@FocusState private var focusedSquare: Chess.Square?
-	
 	@Namespace private var pieceAnimation
 	
 	var body: some View {
@@ -24,6 +23,7 @@ struct ChessBoardView: View {
 						ForEach(Chess.File.validFiles) { file in
 							let square = Chess.Square(file: file, rank: rank)
 							ChessSquareView(board: board, file: file, rank: rank)
+								.animation(.linear, value: board.selectedSquare)
 								.focused($focusedSquare, equals: square)
 								.border(focusedSquare == square ? borderColor : .clear, width: 5)
 						}

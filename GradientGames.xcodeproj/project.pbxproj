@@ -8,12 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		224C10572B23F99E00FF47E7 /* ThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224C10562B23F99E00FF47E7 /* ThemeView.swift */; };
-		226EE7DC27CC510000C8A473 /* CheckersState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7DB27CC510000C8A473 /* CheckersState.swift */; };
-		226EE7DF27CC513D00C8A473 /* CheckersBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7DE27CC513D00C8A473 /* CheckersBoard.swift */; };
 		226EE7E127CC514500C8A473 /* CheckersSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7E027CC514500C8A473 /* CheckersSquare.swift */; };
 		226EE7E327CC515000C8A473 /* CheckersPiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7E227CC515000C8A473 /* CheckersPiece.swift */; };
 		226EE7E827CC516200C8A473 /* CheckersMove.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7E727CC516200C8A473 /* CheckersMove.swift */; };
-		226EE7EB27CC516900C8A473 /* CheckersGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7EA27CC516900C8A473 /* CheckersGame.swift */; };
 		226EE7EE27D1202100C8A473 /* CheckersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7ED27D1202100C8A473 /* CheckersView.swift */; };
 		226EE7F127D1259100C8A473 /* CheckersBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7F027D1259100C8A473 /* CheckersBoardView.swift */; };
 		226EE7F427D125FE00C8A473 /* CheckersSquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7F327D125FE00C8A473 /* CheckersSquareView.swift */; };
@@ -22,6 +19,9 @@
 		22877A0B2B558D880081DA0B /* ReversiBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22877A0A2B558D880081DA0B /* ReversiBoard.swift */; };
 		22877A0D2B558D980081DA0B /* Reversi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22877A0C2B558D980081DA0B /* Reversi.swift */; };
 		22877A0F2B558DA50081DA0B /* ReversiEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22877A0E2B558DA50081DA0B /* ReversiEngine.swift */; };
+		22877A112B55E6C90081DA0B /* Checkers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22877A102B55E6C90081DA0B /* Checkers.swift */; };
+		22877A132B55E6D50081DA0B /* CheckersEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22877A122B55E6D50081DA0B /* CheckersEngine.swift */; };
+		22877A152B55E6E40081DA0B /* CheckersBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22877A142B55E6E40081DA0B /* CheckersBoard.swift */; };
 		22A4FE8B2B4D995B00882E87 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A4FE8A2B4D995B00882E87 /* Theme.swift */; };
 		22A4FE8F2B4DDA5D00882E87 /* ChessBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A4FE8E2B4DDA5D00882E87 /* ChessBoard.swift */; };
 		22A4FE912B537D9900882E87 /* ChessEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A4FE902B537D9900882E87 /* ChessEngine.swift */; };
@@ -60,12 +60,9 @@
 
 /* Begin PBXFileReference section */
 		224C10562B23F99E00FF47E7 /* ThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeView.swift; sourceTree = "<group>"; };
-		226EE7DB27CC510000C8A473 /* CheckersState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckersState.swift; sourceTree = "<group>"; };
-		226EE7DE27CC513D00C8A473 /* CheckersBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckersBoard.swift; sourceTree = "<group>"; };
 		226EE7E027CC514500C8A473 /* CheckersSquare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckersSquare.swift; sourceTree = "<group>"; };
 		226EE7E227CC515000C8A473 /* CheckersPiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckersPiece.swift; sourceTree = "<group>"; };
 		226EE7E727CC516200C8A473 /* CheckersMove.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckersMove.swift; sourceTree = "<group>"; };
-		226EE7EA27CC516900C8A473 /* CheckersGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckersGame.swift; sourceTree = "<group>"; };
 		226EE7ED27D1202100C8A473 /* CheckersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckersView.swift; sourceTree = "<group>"; };
 		226EE7F027D1259100C8A473 /* CheckersBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckersBoardView.swift; sourceTree = "<group>"; };
 		226EE7F327D125FE00C8A473 /* CheckersSquareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckersSquareView.swift; sourceTree = "<group>"; };
@@ -74,6 +71,9 @@
 		22877A0A2B558D880081DA0B /* ReversiBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversiBoard.swift; sourceTree = "<group>"; };
 		22877A0C2B558D980081DA0B /* Reversi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reversi.swift; sourceTree = "<group>"; };
 		22877A0E2B558DA50081DA0B /* ReversiEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversiEngine.swift; sourceTree = "<group>"; };
+		22877A102B55E6C90081DA0B /* Checkers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checkers.swift; sourceTree = "<group>"; };
+		22877A122B55E6D50081DA0B /* CheckersEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckersEngine.swift; sourceTree = "<group>"; };
+		22877A142B55E6E40081DA0B /* CheckersBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckersBoard.swift; sourceTree = "<group>"; };
 		22A4FE8A2B4D995B00882E87 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		22A4FE8E2B4DDA5D00882E87 /* ChessBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessBoard.swift; sourceTree = "<group>"; };
 		22A4FE902B537D9900882E87 /* ChessEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessEngine.swift; sourceTree = "<group>"; };
@@ -128,12 +128,12 @@
 		226EE7DA27CBEF9A00C8A473 /* Checkers */ = {
 			isa = PBXGroup;
 			children = (
-				226EE7DB27CC510000C8A473 /* CheckersState.swift */,
-				226EE7DE27CC513D00C8A473 /* CheckersBoard.swift */,
+				22877A102B55E6C90081DA0B /* Checkers.swift */,
+				22877A122B55E6D50081DA0B /* CheckersEngine.swift */,
+				22877A142B55E6E40081DA0B /* CheckersBoard.swift */,
 				226EE7E027CC514500C8A473 /* CheckersSquare.swift */,
 				226EE7E227CC515000C8A473 /* CheckersPiece.swift */,
 				226EE7E727CC516200C8A473 /* CheckersMove.swift */,
-				226EE7EA27CC516900C8A473 /* CheckersGame.swift */,
 				226EE7ED27D1202100C8A473 /* CheckersView.swift */,
 				226EE7F027D1259100C8A473 /* CheckersBoardView.swift */,
 				226EE7F327D125FE00C8A473 /* CheckersSquareView.swift */,
@@ -326,6 +326,7 @@
 				22DB9DBF27B96273002D8312 /* Times.swift in Sources */,
 				22B3C69E28D29A4100E585C9 /* Protocols.swift in Sources */,
 				22DB9DF927B97F53002D8312 /* ReversiUIView.swift in Sources */,
+				22877A132B55E6D50081DA0B /* CheckersEngine.swift in Sources */,
 				22DB9DDA27B970F7002D8312 /* ChessBoardView.swift in Sources */,
 				22DB9DB027B95DF3002D8312 /* SettingsView.swift in Sources */,
 				22A4FE912B537D9900882E87 /* ChessEngine.swift in Sources */,
@@ -353,19 +354,18 @@
 				22DB9D9227B95101002D8312 /* GradientGamesApp.swift in Sources */,
 				22DB9DF727B97F35002D8312 /* ReversiPieceView.swift in Sources */,
 				22DB9DAE27B95482002D8312 /* ReversiView.swift in Sources */,
+				22877A112B55E6C90081DA0B /* Checkers.swift in Sources */,
 				22DB9DDC27B9710E002D8312 /* ChessView.swift in Sources */,
 				22E750BD29140E5700E9472F /* NoneButtonStyle.swift in Sources */,
 				22877A0B2B558D880081DA0B /* ReversiBoard.swift in Sources */,
-				226EE7DC27CC510000C8A473 /* CheckersState.swift in Sources */,
 				22B3C6A128D29A9200E585C9 /* Navigation.swift in Sources */,
 				22DB9DF527B97F0D002D8312 /* ReversiSquareView.swift in Sources */,
 				226EE7F127D1259100C8A473 /* CheckersBoardView.swift in Sources */,
 				226EE7F727D1260600C8A473 /* CheckersPieceView.swift in Sources */,
 				22877A0D2B558D980081DA0B /* Reversi.swift in Sources */,
 				22E832AB2909AF200037397F /* tvOSSettingsView.swift in Sources */,
-				226EE7DF27CC513D00C8A473 /* CheckersBoard.swift in Sources */,
+				22877A152B55E6E40081DA0B /* CheckersBoard.swift in Sources */,
 				22DB9DB527B95F2E002D8312 /* Extensions.swift in Sources */,
-				226EE7EB27CC516900C8A473 /* CheckersGame.swift in Sources */,
 				226EE7EE27D1202100C8A473 /* CheckersView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

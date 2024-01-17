@@ -65,7 +65,7 @@ extension ReversiEngine {
 	func canMove(for lightTurn: Bool, _ state: Reversi.Pieces, _ moves: [Reversi.Move], with maxMoves: Int) -> Bool {
 		// Board start with 2 pieces already played
 		let initialMoves = 2
-		let movesMade = moves.filter({ move in move.piece.isLight == lightTurn && !move.skip }).count
+		let movesMade = moves.filter({ move in move.light == lightTurn && !move.skip }).count
 		
 		guard initialMoves + movesMade < maxMoves else {
 			return false
@@ -83,23 +83,19 @@ extension ReversiEngine {
 			}
 			
 			// Place piece
-			pieces[move.square] = move.piece
+			pieces[move.square] = Reversi.Piece(isLight: move.light)
 			
 			// Flank opponent pieces
-			let flankedSquares = squaresFlanked(from: move.square, for: move.piece.isLight, pieces)
+			let flankedSquares = squaresFlanked(from: move.square, for: move.light, pieces)
 			for flankedSquare in flankedSquares {
 				guard let piece = pieces[flankedSquare] else {
 					continue
 				}
 				
-				pieces[flankedSquare] = Reversi.Piece(isLight: move.piece.isLight, id: piece.id)
+				pieces[flankedSquare] = Reversi.Piece(isLight: move.light, id: piece.id)
 			}
 		}
 		
 		return pieces
-	}
-	
-	func isLightTurn(_ moves: [Reversi.Move]) -> Bool {
-		!moves.count.isMultiple(of: 2)
 	}
 }

@@ -79,7 +79,7 @@ struct ReversiScoreStatusView: View {
 		let lightScore = pieces.filter({ piece in piece.isLight }).count
 		let darkScore = pieces.filter({ piece in !piece.isLight }).count
 		let initialMoves = 2
-		let moves = board.history.filter({ move in !move.skip }).filter({ move in move.piece.isLight == isLight }).count
+		let moves = board.history.filter({ move in !move.skip }).filter({ move in move.light == isLight }).count
 		VStack(spacing: 0) {
 			ZStack {
 				ReversiPieceView(isLight: isLight)

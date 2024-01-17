@@ -31,6 +31,7 @@ struct ChessSquareView: View {
 		Button {
 			select(square: square)
 		} label: {
+			// Needs to appear/disapper not use opacity
 			GeometryReader { geometry in
 				Circle()
 					.stroke(board.lightTurn ? theme.pieceLight : theme.pieceDark, lineWidth: geometry.size.width / 10)

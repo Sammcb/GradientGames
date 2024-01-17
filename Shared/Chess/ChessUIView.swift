@@ -84,13 +84,9 @@ struct ChessUIView: View {
 			if enableTimer {
 				timersLayout {
 					Spacer()
-					
 					ChessTimeView(board: board, flipped: flipped, isLight: true)
-					
 					Spacer()
-					
 					ChessTimeView(board: board, flipped: flipped, isLight: false)
-					
 					Spacer()
 				}
 				.padding()
