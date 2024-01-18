@@ -22,7 +22,7 @@ struct ChessPromoteView: View {
 				Button {
 					board.promote(to: group)
 				} label: {
-					ChessPieceView(group: group, isLight: board.lightTurn)
+//					ChessPieceView(group: group, isLight: board.lightTurn)
 //						.font(.system(size: 60))
 				}
 				.rotationEffect(!board.lightTurn && flipped ? .radians(.pi) : .zero)
@@ -31,12 +31,12 @@ struct ChessPromoteView: View {
 			}
 		}
 		.disabled(!board.promoting)
-		.animation(.easeIn, value: board.lightTurn)
+//		.animation(.easeIn, value: board.lightTurn)
 		.padding()
 		.background(.ultraThinMaterial)
 #if os(tvOS)
 		.focusSection()
 #endif
-		.transition(.opacity.animation(.linear))
+//		.transition(.opacity.animation(.linear))
 	}
 }

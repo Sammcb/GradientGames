@@ -64,9 +64,9 @@ struct ChessKingStatusView: View {
 			.foregroundStyle(board.lightTurn ? theme.pieceLight : theme.pieceDark)
 			.font(.largeTitle)
 			.rotationEffect(!board.lightTurn && flipped ? .radians(.pi) : .zero)
-			.animation(.easeIn, value: board.lightTurn)
 			.background(.ultraThinMaterial)
 			.clipShape(RoundedRectangle(cornerRadius: 10))
+			.animation(.easeIn, value: board.lightTurn)
 	}
 }
 

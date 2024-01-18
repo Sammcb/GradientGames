@@ -69,6 +69,9 @@ struct ChessView: View {
 			board.selectedSquare = nil
 			board.times.lastUpdate = Date()
 		}
+		.onDisappear {
+			board.selectedSquare = nil
+		}
 #if os(tvOS)
 		.onPlayPauseCommand {
 			guard enableUndo else {

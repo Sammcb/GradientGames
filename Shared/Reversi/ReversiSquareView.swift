@@ -16,25 +16,20 @@ struct ReversiSquareView: View {
 	var body: some View {
 		let square = Reversi.Square(column: column, row: row)
 		Button {
+			if board.gameOver {
+				return
+			}
+			
 			guard board.canPlace(at: square) else {
 				return
 			}
 			
 			board.place(at: square)
 		} label: {
-			if let piece = board.pieces[square] {
-				ReversiPieceView(isLight: piece.isLight)
-					.frame(maxWidth: .infinity, maxHeight: .infinity)
-					.scaleEffect(0.5)
-					.transition(.opacity.animation(.linear))
-					.animation(.linear, value: board.history)
-			} else {
-				Text("")
-					.frame(maxWidth: .infinity, maxHeight: .infinity)
-			}
-			
+			Rectangle()
+				.fill(theme.square)
 		}
-		.background(theme.square, in: Rectangle())
+		.buttonStyle(.borderless)
 		.overlay {
 			if board.validSquares.contains(square) {
 				Circle()
@@ -43,11 +38,5 @@ struct ReversiSquareView: View {
 					.transition(.opacity.animation(.linear))
 			}
 		}
-#if os(tvOS)
-		.buttonStyle(NoneButtonStyle())
-#else
-		.disabled(board.gameOver || board.pieces[square] != nil)
-		.buttonStyle(.borderless)
-#endif
 	}
 }

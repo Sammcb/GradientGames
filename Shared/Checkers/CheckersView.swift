@@ -64,6 +64,9 @@ struct CheckersView: View {
 			board.selectedSquare = board.forcedSelectedSquare
 			board.times.lastUpdate = Date()
 		}
+		.onDisappear {
+			board.selectedSquare = board.forcedSelectedSquare
+		}
 #if os(tvOS)
 		.onPlayPauseCommand {
 			guard enableUndo else {

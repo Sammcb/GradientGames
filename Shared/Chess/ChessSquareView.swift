@@ -14,6 +14,10 @@ struct ChessSquareView: View {
 	let rank: Int
 	
 	private func select(square: Chess.Square) {
+		if board.gameOver {
+			return
+		}
+		
 		if let piece = board.pieces[square], piece.isLight == board.lightTurn {
 			board.selectedSquare = square
 			return
@@ -28,33 +32,20 @@ struct ChessSquareView: View {
 	
 	var body: some View {
 		let square = Chess.Square(file: file, rank: rank)
+		let lightSquare = (rank + file.rawValue - 1).isMultiple(of: 2)
 		Button {
 			select(square: square)
 		} label: {
-			// Needs to appear/disapper not use opacity
-			GeometryReader { geometry in
-				Circle()
-					.stroke(board.lightTurn ? theme.pieceLight : theme.pieceDark, lineWidth: geometry.size.width / 10)
-					.opacity(board.selectedSquare == square ? 1 : 0)
-					.frame(maxWidth: .infinity, maxHeight: .infinity)
-					.scaledToFit()
-					.scaleEffect(0.8)
-			}
+			lightSquare ? theme.squareLight : theme.squareDark
 		}
-#if os(tvOS)
-		.buttonStyle(NoneButtonStyle())
-		.disabled(board.promoting || selected == square)
-#else
 		.buttonStyle(.borderless)
-		.disabled(board.gameOver || board.promoting || board.selectedSquare == square)
-#endif
-		.background((rank + file.rawValue - 1).isMultiple(of: 2) ? theme.squareLight : theme.squareDark, in: Rectangle())
+		.disabled(board.promoting || board.selectedSquare == square)
 		.overlay {
 			if board.validSquares.contains(square) {
 				Circle()
 					.fill(board.lightTurn ? theme.pieceLight : theme.pieceDark)
 					.scaleEffect(0.25)
-					.transition(.opacity.animation(.linear))
+					.transition(.opacity.animation(.easeOut))
 			}
 		}
 	}

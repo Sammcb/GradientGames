@@ -22,7 +22,6 @@ struct CheckersBoardView: View {
 						ForEach(Checkers.SizeRange, id: \.self) { column in
 							let square = Checkers.Square(column: column, row: row)
 							CheckersSquareView(board: board, column: column, row: row)
-								.animation(.linear, value: board.selectedSquare)
 								.focused($focusedSquare, equals: square)
 								.border(focusedSquare == square ? borderColor : .clear, width: 5)
 						}
@@ -35,7 +34,10 @@ struct CheckersBoardView: View {
 					GridRow {
 						ForEach(Checkers.SizeRange, id: \.self) { column in
 							if let piece = board.pieces[column, row] {
+								let selected = board.selectedSquare == Checkers.Square(column: column, row: row)
 								CheckersPieceView(isLight: piece.isLight, kinged: piece.kinged)
+									.scaleEffect(selected ? 1.4 : 1)
+									.animation(.linear, value: board.selectedSquare)
 									.matchedGeometryEffect(id: piece.id, in: pieceAnimation)
 									.allowsHitTesting(false)
 							} else {

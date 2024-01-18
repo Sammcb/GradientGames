@@ -23,7 +23,6 @@ struct ChessBoardView: View {
 						ForEach(Chess.File.validFiles) { file in
 							let square = Chess.Square(file: file, rank: rank)
 							ChessSquareView(board: board, file: file, rank: rank)
-								.animation(.linear, value: board.selectedSquare)
 								.focused($focusedSquare, equals: square)
 								.border(focusedSquare == square ? borderColor : .clear, width: 5)
 						}
@@ -36,20 +35,27 @@ struct ChessBoardView: View {
 					GridRow {
 						ForEach(Chess.File.validFiles) { file in
 							if let piece = board.pieces[file, rank] {
-								ChessPieceView(piece: piece)
-									.matchedGeometryEffect(id: piece.id, in: pieceAnimation)
-									.allowsHitTesting(false)
-									.rotationEffect(!piece.isLight && flipped ? .radians(.pi) : .zero)
+								let selected = board.selectedSquare == Chess.Square(file: file, rank: rank)
+								let scale = selected ? 1 : 0.75
+								GeometryReader { geometry in
+									ChessPieceView(group: piece.group, isLight: piece.isLight)
+										.matchedGeometryEffect(id: piece.id, in: pieceAnimation)
+										.frame(width: geometry.size.width * scale, height: geometry.size.height * scale)
+										.transition(.opacity.animation(.easeIn))
+										.allowsHitTesting(false)
+										.rotationEffect(!piece.isLight && flipped ? .radians(.pi) : .zero)
+										.id(piece.id)
+										.frame(maxWidth: .infinity, maxHeight: .infinity)
+								}
 							} else {
-								Spacer()
-									.frame(maxWidth: .infinity, maxHeight: .infinity)
+								Color.clear
 							}
 						}
 					}
 				}
 			}
-			.animation(.linear, value: board.history)
-			.transition(.opacity.animation(.linear))
+			.animation(.easeInOut(duration: 0.6), value: board.history)
+			.animation(.easeInOut, value: board.selectedSquare)
 		}
 		.aspectRatio(1, contentMode: .fit)
 	}

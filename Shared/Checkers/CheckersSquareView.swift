@@ -14,6 +14,10 @@ struct CheckersSquareView: View {
 	let row: Int
 	
 	private func select(square: Checkers.Square) {
+		if board.gameOver {
+			return
+		}
+		
 		if let piece = board.pieces[square], piece.isLight == board.lightTurn, board.forcedSelectedSquare == nil {
 			board.selectedSquare = square
 			return
@@ -29,26 +33,15 @@ struct CheckersSquareView: View {
 	
 	var body: some View {
 		let square = Checkers.Square(column: column, row: row)
+		let lightSquare = (row + column - 1).isMultiple(of: 2)
 		Button {
 			select(square: square)
 		} label: {
-			// Needs to appear/disapper not use opacity
-			GeometryReader { geometry in
-				Circle()
-					.stroke(board.lightTurn ? theme.pieceLight : theme.pieceDark, lineWidth: geometry.size.width / 10)
-					.opacity(board.selectedSquare == square ? 1 : 0)
-					.frame(maxWidth: .infinity, maxHeight: .infinity)
-					.scaledToFit()
-					.scaleEffect(0.8)
-			}
+			Rectangle()
+				.fill(lightSquare ? theme.squareLight : theme.squareDark)
+				.frame(maxWidth: .infinity, maxHeight: .infinity)
 		}
-#if os(tvOS)
-		.buttonStyle(NoneButtonStyle())
-#else
 		.buttonStyle(.borderless)
-		.disabled(board.gameOver)
-#endif
-		.background((row + column - 1).isMultiple(of: 2) ? theme.squareLight : theme.squareDark, in: Rectangle())
 		.overlay {
 			if board.validSquares.contains(square) {
 				Circle()
