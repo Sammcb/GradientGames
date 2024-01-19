@@ -13,17 +13,11 @@ struct CheckersPieceView: View {
 	let kinged: Bool
 	
 	var body: some View {
-		GeometryReader { geometry in
-			Circle()
-				.foregroundStyle(isLight ? theme.pieceLight : theme.pieceDark)
-				.overlay {
-					Circle()
-						.stroke(isLight ? theme.pieceDark : theme.pieceLight, style: StrokeStyle(lineWidth: geometry.size.width / 16))
-						.frame(maxWidth: .infinity, maxHeight: .infinity)
-						.scaleEffect(0.5)
-						.opacity(kinged ? 1 : 0)
-				}
-				.scaleEffect(0.5)
-		}
+		Image(systemName: "circle")
+			.resizable()
+			.symbolVariant(kinged ? .circle.fill : .fill)
+			.foregroundStyle(isLight ? theme.pieceLight : theme.pieceDark)
+			.scaledToFit()
+			.scaleEffect(0.75)
 	}
 }

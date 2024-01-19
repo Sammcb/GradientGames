@@ -48,6 +48,7 @@ struct GamesView: View, UniversalLinkReciever {
 	@AppStorage(Setting.enableUndo.rawValue) private var enableUndo = true
 	@AppStorage(Setting.flipUI.rawValue) private var flipped = false
 	@AppStorage(Setting.enableTimer.rawValue) private var enableTimer = false
+	@AppStorage(Setting.showMoves.rawValue) private var showMoves = true
 	
 	private func resetGame(for detailView: DetailView) {
 		switch detailView {
@@ -188,15 +189,15 @@ struct GamesView: View, UniversalLinkReciever {
 				switch selectedView {
 				case .chess, .none:
 					let theme = ChessUITheme(theme: themes.first(where: { $0.id.uuidString == chessTheme }))
-					ChessView(board: chessBoard(), enableUndo: enableUndo, flipped: flipped, enableTimer: enableTimer)
+					ChessView(board: chessBoard(), enableUndo: enableUndo, flipped: flipped, enableTimer: enableTimer, showMoves: showMoves)
 						.environment(\.chessTheme, theme)
 				case .reversi:
 					let theme = ReversiUITheme(theme: themes.first(where: { $0.id.uuidString == reversiTheme }))
-					ReversiView(board: reversiBoard(), enableUndo: enableUndo, flipped: flipped, enableTimer: enableTimer)
+					ReversiView(board: reversiBoard(), enableUndo: enableUndo, flipped: flipped, enableTimer: enableTimer, showMoves: showMoves)
 						.environment(\.reversiTheme, theme)
 				case .checkers:
 					let theme = CheckersUITheme(theme: themes.first(where: { $0.id.uuidString == checkersTheme }))
-					CheckersView(board: checkersBoard(), enableUndo: enableUndo, flipped: flipped, enableTimer: enableTimer)
+					CheckersView(board: checkersBoard(), enableUndo: enableUndo, flipped: flipped, enableTimer: enableTimer, showMoves: showMoves)
 						.environment(\.checkersTheme, theme)
 				case .settings:
 					SettingsView()

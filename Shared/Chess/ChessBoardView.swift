@@ -11,6 +11,7 @@ struct ChessBoardView: View {
 	@Environment(\.chessTheme) private var theme
 	var board: ChessBoard
 	var flipped: Bool
+	var showMoves: Bool
 	@FocusState private var focusedSquare: Chess.Square?
 	@Namespace private var pieceAnimation
 	
@@ -22,7 +23,7 @@ struct ChessBoardView: View {
 					GridRow {
 						ForEach(Chess.File.validFiles) { file in
 							let square = Chess.Square(file: file, rank: rank)
-							ChessSquareView(board: board, file: file, rank: rank)
+							ChessSquareView(board: board, showMoves: showMoves, file: file, rank: rank)
 								.focused($focusedSquare, equals: square)
 								.border(focusedSquare == square ? borderColor : .clear, width: 5)
 						}

@@ -44,6 +44,7 @@ struct CheckersView: View {
 	var enableUndo: Bool
 	var flipped: Bool
 	var enableTimer: Bool
+	var showMoves: Bool
 	
 	var body: some View {
 		GeometryReader { geometry in
@@ -53,10 +54,10 @@ struct CheckersView: View {
 			layout {
 				CheckersUIView(board: board, enableTimer: enableTimer, flipped: flipped, vertical: vertical)
 				
-				CheckersBoardView(board: board)
+				CheckersBoardView(board: board, showMoves: showMoves)
 					.frame(maxWidth: .infinity, maxHeight: .infinity)
 			}
-			.background(.linearGradient(colors: [theme.squareLight, theme.squareDark], startPoint: .top, endPoint: .bottom))
+			.background(.linearGradient(colors: [theme.squareDark, theme.squareLight], startPoint: .top, endPoint: .bottom))
 			.frame(maxWidth: .infinity, maxHeight: .infinity)
 			.font(.system(.headline, design: .rounded).bold().monospaced())
 		}
@@ -76,13 +77,13 @@ struct CheckersView: View {
 			board.undo()
 		}
 #else
-		.navigationBarTitleDisplayMode(.inline)
+//		.navigationBarTitleDisplayMode(.inline)
 		.navigationTitle("Checkers")
 		.toolbar {
 			if enableUndo {
 				ToolbarItem {
 					Button(action: board.undo) {
-						Label("Undo", systemImage: "arrow.uturn.backward")
+						Image(systemName: "arrow.uturn.backward")
 							.symbolVariant(.circle.fill)
 							.rotationEffect(board.lightTurn && flipped ? .radians(.pi) : .zero)
 							.animation(.easeIn, value: board.lightTurn)

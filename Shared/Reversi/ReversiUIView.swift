@@ -18,6 +18,7 @@ struct ReversiTimeView: View {
 		Text(board.times.stringFor(lightTime: isLight))
 			.foregroundStyle(isLight ? theme.pieceLight : theme.pieceDark)
 			.rotationEffect(board.lightTurn && flipped ? .radians(.pi) : .zero)
+			.animation(.easeIn, value: board.lightTurn)
 			.onReceive(timer) { currentDate in
 				guard board.lightTurn == isLight else {
 					return
@@ -65,6 +66,8 @@ struct ReversiStatusView: View {
 			.rotationEffect(board.lightTurn && flipped ? .radians(.pi) : .zero)
 			.background(.ultraThinMaterial)
 			.clipShape(RoundedRectangle(cornerRadius: 10))
+			.animation(.easeIn, value: board.lightTurn)
+			.animation(.easeIn, value: board.history)
 	}
 }
 
@@ -83,7 +86,7 @@ struct ReversiScoreStatusView: View {
 		VStack(spacing: 0) {
 			ZStack {
 				ReversiPieceView(isLight: isLight)
-					.frame(width: 25, height: 25)
+					.frame(width: 40, height: 40)
 				Text("\(isLight ? lightScore : darkScore)")
 					.blendMode(.destinationOut)
 			}
@@ -93,6 +96,7 @@ struct ReversiScoreStatusView: View {
 				.foregroundStyle(isLight ? theme.pieceLight : theme.pieceDark)
 		}
 		.rotationEffect(board.lightTurn && flipped ? .radians(.pi) : .zero)
+		.animation(.easeIn, value: board.lightTurn)
 	}
 }
 
@@ -125,8 +129,8 @@ struct ReversiUIView: View {
 			.background(.ultraThinMaterial)
 			
 			ReversiStatusView(board: board, flipped: flipped)
+				.padding()
 		}
-		.animation(.easeIn, value: board.lightTurn)
 		.ignoresSafeArea(edges: vertical ? .horizontal : .vertical)
 	}
 }

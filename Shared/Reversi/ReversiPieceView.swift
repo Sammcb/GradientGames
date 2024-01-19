@@ -12,7 +12,11 @@ struct ReversiPieceView: View {
 	var isLight: Bool
 	
 	var body: some View {
-		Circle()
+		Image(systemName: "circle")
+			.resizable()
+			.symbolVariant(.fill)
 			.foregroundStyle(isLight ? theme.pieceLight : theme.pieceDark)
+			.scaledToFit()
+			.scaleEffect(0.75)
 	}
 }

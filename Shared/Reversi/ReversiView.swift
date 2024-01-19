@@ -44,6 +44,7 @@ struct ReversiView: View {
 	var enableUndo: Bool
 	var flipped: Bool
 	var enableTimer: Bool
+	var showMoves: Bool
 	
 	var body: some View {
 		GeometryReader { geometry in
@@ -53,7 +54,7 @@ struct ReversiView: View {
 			layout {
 				ReversiUIView(board: board, enableTimer: enableTimer, flipped: flipped, vertical: vertical)
 				
-				ReversiBoardView(board: board, flipped: flipped)
+				ReversiBoardView(board: board, flipped: flipped, showMoves: showMoves)
 					.frame(maxWidth: .infinity, maxHeight: .infinity)
 			}
 			.background(.linearGradient(colors: [theme.square, theme.border], startPoint: .top, endPoint: .bottom))
@@ -72,7 +73,7 @@ struct ReversiView: View {
 			board.undo()
 		}
 #else
-		.navigationBarTitleDisplayMode(.inline)
+//		.navigationBarTitleDisplayMode(.inline)
 		.navigationTitle("Reversi")
 		.toolbar {
 			if enableUndo {

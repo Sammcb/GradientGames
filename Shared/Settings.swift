@@ -8,10 +8,5 @@
 import Foundation
 
 enum Setting: String {
-	case enableUndo
-	case enableTimer
-	case flipUI
-	case chessTheme
-	case reversiTheme
-	case checkersTheme
+	case enableUndo, enableTimer, flipUI, showMoves, chessTheme, reversiTheme, checkersTheme
 }

@@ -44,6 +44,7 @@ struct ChessView: View {
 	var enableUndo: Bool
 	var flipped: Bool
 	var enableTimer: Bool
+	var showMoves: Bool
 	
 	var body: some View {
 		GeometryReader { geometry in
@@ -53,15 +54,15 @@ struct ChessView: View {
 			layout {
 				ChessUIView(board: board, enableTimer: enableTimer, flipped: flipped, vertical: vertical)
 				
-				ChessBoardView(board: board, flipped: flipped)
-					.animation(.linear, value: board.history)
+				ChessBoardView(board: board, flipped: flipped, showMoves: showMoves)
+//					.animation(.linear, value: board.history)
 					.frame(maxWidth: .infinity, maxHeight: .infinity)
 				
 				if board.promoting {
 					ChessPromoteView(board: board, flipped: flipped, vertical: vertical)
 				}
 			}
-			.background(.linearGradient(colors: [theme.squareLight, theme.squareDark], startPoint: .top, endPoint: .bottom))
+			.background(.linearGradient(colors: [theme.squareDark, theme.squareLight], startPoint: .top, endPoint: .bottom))
 			.frame(maxWidth: .infinity, maxHeight: .infinity)
 			.font(.system(.headline, design: .rounded).bold().monospaced())
 		}
@@ -81,7 +82,7 @@ struct ChessView: View {
 			board.undo()
 		}
 #else
-		.navigationBarTitleDisplayMode(.inline)
+//		.navigationBarTitleDisplayMode(.inline)
 		.navigationTitle("Chess")
 		.toolbar {
 			if enableUndo {

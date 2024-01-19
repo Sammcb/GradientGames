@@ -51,8 +51,8 @@ class ReversiBoard: ReversiEngine {
 		
 		let move = Reversi.Move(light: piece.isLight, at: square)
 		let futureMoves = history + [move]
-		let futurePieces = computeState(for: futureMoves, from: pieces)
-		let nextPlayerCanMove = canMove(for: lightTurn, futurePieces, futureMoves, with: maxMoves)
+		let futurePieces = computeState(for: [move], from: pieces)
+		let nextPlayerCanMove = canMove(for: !lightTurn, futurePieces, futureMoves, with: maxMoves)
 		
 		history.append(move)
 		
@@ -66,6 +66,10 @@ class ReversiBoard: ReversiEngine {
 	
 	func undo() {
 		guard undoEnabled else {
+			return
+		}
+		
+		guard let move = history.popLast(), move.skip else {
 			return
 		}
 		

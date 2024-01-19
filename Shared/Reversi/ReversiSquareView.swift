@@ -10,6 +10,7 @@ import SwiftUI
 struct ReversiSquareView: View {
 	@Environment(\.reversiTheme) private var theme
 	var board: ReversiBoard
+	var showMoves: Bool
 	let column: Int
 	let row: Int
 	
@@ -26,16 +27,16 @@ struct ReversiSquareView: View {
 			
 			board.place(at: square)
 		} label: {
-			Rectangle()
-				.fill(theme.square)
+			theme.square
 		}
 		.buttonStyle(.borderless)
 		.overlay {
-			if board.validSquares.contains(square) {
+			if showMoves && board.validSquares.contains(square) {
 				Circle()
 					.fill(board.lightTurn ? theme.pieceLight : theme.pieceDark)
 					.scaleEffect(0.25)
-					.transition(.opacity.animation(.linear))
+					.transition(.scale.animation(.easeOut))
+					.animation(.easeIn, value: board.lightTurn)
 			}
 		}
 	}

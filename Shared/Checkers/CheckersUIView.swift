@@ -18,6 +18,7 @@ struct CheckersTimeView: View {
 		Text(board.times.stringFor(lightTime: isLight))
 			.foregroundStyle(isLight ? theme.pieceLight : theme.pieceDark)
 			.rotationEffect(board.lightTurn && flipped ? .radians(.pi) : .zero)
+			.animation(.easeIn, value: board.lightTurn)
 			.onReceive(timer) { currentDate in
 				guard board.lightTurn == isLight else {
 					return
@@ -57,9 +58,9 @@ struct CheckersStateView: View {
 			.foregroundStyle(toggleColor ? theme.pieceLight : theme.pieceDark)
 			.font(.largeTitle)
 			.rotationEffect(board.lightTurn && flipped ? .radians(.pi) : .zero)
-			.animation(.easeIn, value: board.lightTurn)
 			.background(.ultraThinMaterial)
 			.clipShape(RoundedRectangle(cornerRadius: 10))
+			.animation(.easeIn, value: board.lightTurn)
 	}
 }
 
@@ -87,6 +88,7 @@ struct CheckersUIView: View {
 			}
 			
 			CheckersStateView(board: board, flipped: flipped)
+				.padding()
 		}
 		.ignoresSafeArea(edges: vertical ? .horizontal : .vertical)
 	}

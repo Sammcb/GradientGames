@@ -17,10 +17,11 @@ struct SettingsView: View {
 	@Environment(Navigation.self) private var navigation: Navigation
 	@Query(sort: \Theme.index) private var themes: [Theme]
 	@AppStorage(Setting.enableUndo.rawValue) private var enableUndo = true
-	@AppStorage(Setting.enableTimer.rawValue) private var enableTimer = true
+	@AppStorage(Setting.enableTimer.rawValue) private var enableTimer = false
 #if !targetEnvironment(macCatalyst)
 	@AppStorage(Setting.flipUI.rawValue) private var flipUI = false
 #endif
+	@AppStorage(Setting.showMoves.rawValue) private var showMoves = true
 	@AppStorage(Setting.chessTheme.rawValue) private var chessTheme = ""
 	@AppStorage(Setting.reversiTheme.rawValue) private var reversiTheme = ""
 	@AppStorage(Setting.checkersTheme.rawValue) private var checkersTheme = ""
@@ -58,18 +59,18 @@ struct SettingsView: View {
 			Section("General") {
 				Toggle(isOn: $enableUndo) {
 					Label("Undos", systemImage: "arrow.uturn.backward")
-						.symbolVariant(.circle.fill)
 				}
 				Toggle(isOn: $enableTimer) {
 					Label("Timers", systemImage: "clock")
-						.symbolVariant(.fill)
 				}
 #if !targetEnvironment(macCatalyst)
 				Toggle(isOn: $flipUI) {
 					Label("Flip UI each turn", systemImage: "arrow.up.arrow.down")
-						.symbolVariant(.circle.fill)
 				}
 #endif
+				Toggle(isOn: $showMoves) {
+					Label("Show available moves", systemImage: "sparkle.magnifyingglass")
+				}
 			}
 			.headerProminence(.increased)
 			

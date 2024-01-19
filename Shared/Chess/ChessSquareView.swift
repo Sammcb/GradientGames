@@ -10,6 +10,7 @@ import SwiftUI
 struct ChessSquareView: View {
 	@Environment(\.chessTheme) private var theme
 	var board: ChessBoard
+	var showMoves: Bool
 	let file: Chess.File
 	let rank: Int
 	
@@ -41,11 +42,11 @@ struct ChessSquareView: View {
 		.buttonStyle(.borderless)
 		.disabled(board.promoting || board.selectedSquare == square)
 		.overlay {
-			if board.validSquares.contains(square) {
+			if showMoves && board.validSquares.contains(square) {
 				Circle()
 					.fill(board.lightTurn ? theme.pieceLight : theme.pieceDark)
 					.scaleEffect(0.25)
-					.transition(.opacity.animation(.easeOut))
+					.transition(.scale.animation(.easeOut))
 			}
 		}
 	}

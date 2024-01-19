@@ -94,6 +94,7 @@ struct ChessUIView: View {
 			}
 			
 			ChessKingStatusView(board: board, flipped: flipped)
+				.padding()
 		}
 		.ignoresSafeArea(edges: vertical ? .horizontal : .vertical)
 	}

@@ -10,6 +10,7 @@ import SwiftUI
 struct CheckersSquareView: View {
 	@Environment(\.checkersTheme) private var theme
 	var board: CheckersBoard
+	var showMoves: Bool
 	let column: Int
 	let row: Int
 	
@@ -37,17 +38,15 @@ struct CheckersSquareView: View {
 		Button {
 			select(square: square)
 		} label: {
-			Rectangle()
-				.fill(lightSquare ? theme.squareLight : theme.squareDark)
-				.frame(maxWidth: .infinity, maxHeight: .infinity)
+			lightSquare ? theme.squareLight : theme.squareDark
 		}
 		.buttonStyle(.borderless)
 		.overlay {
-			if board.validSquares.contains(square) {
+			if showMoves && board.validSquares.contains(square) {
 				Circle()
 					.fill(board.lightTurn ? theme.pieceLight : theme.pieceDark)
 					.scaleEffect(0.25)
-					.transition(.opacity.animation(.linear))
+					.transition(.scale.animation(.easeOut))
 			}
 		}
 	}
