@@ -1,26 +1,25 @@
 //
-//  SettingsView.swift
+//  macOSSettingsView.swift
 //  GradientGames
 //
-//  Created by Sam McBroom on 2/13/22.
+//  Created by Sam McBroom on 1/20/24.
 //
-#if !os(tvOS)
+
+import SwiftUI
+
 import SwiftUI
 import SwiftData
 
+#if os(macOS)
 struct SettingsView: View {
 	private struct SelectedTheme: Identifiable {
 		let id: UUID
 	}
 	
 	@Environment(\.modelContext) private var context
-	@Environment(Navigation.self) private var navigation: Navigation
 	@Query(sort: \Theme.index) private var themes: [Theme]
 	@AppStorage(Setting.enableUndo.rawValue) private var enableUndo = true
 	@AppStorage(Setting.enableTimer.rawValue) private var enableTimer = false
-#if !targetEnvironment(macCatalyst)
-	@AppStorage(Setting.flipUI.rawValue) private var flipUI = false
-#endif
 	@AppStorage(Setting.showMoves.rawValue) private var showMoves = true
 	@AppStorage(Setting.chessTheme.rawValue) private var chessTheme = ""
 	@AppStorage(Setting.reversiTheme.rawValue) private var reversiTheme = ""
@@ -63,11 +62,6 @@ struct SettingsView: View {
 				Toggle(isOn: $enableTimer) {
 					Label("Timers", systemImage: "clock")
 				}
-#if !targetEnvironment(macCatalyst)
-				Toggle(isOn: $flipUI) {
-					Label("Flip UI each turn", systemImage: "arrow.up.arrow.down")
-				}
-#endif
 				Toggle(isOn: $showMoves) {
 					Label("Show available moves", systemImage: "sparkle.magnifyingglass")
 				}
@@ -106,17 +100,17 @@ struct SettingsView: View {
 					.onMove { indexSet, index in
 						moveTheme(for: .chess, from: indexSet, to: index)
 					}
-				}
-				
-				Button {
-					let theme = Theme(game: .chess)
-					if let lastThemeIndex = chessThemes.last?.index {
-						theme.index = lastThemeIndex + 1
+					
+					Button {
+						let theme = Theme(game: .chess)
+						if let lastThemeIndex = chessThemes.last?.index {
+							theme.index = lastThemeIndex + 1
+						}
+						context.insert(theme)
+						sheetTheme = SelectedTheme(id: theme.id)
+					} label: {
+						Label("Create theme", systemImage: "plus")
 					}
-					context.insert(theme)
-					sheetTheme = SelectedTheme(id: theme.id)
-				} label: {
-					Label("Create theme", systemImage: "plus")
 				}
 			}
 			.headerProminence(.increased)
@@ -215,6 +209,7 @@ struct SettingsView: View {
 			}
 			.headerProminence(.increased)
 		}
+		.padding()
 		.sheet(item: $sheetTheme) { selectedTheme in
 			if let theme = themes.first(where: { $0.id == selectedTheme.id }) {
 				ThemeView(theme: theme)
@@ -224,7 +219,7 @@ struct SettingsView: View {
 //			guard themeLinkOpened else {
 //				return
 //			}
-//			
+//
 //			sheetTheme = nil
 //			navigation.themeLinkOpened = false
 //		}

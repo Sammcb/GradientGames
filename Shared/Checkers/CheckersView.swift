@@ -77,7 +77,9 @@ struct CheckersView: View {
 			board.undo()
 		}
 #else
-//		.navigationBarTitleDisplayMode(.inline)
+#if os(iOS)
+		.navigationBarTitleDisplayMode(.inline)
+#endif
 		.navigationTitle("Checkers")
 		.toolbar {
 			if enableUndo {

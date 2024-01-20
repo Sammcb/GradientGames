@@ -39,7 +39,6 @@ struct GamesView: View, UniversalLinkReciever {
 	@Query private var chessBoards: [ChessBoard]
 	@Query private var reversiBoards: [ReversiBoard]
 	@Query private var checkersBoards: [CheckersBoard]
-	@State private var navigation = Navigation()
 	@State private var path: [UUID] = []
 	@State private var selectedView: DetailView?
 	@AppStorage(Setting.chessTheme.rawValue) private var chessTheme = ""
@@ -92,80 +91,62 @@ struct GamesView: View, UniversalLinkReciever {
 		return board
 	}
 	
-	private func present(_ themeId: UUID) {
-		selectedView = .settings
-		navigation.themeLinkOpened = true
-		path = []
-	}
+//	private func present(_ themeId: UUID) {
+//		selectedView = .settings
+//		navigation.themeLinkOpened = true
+//		path = []
+//	}
 	
 	private func createTheme(with themeField: ThemeField) {
-//		let theme: Theme
-//		switch themeField {
-//		case .chess(let symbol, let pieceLight, let pieceDark, let squareLight, let squareDark):
-//			let lastThemeIndex = chessThemes.last?.index ?? -1
-//			let themeIndex = lastThemeIndex + 1
-//			let chessTheme = ChessTheme(index: themeIndex, symbol: symbol, pieceDark: pieceDark, pieceLight: pieceLight, squareDark: squareDark, squareLight: squareLight)
-//			context.insert(chessTheme)
-//		case .reversi(let symbol, let pieceLight, let pieceDark, let square, let border):
-//			let lastThemeIndex = reversiThemes.last?.index ?? -1
-//			let themeIndex = lastThemeIndex + 1
-//			let reversiTheme = ReversiTheme(index: themeIndex, symbol: symbol, pieceDark: pieceDark, pieceLight: pieceLight, border: border, square: square)
-//			context.insert(reversiTheme)
-//		case .checkers(let symbol, let pieceLight, let pieceDark, let squareLight, let squareDark):
-//			let lastThemeIndex = checkersThemes.last?.index ?? -1
-//			let themeIndex = lastThemeIndex + 1
-//			let checkersTheme = CheckersTheme(index: themeIndex, symbol: symbol, pieceDark: pieceDark, pieceLight: pieceLight, squareDark: squareDark, squareLight: squareLight)
-//			context.insert(checkersTheme)
-//		}
-//		try? context.save()
+		//		let theme: Theme
+		//		switch themeField {
+		//		case .chess(let symbol, let pieceLight, let pieceDark, let squareLight, let squareDark):
+		//			let lastThemeIndex = chessThemes.last?.index ?? -1
+		//			let themeIndex = lastThemeIndex + 1
+		//			let chessTheme = ChessTheme(index: themeIndex, symbol: symbol, pieceDark: pieceDark, pieceLight: pieceLight, squareDark: squareDark, squareLight: squareLight)
+		//			context.insert(chessTheme)
+		//		case .reversi(let symbol, let pieceLight, let pieceDark, let square, let border):
+		//			let lastThemeIndex = reversiThemes.last?.index ?? -1
+		//			let themeIndex = lastThemeIndex + 1
+		//			let reversiTheme = ReversiTheme(index: themeIndex, symbol: symbol, pieceDark: pieceDark, pieceLight: pieceLight, border: border, square: square)
+		//			context.insert(reversiTheme)
+		//		case .checkers(let symbol, let pieceLight, let pieceDark, let squareLight, let squareDark):
+		//			let lastThemeIndex = checkersThemes.last?.index ?? -1
+		//			let themeIndex = lastThemeIndex + 1
+		//			let checkersTheme = CheckersTheme(index: themeIndex, symbol: symbol, pieceDark: pieceDark, pieceLight: pieceLight, squareDark: squareDark, squareLight: squareLight)
+		//			context.insert(checkersTheme)
+		//		}
+		//		try? context.save()
 		
-//		present(theme)
+		//		present(theme)
 	}
 	
 	var body: some View {
 		NavigationSplitView {
 			List(selection: $selectedView) {
-#if targetEnvironment(macCatalyst)
-				Section("Games") {
-					ForEach(DetailView.allCases.filter({ $0 != .settings })) { detailView in
-						let viewInfo = getViewInfo(for: detailView)
-						let action = viewInfo.game?.reset ?? {}
-						NavigationLink(value: detailView) {
-							Label(viewInfo.title, systemImage: viewInfo.symbol)
-								.contextMenu {
-									Button(role: .destructive, action: action) {
-										Label("New game", systemImage: "trash")
-									}
-								}
-						}
-					}
-				}
-				
-				Section("Customization") {
-					let detailView: DetailView = .settings
-					let viewInfo = getViewInfo(for: detailView)
-					NavigationLink(value: detailView) {
-						Label(viewInfo.title, systemImage: viewInfo.symbol)
-					}
-				}
-#else
 				ForEach(DetailView.allGames) { detailView in
 					NavigationLink(value: detailView) {
 						Label(detailView.title, systemImage: detailView.symbol)
-							.contextMenu {
-								Button(role: .destructive) {
-									resetGame(for: detailView)
-								} label: {
-									Label("New game", systemImage: "trash")
-								}
-							}
 					}
+					.contextMenu {
+						Button(role: .destructive) {
+							resetGame(for: detailView)
+						} label: {
+							Label("New game", systemImage: "trash")
+						}
+					}
+				}
+#if os(tvOS)
+				Spacer()
+					.frame(maxHeight: .infinity)
+				NavigationLink(value: DetailView.settings) {
+					Label(DetailView.settings.title, systemImage: DetailView.settings.symbol)
 				}
 #endif
 			}
 			.symbolVariant(.fill)
 			.foregroundStyle(.primary)
-#if !targetEnvironment(macCatalyst)
+#if os(iOS)
 			.toolbar {
 				ToolbarItem {
 					Button(action: {
@@ -187,7 +168,9 @@ struct GamesView: View, UniversalLinkReciever {
 		} detail: {
 			NavigationStack(path: $path) {
 				switch selectedView {
-				case .chess, .none:
+				case .none:
+					ContentUnavailableView("Select a game", systemImage: "circle", description: Text(""))
+				case .chess:
 					let theme = ChessUITheme(theme: themes.first(where: { $0.id.uuidString == chessTheme }))
 					ChessView(board: chessBoard(), enableUndo: enableUndo, flipped: flipped, enableTimer: enableTimer, showMoves: showMoves)
 						.environment(\.chessTheme, theme)
@@ -204,6 +187,5 @@ struct GamesView: View, UniversalLinkReciever {
 				}
 			}
 		}
-		.environment(navigation)
 	}
 }

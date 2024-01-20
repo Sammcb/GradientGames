@@ -73,7 +73,9 @@ struct ReversiView: View {
 			board.undo()
 		}
 #else
-//		.navigationBarTitleDisplayMode(.inline)
+#if os(iOS)
+		.navigationBarTitleDisplayMode(.inline)
+#endif
 		.navigationTitle("Reversi")
 		.toolbar {
 			if enableUndo {

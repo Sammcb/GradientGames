@@ -1,11 +1,11 @@
 //
-//  ThemeView.swift
+//  macOSThemeView.swift
 //  GradientGames
 //
-//  Created by Sam McBroom on 12/8/23.
+//  Created by Sam McBroom on 1/20/24.
 //
 
-#if !os(tvOS)
+#if os(macOS)
 import SwiftUI
 import SwiftData
 

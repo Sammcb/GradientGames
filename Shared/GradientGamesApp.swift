@@ -17,6 +17,12 @@ struct GradientGamesApp: App {
 			GamesView()
 		}
 		.modelContainer(container)
+		#if os(macOS)
+		Settings {
+			SettingsView()
+		}
+		.modelContainer(container)
+		#endif
 	}
 	
 	init() {

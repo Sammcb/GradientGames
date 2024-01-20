@@ -12,7 +12,7 @@ struct ChessThemeKey: EnvironmentKey {
 	static let defaultValue = ChessUITheme()
 }
 
-extension EnvironmentValues {	
+extension EnvironmentValues {
 	var chessTheme: ChessUITheme {
 		get {
 			self[ChessThemeKey.self]
@@ -55,7 +55,7 @@ struct ChessView: View {
 				ChessUIView(board: board, enableTimer: enableTimer, flipped: flipped, vertical: vertical)
 				
 				ChessBoardView(board: board, flipped: flipped, showMoves: showMoves)
-//					.animation(.linear, value: board.history)
+				//					.animation(.linear, value: board.history)
 					.frame(maxWidth: .infinity, maxHeight: .infinity)
 				
 				if board.promoting {
@@ -82,7 +82,9 @@ struct ChessView: View {
 			board.undo()
 		}
 #else
-//		.navigationBarTitleDisplayMode(.inline)
+#if os(iOS)
+		.navigationBarTitleDisplayMode(.inline)
+#endif
 		.navigationTitle("Chess")
 		.toolbar {
 			if enableUndo {

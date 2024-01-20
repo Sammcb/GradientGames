@@ -15,7 +15,7 @@ struct ReversiBoardView: View {
 	@FocusState private var focusedSquare: Reversi.Square?
 	
 	var body: some View {
-//		let borderColor = board.lightTurn ? theme.pieceLight : theme.pieceDark
+		let borderColor = board.lightTurn ? theme.pieceLight : theme.pieceDark
 		ZStack {
 			Grid(horizontalSpacing: 0, verticalSpacing: 0) {
 				ForEach(Reversi.SizeRange.reversed(), id: \.self) { row in
@@ -24,14 +24,7 @@ struct ReversiBoardView: View {
 							let square = Reversi.Square(column: column, row: row)
 							ReversiSquareView(board: board, showMoves: showMoves, column: column, row: row)
 								.focused($focusedSquare, equals: square)
-								.overlay {
-									Rectangle()
-										.stroke(theme.square, lineWidth: 1)
-										.brightness(0.25)
-//									theme.square.brightness(10)
-								}
-//								.border(.white.blendMode(.multiply), width: focusedSquare == square ? 5 : 1)
-//								.border(focusedSquare == square ? borderColor : theme.border, width: focusedSquare == square ? 5 : 1)
+								.border(focusedSquare == square ? borderColor : theme.border, width: focusedSquare == square ? 5 : 1)
 						}
 					}
 				}

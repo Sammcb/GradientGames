@@ -6,142 +6,118 @@
 //
 #if os(tvOS)
 import SwiftUI
+import SwiftData
 
 struct SettingsView: View {
-	@FetchRequest(sortDescriptors: [SortDescriptor(\ChessTheme.index, order: .forward)]) private var chessThemes: FetchedResults<ChessTheme>
-	@FetchRequest(sortDescriptors: [SortDescriptor(\ReversiTheme.index, order: .forward)]) private var reversiThemes: FetchedResults<ReversiTheme>
-	@FetchRequest(sortDescriptors: [SortDescriptor(\CheckersTheme.index, order: .forward)]) private var checkersThemes: FetchedResults<CheckersTheme>
+	@Query(sort: \Theme.index) private var themes: [Theme]
+	@AppStorage(Setting.enableUndo.rawValue) private var enableUndo = true
+	@AppStorage(Setting.enableTimer.rawValue) private var enableTimer = false
+	@AppStorage(Setting.showMoves.rawValue) private var showMoves = true
 	@AppStorage(Setting.chessTheme.rawValue) private var chessTheme = ""
-	@AppStorage(Setting.chessEnableUndo.rawValue) private var chessEnableUndo = true
-	@AppStorage(Setting.chessEnableTimer.rawValue) private var chessEnableTimer = true
 	@AppStorage(Setting.reversiTheme.rawValue) private var reversiTheme = ""
-	@AppStorage(Setting.reversiEnableUndo.rawValue) private var reversiEnableUndo = true
-	@AppStorage(Setting.reversiEnableTimer.rawValue) private var reversiEnableTimer = true
 	@AppStorage(Setting.checkersTheme.rawValue) private var checkersTheme = ""
-	@AppStorage(Setting.checkersEnableUndo.rawValue) private var checkersEnableUndo = true
-	@AppStorage(Setting.checkersEnableTimer.rawValue) private var checkersEnableTimer = true
 	
 	var body: some View {
 		Form {
 			Section {
-				Toggle(isOn: $chessEnableUndo) {
+				Toggle(isOn: $enableUndo) {
 					Label("Undos", systemImage: "arrow.uturn.backward")
-						.symbolVariant(.circle.fill)
 				}
-				Toggle(isOn: $chessEnableTimer) {
+				Toggle(isOn: $enableTimer) {
 					Label("Timers", systemImage: "clock")
-						.symbolVariant(.fill)
+				}
+				Toggle(isOn: $showMoves) {
+					Label("Show available moves", systemImage: "sparkle.magnifyingglass")
 				}
 			} header: {
-				Text("Chess")
+				Text("General")
 			} footer: {
 				Label("Press the play/pause button to undo.", systemImage: "playpause")
 					.symbolVariant(.circle)
 			}
-			
-			Section("Theme") {
-				List {
-					if chessThemes.isEmpty {
-						Text("Please create themes on your iOS device. They will show up here if you are signed into iCloud.")
-							.listRowBackground(Color.clear)
-							.frame(maxWidth: .infinity, alignment: .center)
-					}
-					ForEach(chessThemes) { theme in
-						let themeSelected = chessTheme == theme.id!.uuidString
-						Button {
-							chessTheme = themeSelected ? "" : theme.id!.uuidString
-						} label: {
-							Label {
-								Text(theme.symbol!)
-							} icon: {
-								Image(systemName: themeSelected ? "checkmark.circle.fill" : "circle")
-									.foregroundStyle(themeSelected ? .green : .gray)
-							}
-						}
-					}
-				}
-			}
 			.headerProminence(.increased)
 			
-			Section {
-				Toggle(isOn: $reversiEnableUndo) {
-					Label("Undos", systemImage: "arrow.uturn.backward")
-						.symbolVariant(.circle.fill)
-				}
-				Toggle(isOn: $reversiEnableTimer) {
-					Label("Timers", systemImage: "clock")
+			if themes.isEmpty {
+				Section("Themes") {
+					ContentUnavailableView("Please create themes on your iOS, iPadOS, or macOS device.", systemImage: "paintbrush.pointed", description: Text("Themes will show up here if you are signed into iCloud."))
 						.symbolVariant(.fill)
+						.frame(maxWidth: .infinity)
+						.listRowBackground(Color.clear)
 				}
-			} header: {
-				Text("Reversi")
-			} footer: {
-				Label("Press the play/pause button to undo.", systemImage: "playpause")
-					.symbolVariant(.circle)
+				.headerProminence(.increased)
 			}
 			
-			Section("Theme") {
-				List {
-					if reversiThemes.isEmpty {
-						Text("Please create themes on your iOS device. They will show up here if you are signed into iCloud.")
-							.listRowBackground(Color.clear)
-							.frame(maxWidth: .infinity, alignment: .center)
-					}
-					ForEach(reversiThemes) { theme in
-						let themeSelected = reversiTheme == theme.id!.uuidString
-						Button {
-							reversiTheme = themeSelected ? "" : theme.id!.uuidString
-						} label: {
-							Label {
-								Text(theme.symbol!)
-							} icon: {
-								Image(systemName: themeSelected ? "checkmark.circle.fill" : "circle")
-									.foregroundStyle(themeSelected ? .green : .gray)
+			let chessThemes = themes.filter({ $0.game == .chess })
+			if !chessThemes.isEmpty {
+				Section("Chess") {
+					List {
+						ForEach(chessThemes) { theme in
+							let themeSelected = chessTheme == theme.id.uuidString
+							HStack {
+								Text(theme.symbol)
+								Spacer()
+								Button {
+									chessTheme = themeSelected ? "" : theme.id.uuidString
+								} label: {
+									Label("Selected", systemImage: "checkmark.circle.fill")
+										.labelStyle(.iconOnly)
+										.opacity(themeSelected ? 1 : 0)
+										.foregroundStyle(.green)
+								}
 							}
 						}
 					}
 				}
-			}
-			.headerProminence(.increased)
-			
-			Section {
-				Toggle(isOn: $checkersEnableUndo) {
-					Label("Undos", systemImage: "arrow.uturn.backward")
-						.symbolVariant(.circle.fill)
-				}
-				Toggle(isOn: $checkersEnableTimer) {
-					Label("Timers", systemImage: "clock")
-						.symbolVariant(.fill)
-				}
-			} header: {
-				Text("Checkers")
-			} footer: {
-				Label("Press the play/pause button to undo.", systemImage: "playpause")
-					.symbolVariant(.circle)
+				.headerProminence(.increased)
 			}
 			
-			Section("Theme") {
-				List {
-					if checkersThemes.isEmpty {
-						Text("Please create themes on your iOS device. They will show up here if you are signed into iCloud.")
-							.listRowBackground(Color.clear)
-							.frame(maxWidth: .infinity, alignment: .center)
-					}
-					ForEach(checkersThemes) { theme in
-						let themeSelected = checkersTheme == theme.id!.uuidString
-						Button {
-							checkersTheme = themeSelected ? "" : theme.id!.uuidString
-						} label: {
-							Label {
-								Text(theme.symbol!)
-							} icon: {
-								Image(systemName: themeSelected ? "checkmark.circle.fill" : "circle")
-									.foregroundStyle(themeSelected ? .green : .gray)
+			let reversiThemes = themes.filter({ $0.game == .reversi })
+			if !reversiThemes.isEmpty {
+				Section("Reversi") {
+					List {
+						ForEach(reversiThemes) { theme in
+							let themeSelected = reversiTheme == theme.id.uuidString
+							HStack {
+								Text(theme.symbol)
+								Spacer()
+								Button {
+									reversiTheme = themeSelected ? "" : theme.id.uuidString
+								} label: {
+									Label("Selected", systemImage: "checkmark.circle.fill")
+										.labelStyle(.iconOnly)
+										.opacity(themeSelected ? 1 : 0)
+										.foregroundStyle(.green)
+								}
 							}
 						}
 					}
 				}
+				.headerProminence(.increased)
 			}
-			.headerProminence(.increased)
+			
+			let checkersThemes = themes.filter({ $0.game == .checkers })
+			if !checkersThemes.isEmpty {
+				Section("Checkers") {
+					List {
+						ForEach(checkersThemes) { theme in
+							let themeSelected = checkersTheme == theme.id.uuidString
+							HStack {
+								Text(theme.symbol)
+								Spacer()
+								Button {
+									checkersTheme = themeSelected ? "" : theme.id.uuidString
+								} label: {
+									Label("Selected", systemImage: "checkmark.circle.fill")
+										.labelStyle(.iconOnly)
+										.opacity(themeSelected ? 1 : 0)
+										.foregroundStyle(.green)
+								}
+							}
+						}
+					}
+				}
+				.headerProminence(.increased)
+			}
 		}
 		.navigationTitle("Settings")
 	}
