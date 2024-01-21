@@ -12,7 +12,7 @@ struct ReversiThemeKey: EnvironmentKey {
 	static let defaultValue = ReversiUITheme()
 }
 
-extension EnvironmentValues {	
+extension EnvironmentValues {
 	var reversiTheme: ReversiUITheme {
 		get {
 			self[ReversiThemeKey.self]
@@ -40,6 +40,7 @@ struct ReversiUITheme {
 
 struct ReversiView: View {
 	@Environment(\.reversiTheme) private var theme
+	@State private var themesSheetShown = false
 	var board: ReversiBoard
 	var enableUndo: Bool
 	var flipped: Bool
@@ -56,6 +57,29 @@ struct ReversiView: View {
 				
 				ReversiBoardView(board: board, flipped: flipped, showMoves: showMoves)
 					.frame(maxWidth: .infinity, maxHeight: .infinity)
+				
+#if os(tvOS)
+				VStack {
+					Button() {
+						themesSheetShown.toggle()
+					} label: {
+						Label("Themes", systemImage: "paintpalette")
+							.labelStyle(.iconOnly)
+					}
+					
+					if enableUndo {
+						Button(action: board.undo) {
+							Label("Undo", systemImage: "arrow.uturn.backward")
+								.symbolVariant(.circle.fill)
+								.labelStyle(.iconOnly)
+						}
+						.disabled(!board.undoEnabled)
+					}
+					
+					Spacer()
+				}
+				.focusSection()
+#endif
 			}
 			.background(.linearGradient(colors: [theme.square, theme.border], startPoint: .top, endPoint: .bottom))
 			.frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -63,6 +87,9 @@ struct ReversiView: View {
 		}
 		.onAppear {
 			board.times.lastUpdate = Date()
+		}
+		.sheet(isPresented: $themesSheetShown) {
+			ThemesView(game: .reversi)
 		}
 #if os(tvOS)
 		.onPlayPauseCommand {
@@ -78,8 +105,8 @@ struct ReversiView: View {
 #endif
 		.navigationTitle("Reversi")
 		.toolbar {
-			if enableUndo {
-				ToolbarItem {
+			ToolbarItemGroup {
+				if enableUndo {
 					Button(action: board.undo) {
 						Image(systemName: "arrow.uturn.backward")
 							.symbolVariant(.circle.fill)
@@ -87,6 +114,12 @@ struct ReversiView: View {
 							.animation(.easeIn, value: board.lightTurn)
 					}
 					.disabled(!board.undoEnabled)
+				}
+				
+				Button() {
+					themesSheetShown.toggle()
+				} label: {
+					Label("Themes", systemImage: "paintpalette")
 				}
 			}
 		}

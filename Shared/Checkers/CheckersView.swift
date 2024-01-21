@@ -40,6 +40,7 @@ struct CheckersUITheme {
 
 struct CheckersView: View {
 	@Environment(\.checkersTheme) private var theme
+	@State private var themesSheetShown = false
 	var board: CheckersBoard
 	var enableUndo: Bool
 	var flipped: Bool
@@ -56,6 +57,29 @@ struct CheckersView: View {
 				
 				CheckersBoardView(board: board, showMoves: showMoves)
 					.frame(maxWidth: .infinity, maxHeight: .infinity)
+				
+#if os(tvOS)
+				VStack {
+					Button() {
+						themesSheetShown.toggle()
+					} label: {
+						Label("Themes", systemImage: "paintpalette")
+							.labelStyle(.iconOnly)
+					}
+					
+					if enableUndo {
+						Button(action: board.undo) {
+							Label("Undo", systemImage: "arrow.uturn.backward")
+								.symbolVariant(.circle.fill)
+								.labelStyle(.iconOnly)
+						}
+						.disabled(!board.undoEnabled)
+					}
+					
+					Spacer()
+				}
+				.focusSection()
+#endif
 			}
 			.background(.linearGradient(colors: [theme.squareDark, theme.squareLight], startPoint: .top, endPoint: .bottom))
 			.frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -67,6 +91,9 @@ struct CheckersView: View {
 		}
 		.onDisappear {
 			board.selectedSquare = board.forcedSelectedSquare
+		}
+		.sheet(isPresented: $themesSheetShown) {
+			ThemesView(game: .checkers)
 		}
 #if os(tvOS)
 		.onPlayPauseCommand {
@@ -82,8 +109,8 @@ struct CheckersView: View {
 #endif
 		.navigationTitle("Checkers")
 		.toolbar {
-			if enableUndo {
-				ToolbarItem {
+			ToolbarItemGroup {
+				if enableUndo {
 					Button(action: board.undo) {
 						Image(systemName: "arrow.uturn.backward")
 							.symbolVariant(.circle.fill)
@@ -91,6 +118,12 @@ struct CheckersView: View {
 							.animation(.easeIn, value: board.lightTurn)
 					}
 					.disabled(!board.undoEnabled)
+				}
+				
+				Button() {
+					themesSheetShown.toggle()
+				} label: {
+					Label("Themes", systemImage: "paintpalette")
 				}
 			}
 		}

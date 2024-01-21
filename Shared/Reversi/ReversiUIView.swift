@@ -85,8 +85,10 @@ struct ReversiScoreStatusView: View {
 		let moves = board.history.filter({ move in !move.skip }).filter({ move in move.light == isLight }).count
 		VStack(spacing: 0) {
 			ZStack {
-				ReversiPieceView(isLight: isLight)
-					.frame(width: 40, height: 40)
+				Image(systemName: "circle")
+					.symbolVariant(.fill)
+					.foregroundStyle(isLight ? theme.pieceLight : theme.pieceDark)
+					.font(.largeTitle)
 				Text("\(isLight ? lightScore : darkScore)")
 					.blendMode(.destinationOut)
 			}

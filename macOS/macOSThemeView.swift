@@ -15,7 +15,7 @@ struct ThemeView: View {
 	@Bindable var theme: Theme
 	
 	var body: some View {
-		NavigationView {
+		NavigationStack {
 			Form {
 				Section("Symbol") {
 					TextField("Symbol", text: $theme.symbol)

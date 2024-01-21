@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		220FFAC42B5C7CFF00A6262A /* iOSThemesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220FFAC32B5C7CFF00A6262A /* iOSThemesView.swift */; };
+		220FFAC82B5CB20600A6262A /* tvOSThemesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220FFAC72B5CB20600A6262A /* tvOSThemesView.swift */; };
+		220FFACA2B5D826B00A6262A /* macOSThemesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220FFAC92B5D826B00A6262A /* macOSThemesView.swift */; };
 		224C10572B23F99E00FF47E7 /* iOSThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224C10562B23F99E00FF47E7 /* iOSThemeView.swift */; };
 		226EE7E127CC514500C8A473 /* CheckersSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7E027CC514500C8A473 /* CheckersSquare.swift */; };
 		226EE7E327CC515000C8A473 /* CheckersPiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7E227CC515000C8A473 /* CheckersPiece.swift */; };
@@ -28,12 +31,11 @@
 		22A4FE932B545D6700882E87 /* Chess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A4FE922B545D6700882E87 /* Chess.swift */; };
 		22B3C69E28D29A4100E585C9 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B3C69D28D29A4100E585C9 /* Protocols.swift */; };
 		22BF667E28D3A6C600C13CA3 /* UniversalLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BF667D28D3A6C600C13CA3 /* UniversalLinks.swift */; };
-		22DA42C52B5C269F00590710 /* macOSSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DA42C42B5C269F00590710 /* macOSSettingsView.swift */; };
 		22DA42C72B5C26CE00590710 /* macOSThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DA42C62B5C26CE00590710 /* macOSThemeView.swift */; };
 		22DB9D9227B95101002D8312 /* GradientGamesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9D9127B95101002D8312 /* GradientGamesApp.swift */; };
 		22DB9DA927B9533A002D8312 /* GamesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DA827B9533A002D8312 /* GamesView.swift */; };
 		22DB9DAE27B95482002D8312 /* ReversiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DAD27B95482002D8312 /* ReversiView.swift */; };
-		22DB9DB027B95DF3002D8312 /* iOSSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DAF27B95DF3002D8312 /* iOSSettingsView.swift */; };
+		22DB9DB027B95DF3002D8312 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DAF27B95DF3002D8312 /* SettingsView.swift */; };
 		22DB9DB527B95F2E002D8312 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DB427B95F2E002D8312 /* Extensions.swift */; };
 		22DB9DBB27B96234002D8312 /* ChessPiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DBA27B96234002D8312 /* ChessPiece.swift */; };
 		22DB9DBD27B9624F002D8312 /* ChessSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DBC27B9624F002D8312 /* ChessSquare.swift */; };
@@ -41,7 +43,6 @@
 		22DB9DC127B96292002D8312 /* ChessMove.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DC027B96292002D8312 /* ChessMove.swift */; };
 		22DB9DC327B96528002D8312 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DC227B96528002D8312 /* Settings.swift */; };
 		22DB9DC727B96730002D8312 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22DB9DC627B96730002D8312 /* CloudKit.framework */; };
-		22DB9DCA27B9683A002D8312 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22DB9DC927B9683A002D8312 /* Assets.xcassets */; };
 		22DB9DDA27B970F7002D8312 /* ChessBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DD927B970F7002D8312 /* ChessBoardView.swift */; };
 		22DB9DDC27B9710E002D8312 /* ChessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DDB27B9710E002D8312 /* ChessView.swift */; };
 		22DB9DDE27B97132002D8312 /* ChessSquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DDD27B97132002D8312 /* ChessSquareView.swift */; };
@@ -55,10 +56,13 @@
 		22DB9DF527B97F0D002D8312 /* ReversiSquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DF427B97F0D002D8312 /* ReversiSquareView.swift */; };
 		22DB9DF727B97F35002D8312 /* ReversiPieceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DF627B97F35002D8312 /* ReversiPieceView.swift */; };
 		22DB9DF927B97F53002D8312 /* ReversiUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DF827B97F53002D8312 /* ReversiUIView.swift */; };
-		22E832AB2909AF200037397F /* tvOSSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9E3527BC1216002D8312 /* tvOSSettingsView.swift */; };
+		22E43CEB2B5D93EB00CA1F8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22DB9DC927B9683A002D8312 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		220FFAC32B5C7CFF00A6262A /* iOSThemesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSThemesView.swift; sourceTree = "<group>"; };
+		220FFAC72B5CB20600A6262A /* tvOSThemesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tvOSThemesView.swift; sourceTree = "<group>"; };
+		220FFAC92B5D826B00A6262A /* macOSThemesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSThemesView.swift; sourceTree = "<group>"; };
 		224C10562B23F99E00FF47E7 /* iOSThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSThemeView.swift; sourceTree = "<group>"; };
 		226EE7E027CC514500C8A473 /* CheckersSquare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckersSquare.swift; sourceTree = "<group>"; };
 		226EE7E227CC515000C8A473 /* CheckersPiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckersPiece.swift; sourceTree = "<group>"; };
@@ -80,13 +84,12 @@
 		22A4FE922B545D6700882E87 /* Chess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chess.swift; sourceTree = "<group>"; };
 		22B3C69D28D29A4100E585C9 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		22BF667D28D3A6C600C13CA3 /* UniversalLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversalLinks.swift; sourceTree = "<group>"; };
-		22DA42C42B5C269F00590710 /* macOSSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSSettingsView.swift; sourceTree = "<group>"; };
 		22DA42C62B5C26CE00590710 /* macOSThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSThemeView.swift; sourceTree = "<group>"; };
 		22DB9D8E27B95101002D8312 /* GradientGames.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GradientGames.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22DB9D9127B95101002D8312 /* GradientGamesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientGamesApp.swift; sourceTree = "<group>"; };
 		22DB9DA827B9533A002D8312 /* GamesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesView.swift; sourceTree = "<group>"; };
 		22DB9DAD27B95482002D8312 /* ReversiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversiView.swift; sourceTree = "<group>"; };
-		22DB9DAF27B95DF3002D8312 /* iOSSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSSettingsView.swift; sourceTree = "<group>"; };
+		22DB9DAF27B95DF3002D8312 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		22DB9DB427B95F2E002D8312 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		22DB9DBA27B96234002D8312 /* ChessPiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessPiece.swift; sourceTree = "<group>"; };
 		22DB9DBC27B9624F002D8312 /* ChessSquare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessSquare.swift; sourceTree = "<group>"; };
@@ -110,7 +113,6 @@
 		22DB9DF427B97F0D002D8312 /* ReversiSquareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversiSquareView.swift; sourceTree = "<group>"; };
 		22DB9DF627B97F35002D8312 /* ReversiPieceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversiPieceView.swift; sourceTree = "<group>"; };
 		22DB9DF827B97F53002D8312 /* ReversiUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversiUIView.swift; sourceTree = "<group>"; };
-		22DB9E3527BC1216002D8312 /* tvOSSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tvOSSettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,8 +148,8 @@
 		22DA42C32B5C266300590710 /* macOS */ = {
 			isa = PBXGroup;
 			children = (
-				22DA42C42B5C269F00590710 /* macOSSettingsView.swift */,
 				22DA42C62B5C26CE00590710 /* macOSThemeView.swift */,
+				220FFAC92B5D826B00A6262A /* macOSThemesView.swift */,
 			);
 			path = macOS;
 			sourceTree = "<group>";
@@ -181,6 +183,7 @@
 				22DB9D9127B95101002D8312 /* GradientGamesApp.swift */,
 				22BF667D28D3A6C600C13CA3 /* UniversalLinks.swift */,
 				22DB9DA827B9533A002D8312 /* GamesView.swift */,
+				22DB9DAF27B95DF3002D8312 /* SettingsView.swift */,
 				22DB9DB427B95F2E002D8312 /* Extensions.swift */,
 				22B3C69D28D29A4100E585C9 /* Protocols.swift */,
 				22DB9DC227B96528002D8312 /* Settings.swift */,
@@ -215,8 +218,8 @@
 		22DB9DA427B952FF002D8312 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				22DB9DAF27B95DF3002D8312 /* iOSSettingsView.swift */,
 				224C10562B23F99E00FF47E7 /* iOSThemeView.swift */,
+				220FFAC32B5C7CFF00A6262A /* iOSThemesView.swift */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -224,7 +227,7 @@
 		22DB9DA527B95304002D8312 /* tvOS */ = {
 			isa = PBXGroup;
 			children = (
-				22DB9E3527BC1216002D8312 /* tvOSSettingsView.swift */,
+				220FFAC72B5CB20600A6262A /* tvOSThemesView.swift */,
 			);
 			path = tvOS;
 			sourceTree = "<group>";
@@ -317,7 +320,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				22DB9DCA27B9683A002D8312 /* Assets.xcassets in Resources */,
+				22E43CEB2B5D93EB00CA1F8C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,11 +335,13 @@
 				22BF667E28D3A6C600C13CA3 /* UniversalLinks.swift in Sources */,
 				226EE7F427D125FE00C8A473 /* CheckersSquareView.swift in Sources */,
 				22DB9DBF27B96273002D8312 /* Times.swift in Sources */,
+				220FFACA2B5D826B00A6262A /* macOSThemesView.swift in Sources */,
+				220FFAC82B5CB20600A6262A /* tvOSThemesView.swift in Sources */,
 				22B3C69E28D29A4100E585C9 /* Protocols.swift in Sources */,
 				22DB9DF927B97F53002D8312 /* ReversiUIView.swift in Sources */,
 				22877A132B55E6D50081DA0B /* CheckersEngine.swift in Sources */,
 				22DB9DDA27B970F7002D8312 /* ChessBoardView.swift in Sources */,
-				22DB9DB027B95DF3002D8312 /* iOSSettingsView.swift in Sources */,
+				22DB9DB027B95DF3002D8312 /* SettingsView.swift in Sources */,
 				22A4FE912B537D9900882E87 /* ChessEngine.swift in Sources */,
 				22DB9DE227B97153002D8312 /* ChessUIView.swift in Sources */,
 				22A4FE932B545D6700882E87 /* Chess.swift in Sources */,
@@ -351,7 +356,6 @@
 				22DB9DE427B97164002D8312 /* ChessPromoteView.swift in Sources */,
 				22DB9DE027B97143002D8312 /* ChessPieceView.swift in Sources */,
 				226EE7E827CC516200C8A473 /* CheckersMove.swift in Sources */,
-				22DA42C52B5C269F00590710 /* macOSSettingsView.swift in Sources */,
 				22A4FE8B2B4D995B00882E87 /* Theme.swift in Sources */,
 				22DB9DF327B97EF5002D8312 /* ReversiBoardView.swift in Sources */,
 				22DB9DEB27B97D2C002D8312 /* ReversiPiece.swift in Sources */,
@@ -370,8 +374,8 @@
 				22DB9DF527B97F0D002D8312 /* ReversiSquareView.swift in Sources */,
 				226EE7F127D1259100C8A473 /* CheckersBoardView.swift in Sources */,
 				226EE7F727D1260600C8A473 /* CheckersPieceView.swift in Sources */,
+				220FFAC42B5C7CFF00A6262A /* iOSThemesView.swift in Sources */,
 				22877A0D2B558D980081DA0B /* Reversi.swift in Sources */,
-				22E832AB2909AF200037397F /* tvOSSettingsView.swift in Sources */,
 				22877A152B55E6E40081DA0B /* CheckersBoard.swift in Sources */,
 				22DB9DB527B95F2E002D8312 /* Extensions.swift in Sources */,
 				226EE7EE27D1202100C8A473 /* CheckersView.swift in Sources */,
@@ -510,7 +514,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "";
 				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=appletvos*]" = AppIcontvOS;
+				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=appletvsimulator*]" = AppIcontvOS;
 				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=iphoneos*]" = AppIconiOS;
+				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=iphonesimulator*]" = AppIconiOS;
+				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=macosx*]" = AppIconmacOS;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = Shared/GradientGames.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -522,8 +530,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.board-games";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -548,6 +555,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "";
 				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=appletvos*]" = AppIcontvOS;
 				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=iphoneos*]" = AppIconiOS;
+				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=macosx*]" = AppIconmacOS;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = Shared/GradientGames.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -559,8 +568,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.board-games";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

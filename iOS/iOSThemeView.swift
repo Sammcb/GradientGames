@@ -15,7 +15,7 @@ struct ThemeView: View {
 	@Bindable var theme: Theme
 	
 	var body: some View {
-		NavigationView {
+		NavigationStack {
 			Form {
 				Section("Symbol") {
 					TextField("Symbol", text: $theme.symbol)
@@ -28,11 +28,16 @@ struct ThemeView: View {
 				}
 			}
 			.toolbar {
-				Button("Done") {
-					dismiss()
+				ToolbarItem {
+					Button {
+						dismiss()
+					} label: {
+						Label("Close", systemImage: "x")
+							.symbolVariant(.circle)
+					}
 				}
 			}
-			.navigationTitle("Details")
+			.navigationTitle("Theme")
 		}
 	}
 }

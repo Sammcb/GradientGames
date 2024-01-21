@@ -16,7 +16,7 @@ private enum DetailView: String, Identifiable, CaseIterable {
 	}
 	
 	static var allGames: [Self] {
-		allCases.filter({ $0 != .settings })
+		allCases.filter({ detailView in detailView != .settings })
 	}
 	
 	var title: String {
@@ -39,7 +39,6 @@ struct GamesView: View, UniversalLinkReciever {
 	@Query private var chessBoards: [ChessBoard]
 	@Query private var reversiBoards: [ReversiBoard]
 	@Query private var checkersBoards: [CheckersBoard]
-	@State private var path: [UUID] = []
 	@State private var selectedView: DetailView?
 	@AppStorage(Setting.chessTheme.rawValue) private var chessTheme = ""
 	@AppStorage(Setting.reversiTheme.rawValue) private var reversiTheme = ""
@@ -56,8 +55,12 @@ struct GamesView: View, UniversalLinkReciever {
 			context.insert(ChessBoard())
 			return
 		case .reversi:
+			reversiBoards.forEach({ board in context.delete(board) })
+			context.insert(ReversiBoard())
 			return
 		case .checkers:
+			checkersBoards.forEach({ board in context.delete(board) })
+			context.insert(CheckersBoard())
 			return
 		case .settings:
 			return
@@ -137,8 +140,7 @@ struct GamesView: View, UniversalLinkReciever {
 					}
 				}
 #if os(tvOS)
-				Spacer()
-					.frame(maxHeight: .infinity)
+				Divider()
 				NavigationLink(value: DetailView.settings) {
 					Label(DetailView.settings.title, systemImage: DetailView.settings.symbol)
 				}
@@ -149,10 +151,10 @@ struct GamesView: View, UniversalLinkReciever {
 #if os(iOS)
 			.toolbar {
 				ToolbarItem {
-					Button(action: {
+					Button {
 						selectedView = .settings
-					}) {
-						Label("Settings", systemImage: "gearshape")
+					} label: {
+						Label(DetailView.settings.title, systemImage: DetailView.settings.symbol)
 					}
 				}
 			}
@@ -166,25 +168,23 @@ struct GamesView: View, UniversalLinkReciever {
 				createTheme(with: themeField)
 			}
 		} detail: {
-			NavigationStack(path: $path) {
-				switch selectedView {
-				case .none:
-					ContentUnavailableView("Select a game", systemImage: "circle", description: Text(""))
-				case .chess:
-					let theme = ChessUITheme(theme: themes.first(where: { $0.id.uuidString == chessTheme }))
-					ChessView(board: chessBoard(), enableUndo: enableUndo, flipped: flipped, enableTimer: enableTimer, showMoves: showMoves)
-						.environment(\.chessTheme, theme)
-				case .reversi:
-					let theme = ReversiUITheme(theme: themes.first(where: { $0.id.uuidString == reversiTheme }))
-					ReversiView(board: reversiBoard(), enableUndo: enableUndo, flipped: flipped, enableTimer: enableTimer, showMoves: showMoves)
-						.environment(\.reversiTheme, theme)
-				case .checkers:
-					let theme = CheckersUITheme(theme: themes.first(where: { $0.id.uuidString == checkersTheme }))
-					CheckersView(board: checkersBoard(), enableUndo: enableUndo, flipped: flipped, enableTimer: enableTimer, showMoves: showMoves)
-						.environment(\.checkersTheme, theme)
-				case .settings:
-					SettingsView()
-				}
+			switch selectedView {
+			case .none:
+				ContentUnavailableView("Select a game", systemImage: "circle", description: Text(""))
+			case .chess:
+				let theme = ChessUITheme(theme: themes.first(where: { $0.id.uuidString == chessTheme }))
+				ChessView(board: chessBoard(), enableUndo: enableUndo, flipped: flipped, enableTimer: enableTimer, showMoves: showMoves)
+					.environment(\.chessTheme, theme)
+			case .reversi:
+				let theme = ReversiUITheme(theme: themes.first(where: { $0.id.uuidString == reversiTheme }))
+				ReversiView(board: reversiBoard(), enableUndo: enableUndo, flipped: flipped, enableTimer: enableTimer, showMoves: showMoves)
+					.environment(\.reversiTheme, theme)
+			case .checkers:
+				let theme = CheckersUITheme(theme: themes.first(where: { $0.id.uuidString == checkersTheme }))
+				CheckersView(board: checkersBoard(), enableUndo: enableUndo, flipped: flipped, enableTimer: enableTimer, showMoves: showMoves)
+					.environment(\.checkersTheme, theme)
+			case .settings:
+				SettingsView()
 			}
 		}
 	}
