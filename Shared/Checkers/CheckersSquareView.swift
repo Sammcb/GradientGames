@@ -47,6 +47,7 @@ struct CheckersSquareView: View {
 					.fill(board.lightTurn ? theme.pieceLight : theme.pieceDark)
 					.scaleEffect(0.25)
 					.transition(.scale.animation(.easeOut))
+					.allowsHitTesting(false)
 			}
 		}
 	}

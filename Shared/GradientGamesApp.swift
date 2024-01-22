@@ -20,6 +20,8 @@ struct GradientGamesApp: App {
 		#if os(macOS)
 		Settings {
 			SettingsView()
+				.padding()
+				.fixedSize()
 		}
 		.modelContainer(container)
 		#endif

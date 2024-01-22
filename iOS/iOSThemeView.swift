@@ -10,7 +10,6 @@ import SwiftUI
 import SwiftData
 
 struct ThemeView: View {
-	@Environment(\.modelContext) private var context
 	@Environment(\.dismiss) private var dismiss
 	@Bindable var theme: Theme
 	
@@ -32,8 +31,9 @@ struct ThemeView: View {
 					Button {
 						dismiss()
 					} label: {
-						Label("Close", systemImage: "x")
+						Label("Done", systemImage: "checkmark")
 							.symbolVariant(.circle)
+							.labelStyle(.titleOnly)
 					}
 				}
 			}

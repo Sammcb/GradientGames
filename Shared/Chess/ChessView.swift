@@ -55,13 +55,14 @@ struct ChessView: View {
 			layout {
 				ChessUIView(board: board, enableTimer: enableTimer, flipped: flipped, vertical: vertical)
 				
-				ChessBoardView(board: board, flipped: flipped, showMoves: showMoves)
-				//					.animation(.linear, value: board.history)
-					.frame(maxWidth: .infinity, maxHeight: .infinity)
-				
 				if board.promoting {
 					ChessPromoteView(board: board, flipped: flipped, vertical: vertical)
+						.transition(.opacity.animation(.easeIn))
 				}
+				
+				ChessBoardView(board: board, flipped: flipped, showMoves: showMoves)
+					.animation(.easeInOut(duration: 0.6), value: board.promoting)
+					.frame(maxWidth: .infinity, maxHeight: .infinity)
 				
 #if os(tvOS)
 				VStack {

@@ -10,30 +10,35 @@ import SwiftUI
 import SwiftData
 
 struct ThemeView: View {
-	@Environment(\.modelContext) private var context
 	@Environment(\.dismiss) private var dismiss
 	@Bindable var theme: Theme
 	
 	var body: some View {
 		NavigationStack {
 			Form {
-				Section("Symbol") {
-					TextField("Symbol", text: $theme.symbol)
-				}
+				TextField("Symbol", text: $theme.symbol)
 				
-				Section("Colors") {
-					ForEach($theme.colors.sorted(by: { $0.wrappedValue.target < $1.wrappedValue.target })) { $color in
-						ColorPicker(color.target.displayName, selection: $color.color, supportsOpacity: false)
-					}
+				ForEach($theme.colors.sorted(by: { $0.wrappedValue.target < $1.wrappedValue.target })) { $color in
+					ColorPicker(color.target.displayName, selection: $color.color, supportsOpacity: false)
 				}
 			}
 			.toolbar {
-				Button("Done") {
-					dismiss()
+				ToolbarItem(placement: .confirmationAction) {
+					
+					Button {
+						dismiss()
+					} label: {
+						Label("Done", systemImage: "checkmark")
+							.symbolVariant(.circle)
+							.labelStyle(.titleOnly)
+					}
 				}
 			}
 			.navigationTitle("Details")
 		}
+		.padding()
+		.frame(idealWidth: 250, idealHeight: 250, alignment: .top)
+		.fixedSize()
 	}
 }
 #endif

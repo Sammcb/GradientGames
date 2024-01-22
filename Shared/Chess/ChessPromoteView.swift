@@ -17,26 +17,31 @@ struct ChessPromoteView: View {
 	var body: some View {
 		let layout = vertical ? AnyLayout(HStackLayout()) : AnyLayout(VStackLayout())
 		layout {
-			Spacer()
 			ForEach(groups) { group in
+				let piece = switch group {
+				case .pawn: board.lightTurn ? "♙" : "♟︎"
+				case .knight: board.lightTurn ? "♘" : "♞"
+				case .bishop: board.lightTurn ? "♗" : "♝"
+				case .rook: board.lightTurn ? "♖" : "♜"
+				case .queen: board.lightTurn ? "♕" : "♛"
+				case .king: board.lightTurn ? "♔" : "♚"
+				}
 				Button {
 					board.promote(to: group)
 				} label: {
-//					ChessPieceView(group: group, isLight: board.lightTurn)
-//						.font(.system(size: 60))
+					Text(piece)
+						.font(.largeTitle)
 				}
 				.rotationEffect(!board.lightTurn && flipped ? .radians(.pi) : .zero)
-				
-				Spacer()
+				.padding()
+				.disabled(!board.promoting)
 			}
 		}
-		.disabled(!board.promoting)
-//		.animation(.easeIn, value: board.lightTurn)
 		.padding()
 		.background(.ultraThinMaterial)
+		.clipShape(RoundedRectangle(cornerRadius: 10))
 #if os(tvOS)
 		.focusSection()
 #endif
-//		.transition(.opacity.animation(.linear))
 	}
 }

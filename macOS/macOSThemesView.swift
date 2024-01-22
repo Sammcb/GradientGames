@@ -57,28 +57,44 @@ struct ThemesView: View {
 						case .reversi: reversiTheme == theme.id.uuidString
 						case .checkers: checkersTheme == theme.id.uuidString
 						}
-						HStack {
+						Button {
+							switch game {
+							case .chess: chessTheme = themeSelected ? "" : theme.id.uuidString
+							case .reversi: reversiTheme = themeSelected ? "" : theme.id.uuidString
+							case .checkers: checkersTheme = themeSelected ? "" : theme.id.uuidString
+							}
+						} label: {
 							Text(theme.symbol)
 							Spacer()
-							Button {
-								switch game {
-								case .chess: chessTheme = themeSelected ? "" : theme.id.uuidString
-								case .reversi: reversiTheme = themeSelected ? "" : theme.id.uuidString
-								case .checkers: checkersTheme = themeSelected ? "" : theme.id.uuidString
-								}
-							} label: {
-								Label("Selected", systemImage: "checkmark.circle.fill")
-									.labelStyle(.iconOnly)
-									.opacity(themeSelected ? 1 : 0)
-									.foregroundStyle(.green)
-							}
+							Label("Selected", systemImage: "checkmark")
+								.symbolVariant(.circle.fill)
+								.labelStyle(.iconOnly)
+								.opacity(themeSelected ? 1 : 0)
+								.foregroundStyle(.green)
 						}
+						.buttonStyle(.borderless)
 						.swipeActions(edge: .leading) {
 							Button {
 								sheetTheme = theme
 							} label: {
 								Label("Edit", systemImage: "pencil")
 									.tint(.blue)
+							}
+						}
+						.contextMenu {
+							Button {
+								sheetTheme = theme
+							} label: {
+								Label("Edit", systemImage: "pencil")
+							}
+							
+							Button(role: .destructive) {
+								guard let index = gameThemes.firstIndex(of: theme) else {
+									return
+								}
+								deleteTheme(at: [index])
+							} label: {
+								Label("Delete", systemImage: "trash")
 							}
 						}
 					}
@@ -99,12 +115,13 @@ struct ThemesView: View {
 			}
 			.navigationTitle("Themes")
 			.toolbar {
-				ToolbarItem {
+				ToolbarItem(placement: .confirmationAction) {
 					Button {
 						dismiss()
 					} label: {
-						Label("Close", systemImage: "x")
+						Label("Done", systemImage: "checkmark")
 							.symbolVariant(.circle)
+							.labelStyle(.titleOnly)
 					}
 				}
 			}
@@ -112,14 +129,9 @@ struct ThemesView: View {
 				ThemeView(theme: selectedTheme)
 			}
 		}
-//		.onReceive(navigation.themeLinkOpened) { themeLinkOpened in
-//			guard themeLinkOpened else {
-//				return
-//			}
-//
-//			sheetTheme = nil
-//			navigation.themeLinkOpened = false
-//		}
+		.padding()
+		.frame(idealWidth: 500, idealHeight: 500)
+		.fixedSize()
 	}
 }
 #endif

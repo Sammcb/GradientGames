@@ -55,7 +55,7 @@ struct ChessKingStatusView: View {
 		let kingStateSymbol = switch kingState {
 		case .ok: "checkmark"
 		case .check: "exclamationmark.triangle"
-		case .checkmate: "x"
+		case .checkmate: "xmark"
 		case .stalemate: "minus"
 		}
 		Image(systemName: kingStateSymbol)

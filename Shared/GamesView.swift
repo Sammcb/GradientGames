@@ -170,7 +170,7 @@ struct GamesView: View, UniversalLinkReciever {
 		} detail: {
 			switch selectedView {
 			case .none:
-				ContentUnavailableView("Select a game", systemImage: "circle", description: Text(""))
+				ContentUnavailableView("Pick a game to play!", systemImage: "rectangle.checkered")
 			case .chess:
 				let theme = ChessUITheme(theme: themes.first(where: { $0.id.uuidString == chessTheme }))
 				ChessView(board: chessBoard(), enableUndo: enableUndo, flipped: flipped, enableTimer: enableTimer, showMoves: showMoves)

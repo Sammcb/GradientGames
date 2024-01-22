@@ -37,6 +37,7 @@ struct ReversiSquareView: View {
 					.scaleEffect(0.25)
 					.transition(.scale.animation(.easeOut))
 					.animation(.easeIn, value: board.lightTurn)
+					.allowsHitTesting(false)
 			}
 		}
 	}

@@ -67,7 +67,8 @@ struct ThemesView: View {
 								case .checkers: checkersTheme = themeSelected ? "" : theme.id.uuidString
 								}
 							} label: {
-								Label("Selected", systemImage: "checkmark.circle.fill")
+								Label("Selected", systemImage: "checkmark")
+									.symbolVariant(.circle.fill)
 									.labelStyle(.iconOnly)
 									.opacity(themeSelected ? 1 : 0)
 									.foregroundStyle(.green)
@@ -103,8 +104,9 @@ struct ThemesView: View {
 					Button {
 						dismiss()
 					} label: {
-						Label("Close", systemImage: "x")
+						Label("Done", systemImage: "checkmark")
 							.symbolVariant(.circle)
+							.labelStyle(.titleOnly)
 					}
 				}
 			}
@@ -112,14 +114,6 @@ struct ThemesView: View {
 				ThemeView(theme: selectedTheme)
 			}
 		}
-//		.onReceive(navigation.themeLinkOpened) { themeLinkOpened in
-//			guard themeLinkOpened else {
-//				return
-//			}
-//
-//			sheetTheme = nil
-//			navigation.themeLinkOpened = false
-//		}
 	}
 }
 #endif
