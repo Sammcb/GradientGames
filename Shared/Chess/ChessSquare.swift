@@ -11,18 +11,15 @@ extension Chess {
 	struct Square: Equatable, Codable, Hashable {
 		let file: File
 		let rank: Int
-		
-		init(file: File, rank: Int) {
-			self.file = file
-			self.rank = rank
+	}
+}
+
+extension Chess.Square {
+	init?(_ square: Self, deltaFile: Int = 0, deltaRank: Int = 0) {
+		guard square.file + deltaFile != .none && Chess.Ranks.contains(square.rank + deltaRank) else {
+			return nil
 		}
 		
-		init?(_ square: Self, deltaFile: Int = 0, deltaRank: Int = 0) {
-			guard square.file + deltaFile != .none && Chess.Ranks.contains(square.rank + deltaRank) else {
-				return nil
-			}
-			
-			self.init(file: square.file + deltaFile, rank: square.rank + deltaRank)
-		}
+		self.init(file: square.file + deltaFile, rank: square.rank + deltaRank)
 	}
 }

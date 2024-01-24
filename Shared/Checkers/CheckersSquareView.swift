@@ -38,13 +38,13 @@ struct CheckersSquareView: View {
 		Button {
 			select(square: square)
 		} label: {
-			lightSquare ? theme.squareLight : theme.squareDark
+			lightSquare ? theme.colors[.squareLight] : theme.colors[.squareDark]
 		}
 		.buttonStyle(.borderless)
 		.overlay {
 			if showMoves && board.validSquares.contains(square) {
 				Circle()
-					.fill(board.lightTurn ? theme.pieceLight : theme.pieceDark)
+					.fill(board.lightTurn ? theme.colors[.pieceLight] : theme.colors[.pieceDark])
 					.scaleEffect(0.25)
 					.transition(.scale.animation(.easeOut))
 					.allowsHitTesting(false)

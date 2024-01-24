@@ -24,9 +24,7 @@ enum ThemeField {
 	case checkers(String, Color, Color, Color, Color)
 }
 
-protocol UniversalLinkReciever: ColorConverter {
-	func parseUniversalLink(_ url: URL) throws -> ThemeField
-}
+protocol UniversalLinkReciever: ColorConverter {}
 
 extension UniversalLinkReciever {
 	private func themeColorKeys(for linkType: ThemeLink) -> [String] {

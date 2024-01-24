@@ -50,13 +50,39 @@ struct ThemesView: View {
 		NavigationStack {
 			Form {
 				let gameThemes = themes.filter({ $0.game == game })
+				let gameTheme = switch game {
+				case .chess: chessTheme
+				case .reversi: reversiTheme
+				case .checkers: checkersTheme
+				}
+				
+				Section {
+					let selectedThemeMissing = !themes.contains(where: { theme in theme.id.uuidString == gameTheme })
+					Button {
+						switch game {
+						case .chess: chessTheme = ""
+						case .reversi: reversiTheme = ""
+						case .checkers: checkersTheme = ""
+						}
+					} label: {
+						let defaultTheme = switch game {
+						case .chess: Theme.defaultChessTheme
+						case .reversi: Theme.defaultReversiTheme
+						case .checkers: Theme.defaultCheckersTheme
+						}
+						ThemeListEntryView(theme: defaultTheme, selected: selectedThemeMissing)
+					}
+					.foregroundStyle(.primary)
+					.disabled(selectedThemeMissing)
+					.padding()
+				}
+				
+				Divider()
+					.padding(.horizontal)
+				
 				List {
 					ForEach(gameThemes) { theme in
-						let themeSelected = switch game {
-						case .chess: chessTheme == theme.id.uuidString
-						case .reversi: reversiTheme == theme.id.uuidString
-						case .checkers: checkersTheme == theme.id.uuidString
-						}
+						let themeSelected = gameTheme == theme.id.uuidString
 						Button {
 							switch game {
 							case .chess: chessTheme = themeSelected ? "" : theme.id.uuidString
@@ -64,15 +90,10 @@ struct ThemesView: View {
 							case .checkers: checkersTheme = themeSelected ? "" : theme.id.uuidString
 							}
 						} label: {
-							Text(theme.symbol)
-							Spacer()
-							Label("Selected", systemImage: "checkmark")
-								.symbolVariant(.circle.fill)
-								.labelStyle(.iconOnly)
-								.opacity(themeSelected ? 1 : 0)
-								.foregroundStyle(.green)
+							ThemeListEntryView(theme: theme, selected: themeSelected)
 						}
-						.buttonStyle(.borderless)
+						.foregroundStyle(.primary)
+						.listRowSeparator(.hidden)
 						.swipeActions(edge: .leading) {
 							Button {
 								sheetTheme = theme

@@ -10,7 +10,7 @@
 		220FFAC42B5C7CFF00A6262A /* iOSThemesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220FFAC32B5C7CFF00A6262A /* iOSThemesView.swift */; };
 		220FFAC82B5CB20600A6262A /* tvOSThemesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220FFAC72B5CB20600A6262A /* tvOSThemesView.swift */; };
 		220FFACA2B5D826B00A6262A /* macOSThemesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220FFAC92B5D826B00A6262A /* macOSThemesView.swift */; };
-		224C10572B23F99E00FF47E7 /* iOSThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224C10562B23F99E00FF47E7 /* iOSThemeView.swift */; };
+		224C10572B23F99E00FF47E7 /* ThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224C10562B23F99E00FF47E7 /* ThemeView.swift */; };
 		226EE7E127CC514500C8A473 /* CheckersSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7E027CC514500C8A473 /* CheckersSquare.swift */; };
 		226EE7E327CC515000C8A473 /* CheckersPiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7E227CC515000C8A473 /* CheckersPiece.swift */; };
 		226EE7E827CC516200C8A473 /* CheckersMove.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226EE7E727CC516200C8A473 /* CheckersMove.swift */; };
@@ -29,14 +29,12 @@
 		22A4FE8F2B4DDA5D00882E87 /* ChessBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A4FE8E2B4DDA5D00882E87 /* ChessBoard.swift */; };
 		22A4FE912B537D9900882E87 /* ChessEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A4FE902B537D9900882E87 /* ChessEngine.swift */; };
 		22A4FE932B545D6700882E87 /* Chess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A4FE922B545D6700882E87 /* Chess.swift */; };
-		22B3C69E28D29A4100E585C9 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B3C69D28D29A4100E585C9 /* Protocols.swift */; };
+		22B007E12B6076D500530F93 /* ThemesBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B007E02B6076D500530F93 /* ThemesBackup.swift */; };
 		22BF667E28D3A6C600C13CA3 /* UniversalLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BF667D28D3A6C600C13CA3 /* UniversalLinks.swift */; };
-		22DA42C72B5C26CE00590710 /* macOSThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DA42C62B5C26CE00590710 /* macOSThemeView.swift */; };
 		22DB9D9227B95101002D8312 /* GradientGamesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9D9127B95101002D8312 /* GradientGamesApp.swift */; };
 		22DB9DA927B9533A002D8312 /* GamesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DA827B9533A002D8312 /* GamesView.swift */; };
 		22DB9DAE27B95482002D8312 /* ReversiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DAD27B95482002D8312 /* ReversiView.swift */; };
 		22DB9DB027B95DF3002D8312 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DAF27B95DF3002D8312 /* SettingsView.swift */; };
-		22DB9DB527B95F2E002D8312 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DB427B95F2E002D8312 /* Extensions.swift */; };
 		22DB9DBB27B96234002D8312 /* ChessPiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DBA27B96234002D8312 /* ChessPiece.swift */; };
 		22DB9DBD27B9624F002D8312 /* ChessSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DBC27B9624F002D8312 /* ChessSquare.swift */; };
 		22DB9DBF27B96273002D8312 /* Times.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DBE27B96273002D8312 /* Times.swift */; };
@@ -57,13 +55,15 @@
 		22DB9DF727B97F35002D8312 /* ReversiPieceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DF627B97F35002D8312 /* ReversiPieceView.swift */; };
 		22DB9DF927B97F53002D8312 /* ReversiUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DF827B97F53002D8312 /* ReversiUIView.swift */; };
 		22E43CEB2B5D93EB00CA1F8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22DB9DC927B9683A002D8312 /* Assets.xcassets */; };
+		22E43CED2B5E3B4B00CA1F8C /* ColorConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E43CEC2B5E3B4B00CA1F8C /* ColorConverter.swift */; };
+		22E43CEF2B5EDFD200CA1F8C /* ThemeListEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E43CEE2B5EDFD200CA1F8C /* ThemeListEntryView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		220FFAC32B5C7CFF00A6262A /* iOSThemesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSThemesView.swift; sourceTree = "<group>"; };
 		220FFAC72B5CB20600A6262A /* tvOSThemesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tvOSThemesView.swift; sourceTree = "<group>"; };
 		220FFAC92B5D826B00A6262A /* macOSThemesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSThemesView.swift; sourceTree = "<group>"; };
-		224C10562B23F99E00FF47E7 /* iOSThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSThemeView.swift; sourceTree = "<group>"; };
+		224C10562B23F99E00FF47E7 /* ThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeView.swift; sourceTree = "<group>"; };
 		226EE7E027CC514500C8A473 /* CheckersSquare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckersSquare.swift; sourceTree = "<group>"; };
 		226EE7E227CC515000C8A473 /* CheckersPiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckersPiece.swift; sourceTree = "<group>"; };
 		226EE7E727CC516200C8A473 /* CheckersMove.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckersMove.swift; sourceTree = "<group>"; };
@@ -82,15 +82,13 @@
 		22A4FE8E2B4DDA5D00882E87 /* ChessBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessBoard.swift; sourceTree = "<group>"; };
 		22A4FE902B537D9900882E87 /* ChessEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessEngine.swift; sourceTree = "<group>"; };
 		22A4FE922B545D6700882E87 /* Chess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chess.swift; sourceTree = "<group>"; };
-		22B3C69D28D29A4100E585C9 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		22B007E02B6076D500530F93 /* ThemesBackup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesBackup.swift; sourceTree = "<group>"; };
 		22BF667D28D3A6C600C13CA3 /* UniversalLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversalLinks.swift; sourceTree = "<group>"; };
-		22DA42C62B5C26CE00590710 /* macOSThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSThemeView.swift; sourceTree = "<group>"; };
 		22DB9D8E27B95101002D8312 /* GradientGames.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GradientGames.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22DB9D9127B95101002D8312 /* GradientGamesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientGamesApp.swift; sourceTree = "<group>"; };
 		22DB9DA827B9533A002D8312 /* GamesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesView.swift; sourceTree = "<group>"; };
 		22DB9DAD27B95482002D8312 /* ReversiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversiView.swift; sourceTree = "<group>"; };
 		22DB9DAF27B95DF3002D8312 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		22DB9DB427B95F2E002D8312 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		22DB9DBA27B96234002D8312 /* ChessPiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessPiece.swift; sourceTree = "<group>"; };
 		22DB9DBC27B9624F002D8312 /* ChessSquare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessSquare.swift; sourceTree = "<group>"; };
 		22DB9DBE27B96273002D8312 /* Times.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Times.swift; sourceTree = "<group>"; };
@@ -113,6 +111,8 @@
 		22DB9DF427B97F0D002D8312 /* ReversiSquareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversiSquareView.swift; sourceTree = "<group>"; };
 		22DB9DF627B97F35002D8312 /* ReversiPieceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversiPieceView.swift; sourceTree = "<group>"; };
 		22DB9DF827B97F53002D8312 /* ReversiUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversiUIView.swift; sourceTree = "<group>"; };
+		22E43CEC2B5E3B4B00CA1F8C /* ColorConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorConverter.swift; sourceTree = "<group>"; };
+		22E43CEE2B5EDFD200CA1F8C /* ThemeListEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeListEntryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,7 +148,6 @@
 		22DA42C32B5C266300590710 /* macOS */ = {
 			isa = PBXGroup;
 			children = (
-				22DA42C62B5C26CE00590710 /* macOSThemeView.swift */,
 				220FFAC92B5D826B00A6262A /* macOSThemesView.swift */,
 			);
 			path = macOS;
@@ -182,16 +181,18 @@
 				22DB9DC927B9683A002D8312 /* Assets.xcassets */,
 				22DB9D9127B95101002D8312 /* GradientGamesApp.swift */,
 				22BF667D28D3A6C600C13CA3 /* UniversalLinks.swift */,
+				22B007E02B6076D500530F93 /* ThemesBackup.swift */,
+				22E43CEC2B5E3B4B00CA1F8C /* ColorConverter.swift */,
 				22DB9DA827B9533A002D8312 /* GamesView.swift */,
 				22DB9DAF27B95DF3002D8312 /* SettingsView.swift */,
-				22DB9DB427B95F2E002D8312 /* Extensions.swift */,
-				22B3C69D28D29A4100E585C9 /* Protocols.swift */,
+				224C10562B23F99E00FF47E7 /* ThemeView.swift */,
+				22E43CEE2B5EDFD200CA1F8C /* ThemeListEntryView.swift */,
 				22DB9DC227B96528002D8312 /* Settings.swift */,
 				22DB9DBE27B96273002D8312 /* Times.swift */,
 				22A4FE8A2B4D995B00882E87 /* Theme.swift */,
 				22DB9DA027B9528E002D8312 /* Chess */,
-				226EE7DA27CBEF9A00C8A473 /* Checkers */,
 				22DB9DAC27B9546B002D8312 /* Reversi */,
+				226EE7DA27CBEF9A00C8A473 /* Checkers */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -218,7 +219,6 @@
 		22DB9DA427B952FF002D8312 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				224C10562B23F99E00FF47E7 /* iOSThemeView.swift */,
 				220FFAC32B5C7CFF00A6262A /* iOSThemesView.swift */,
 			);
 			path = iOS;
@@ -337,7 +337,6 @@
 				22DB9DBF27B96273002D8312 /* Times.swift in Sources */,
 				220FFACA2B5D826B00A6262A /* macOSThemesView.swift in Sources */,
 				220FFAC82B5CB20600A6262A /* tvOSThemesView.swift in Sources */,
-				22B3C69E28D29A4100E585C9 /* Protocols.swift in Sources */,
 				22DB9DF927B97F53002D8312 /* ReversiUIView.swift in Sources */,
 				22877A132B55E6D50081DA0B /* CheckersEngine.swift in Sources */,
 				22DB9DDA27B970F7002D8312 /* ChessBoardView.swift in Sources */,
@@ -348,8 +347,8 @@
 				22DB9DC127B96292002D8312 /* ChessMove.swift in Sources */,
 				22DB9DC327B96528002D8312 /* Settings.swift in Sources */,
 				22DB9DA927B9533A002D8312 /* GamesView.swift in Sources */,
+				22E43CED2B5E3B4B00CA1F8C /* ColorConverter.swift in Sources */,
 				22DB9DBB27B96234002D8312 /* ChessPiece.swift in Sources */,
-				22DA42C72B5C26CE00590710 /* macOSThemeView.swift in Sources */,
 				226EE80127D1547F00C8A473 /* CheckersUIView.swift in Sources */,
 				226EE7E327CC515000C8A473 /* CheckersPiece.swift in Sources */,
 				226EE7E127CC514500C8A473 /* CheckersSquare.swift in Sources */,
@@ -357,13 +356,15 @@
 				22DB9DE027B97143002D8312 /* ChessPieceView.swift in Sources */,
 				226EE7E827CC516200C8A473 /* CheckersMove.swift in Sources */,
 				22A4FE8B2B4D995B00882E87 /* Theme.swift in Sources */,
+				22B007E12B6076D500530F93 /* ThemesBackup.swift in Sources */,
 				22DB9DF327B97EF5002D8312 /* ReversiBoardView.swift in Sources */,
 				22DB9DEB27B97D2C002D8312 /* ReversiPiece.swift in Sources */,
 				22DB9DED27B97D43002D8312 /* ReversiSquare.swift in Sources */,
 				22DB9DDE27B97132002D8312 /* ChessSquareView.swift in Sources */,
 				22DB9DEF27B97D54002D8312 /* ReversiMove.swift in Sources */,
+				22E43CEF2B5EDFD200CA1F8C /* ThemeListEntryView.swift in Sources */,
 				22A4FE8F2B4DDA5D00882E87 /* ChessBoard.swift in Sources */,
-				224C10572B23F99E00FF47E7 /* iOSThemeView.swift in Sources */,
+				224C10572B23F99E00FF47E7 /* ThemeView.swift in Sources */,
 				22DB9DBD27B9624F002D8312 /* ChessSquare.swift in Sources */,
 				22DB9D9227B95101002D8312 /* GradientGamesApp.swift in Sources */,
 				22DB9DF727B97F35002D8312 /* ReversiPieceView.swift in Sources */,
@@ -377,7 +378,6 @@
 				220FFAC42B5C7CFF00A6262A /* iOSThemesView.swift in Sources */,
 				22877A0D2B558D980081DA0B /* Reversi.swift in Sources */,
 				22877A152B55E6E40081DA0B /* CheckersBoard.swift in Sources */,
-				22DB9DB527B95F2E002D8312 /* Extensions.swift in Sources */,
 				226EE7EE27D1202100C8A473 /* CheckersView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

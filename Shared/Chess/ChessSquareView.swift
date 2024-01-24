@@ -37,14 +37,14 @@ struct ChessSquareView: View {
 		Button {
 			select(square: square)
 		} label: {
-			lightSquare ? theme.squareLight : theme.squareDark
+			lightSquare ? theme.colors[.squareLight] : theme.colors[.squareDark]
 		}
 		.buttonStyle(.borderless)
 		.disabled(board.promoting || board.selectedSquare == square)
 		.overlay {
 			if showMoves && board.validSquares.contains(square) {
 				Circle()
-					.fill(board.lightTurn ? theme.pieceLight : theme.pieceDark)
+					.fill(board.lightTurn ? theme.colors[.pieceLight] : theme.colors[.squareDark])
 					.scaleEffect(0.25)
 					.transition(.scale.animation(.easeOut))
 					.allowsHitTesting(false)

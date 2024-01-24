@@ -24,7 +24,7 @@ struct ChessPieceView: View {
 		GeometryReader { geometry in
 			Text(piece)
 				.font(.system(size: geometry.size.width * 0.75))
-				.foregroundStyle(isLight ? theme.pieceLight : theme.pieceDark)
+				.foregroundStyle(isLight ? theme.colors[.pieceLight] : theme.colors[.pieceDark])
 				.frame(maxWidth: .infinity, maxHeight: .infinity)
 		}
 	}

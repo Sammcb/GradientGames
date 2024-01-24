@@ -9,11 +9,11 @@ import SwiftUI
 import SwiftData
 
 struct CheckersThemeKey: EnvironmentKey {
-	static let defaultValue = CheckersUITheme()
+	static let defaultValue = Theme.defaultCheckersTheme
 }
 
 extension EnvironmentValues {
-	var checkersTheme: CheckersUITheme {
+	var checkersTheme: Theme {
 		get {
 			self[CheckersThemeKey.self]
 		}
@@ -21,20 +21,6 @@ extension EnvironmentValues {
 		set {
 			self[CheckersThemeKey.self] = newValue
 		}
-	}
-}
-
-struct CheckersUITheme {
-	let squareLight: Color
-	let squareDark: Color
-	let pieceLight: Color
-	let pieceDark: Color
-	
-	init(theme: Theme? = nil) {
-		squareLight = theme?.colors[.squareLight] ?? Color(red: 196 / 255, green: 180 / 255, blue: 151 / 255)
-		squareDark = theme?.colors[.squareDark] ?? Color(red: 168 / 255, green: 128 / 255, blue: 99 / 255)
-		pieceLight = theme?.colors[.pieceLight] ?? Color(red: 230 / 255, green: 212 / 255, blue: 162 / 255)
-		pieceDark = theme?.colors[.pieceDark] ?? Color(red: 64 / 255, green: 57 / 255, blue: 52 / 255)
 	}
 }
 
@@ -81,7 +67,7 @@ struct CheckersView: View {
 				.focusSection()
 #endif
 			}
-			.background(.linearGradient(colors: [theme.squareDark, theme.squareLight], startPoint: .top, endPoint: .bottom))
+			.background(.linearGradient(colors: [theme.colors[.squareDark], theme.colors[.squareLight]], startPoint: .top, endPoint: .bottom))
 			.frame(maxWidth: .infinity, maxHeight: .infinity)
 			.font(.system(.headline, design: .rounded).bold().monospaced())
 		}

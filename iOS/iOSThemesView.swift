@@ -35,10 +35,10 @@ struct ThemesView: View {
 	}
 	
 	private func moveTheme(from offsets: IndexSet, to offset: Int) {
-		var ids = themes.filter({ $0.game == game }).map({ $0.id })
+		var ids = themes.filter({ theme in theme.game == game }).map({ theme in theme.id })
 		ids.move(fromOffsets: offsets, toOffset: offset)
 		for (index, id) in ids.enumerated() {
-			guard let theme = themes.first(where: { $0.id == id }) else {
+			guard let theme = themes.first(where: { theme in theme.id == id }) else {
 				continue
 			}
 			
@@ -49,31 +49,46 @@ struct ThemesView: View {
 	var body: some View {
 		NavigationStack {
 			Form {
-				let gameThemes = themes.filter({ $0.game == game })
+				let gameThemes = themes.filter({ theme in theme.game == game })
+				let gameTheme = switch game {
+				case .chess: chessTheme
+				case .reversi: reversiTheme
+				case .checkers: checkersTheme
+				}
+				
+				Section {
+					let selectedThemeMissing = !gameThemes.contains(where: { theme in theme.id.uuidString == gameTheme })
+					Button {
+						switch game {
+						case .chess: chessTheme = ""
+						case .reversi: reversiTheme = ""
+						case .checkers: checkersTheme = ""
+						}
+					} label: {
+						let defaultTheme = switch game {
+						case .chess: Theme.defaultChessTheme
+						case .reversi: Theme.defaultReversiTheme
+						case .checkers: Theme.defaultCheckersTheme
+						}
+						ThemeListEntryView(theme: defaultTheme, selected: selectedThemeMissing)
+					}
+					.foregroundStyle(.primary)
+					.disabled(selectedThemeMissing)
+				}
+				
 				List {
 					ForEach(gameThemes) { theme in
-						let themeSelected = switch game {
-						case .chess: chessTheme == theme.id.uuidString
-						case .reversi: reversiTheme == theme.id.uuidString
-						case .checkers: checkersTheme == theme.id.uuidString
-						}
-						HStack {
-							Text(theme.symbol)
-							Spacer()
-							Button {
-								switch game {
-								case .chess: chessTheme = themeSelected ? "" : theme.id.uuidString
-								case .reversi: reversiTheme = themeSelected ? "" : theme.id.uuidString
-								case .checkers: checkersTheme = themeSelected ? "" : theme.id.uuidString
-								}
-							} label: {
-								Label("Selected", systemImage: "checkmark")
-									.symbolVariant(.circle.fill)
-									.labelStyle(.iconOnly)
-									.opacity(themeSelected ? 1 : 0)
-									.foregroundStyle(.green)
+						let themeSelected = gameTheme == theme.id.uuidString
+						Button {
+							switch game {
+							case .chess: chessTheme = themeSelected ? "" : theme.id.uuidString
+							case .reversi: reversiTheme = themeSelected ? "" : theme.id.uuidString
+							case .checkers: checkersTheme = themeSelected ? "" : theme.id.uuidString
 							}
+						} label: {
+							ThemeListEntryView(theme: theme, selected: themeSelected)
 						}
+						.foregroundStyle(.primary)
 						.swipeActions(edge: .leading) {
 							Button {
 								sheetTheme = theme
@@ -100,7 +115,7 @@ struct ThemesView: View {
 			}
 			.navigationTitle("Themes")
 			.toolbar {
-				ToolbarItem {
+				ToolbarItem(placement: .confirmationAction) {
 					Button {
 						dismiss()
 					} label: {

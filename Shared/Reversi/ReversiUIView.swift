@@ -16,7 +16,7 @@ struct ReversiTimeView: View {
 	
 	var body: some View {
 		Text(board.times.stringFor(lightTime: isLight))
-			.foregroundStyle(isLight ? theme.pieceLight : theme.pieceDark)
+			.foregroundStyle(isLight ? theme.colors[.pieceLight] : theme.colors[.pieceDark])
 			.rotationEffect(board.lightTurn && flipped ? .radians(.pi) : .zero)
 			.animation(.easeIn, value: board.lightTurn)
 			.onReceive(timer) { currentDate in
@@ -55,8 +55,8 @@ struct ReversiStatusView: View {
 		let lightScore = pieces.filter({ piece in piece.isLight }).count
 		let darkScore = pieces.filter({ piece in !piece.isLight }).count
 		let gameOverSymbol = lightScore == darkScore ? "minus.circle" : "crown"
-		let gameOverColor = lightScore > darkScore ? theme.pieceLight : theme.pieceDark
-		let turnColor = board.lightTurn ? theme.pieceLight : theme.pieceDark
+		let gameOverColor = lightScore > darkScore ? theme.colors[.pieceLight] : theme.colors[.pieceDark]
+		let turnColor = board.lightTurn ? theme.colors[.pieceLight] : theme.colors[.pieceDark]
 		let symbolColor = board.gameOver ? gameOverColor : turnColor
 		Image(systemName: board.gameOver ? gameOverSymbol : "circle")
 			.padding()
@@ -87,7 +87,7 @@ struct ReversiScoreStatusView: View {
 			ZStack {
 				Image(systemName: "circle")
 					.symbolVariant(.fill)
-					.foregroundStyle(isLight ? theme.pieceLight : theme.pieceDark)
+					.foregroundStyle(isLight ? theme.colors[.pieceLight] : theme.colors[.pieceDark])
 					.font(.largeTitle)
 				Text("\(isLight ? lightScore : darkScore)")
 					.blendMode(.destinationOut)
@@ -95,7 +95,7 @@ struct ReversiScoreStatusView: View {
 			.compositingGroup()
 			
 			Text("\(moves + initialMoves)/\(board.maxMoves)")
-				.foregroundStyle(isLight ? theme.pieceLight : theme.pieceDark)
+				.foregroundStyle(isLight ? theme.colors[.pieceLight] : theme.colors[.pieceDark])
 		}
 		.rotationEffect(board.lightTurn && flipped ? .radians(.pi) : .zero)
 		.animation(.easeIn, value: board.lightTurn)

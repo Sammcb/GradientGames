@@ -1,10 +1,13 @@
 //
-//  Extensions.swift
+//  ColorConverter.swift
 //  GradientGames
 //
-//  Created by Sam McBroom on 2/13/22.
+//  Created by Sam McBroom on 1/21/24.
 //
+
 import SwiftUI
+
+protocol ColorConverter {}
 
 extension ColorConverter {
 	func colorFrom(_ colorString: String) -> Color {

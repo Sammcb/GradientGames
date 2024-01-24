@@ -16,7 +16,7 @@ struct CheckersTimeView: View {
 	
 	var body: some View {
 		Text(board.times.stringFor(lightTime: isLight))
-			.foregroundStyle(isLight ? theme.pieceLight : theme.pieceDark)
+			.foregroundStyle(isLight ? theme.colors[.pieceLight] : theme.colors[.pieceDark])
 			.rotationEffect(board.lightTurn && flipped ? .radians(.pi) : .zero)
 			.animation(.easeIn, value: board.lightTurn)
 			.onReceive(timer) { currentDate in
@@ -55,7 +55,7 @@ struct CheckersStateView: View {
 		Image(systemName: board.gameOver ? "crown" : "circle.circle")
 			.padding()
 			.symbolVariant(.fill)
-			.foregroundStyle(toggleColor ? theme.pieceLight : theme.pieceDark)
+			.foregroundStyle(toggleColor ? theme.colors[.pieceLight] : theme.colors[.pieceDark])
 			.font(.largeTitle)
 			.rotationEffect(board.lightTurn && flipped ? .radians(.pi) : .zero)
 			.background(.ultraThinMaterial)

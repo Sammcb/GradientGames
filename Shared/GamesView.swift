@@ -172,15 +172,15 @@ struct GamesView: View, UniversalLinkReciever {
 			case .none:
 				ContentUnavailableView("Pick a game to play!", systemImage: "rectangle.checkered")
 			case .chess:
-				let theme = ChessUITheme(theme: themes.first(where: { $0.id.uuidString == chessTheme }))
+				let theme = themes.first(where: { $0.id.uuidString == chessTheme }) ?? Theme.defaultChessTheme
 				ChessView(board: chessBoard(), enableUndo: enableUndo, flipped: flipped, enableTimer: enableTimer, showMoves: showMoves)
 					.environment(\.chessTheme, theme)
 			case .reversi:
-				let theme = ReversiUITheme(theme: themes.first(where: { $0.id.uuidString == reversiTheme }))
+				let theme = themes.first(where: { $0.id.uuidString == reversiTheme }) ?? Theme.defaultReversiTheme
 				ReversiView(board: reversiBoard(), enableUndo: enableUndo, flipped: flipped, enableTimer: enableTimer, showMoves: showMoves)
 					.environment(\.reversiTheme, theme)
 			case .checkers:
-				let theme = CheckersUITheme(theme: themes.first(where: { $0.id.uuidString == checkersTheme }))
+				let theme = themes.first(where: { $0.id.uuidString == checkersTheme }) ?? Theme.defaultCheckersTheme
 				CheckersView(board: checkersBoard(), enableUndo: enableUndo, flipped: flipped, enableTimer: enableTimer, showMoves: showMoves)
 					.environment(\.checkersTheme, theme)
 			case .settings:

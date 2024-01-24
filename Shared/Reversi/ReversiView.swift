@@ -9,11 +9,11 @@ import SwiftUI
 import SwiftData
 
 struct ReversiThemeKey: EnvironmentKey {
-	static let defaultValue = ReversiUITheme()
+	static let defaultValue = Theme.defaultReversiTheme
 }
 
 extension EnvironmentValues {
-	var reversiTheme: ReversiUITheme {
+	var reversiTheme: Theme {
 		get {
 			self[ReversiThemeKey.self]
 		}
@@ -21,20 +21,6 @@ extension EnvironmentValues {
 		set {
 			self[ReversiThemeKey.self] = newValue
 		}
-	}
-}
-
-struct ReversiUITheme {
-	let border: Color
-	let square: Color
-	let pieceLight: Color
-	let pieceDark: Color
-	
-	init(theme: Theme? = nil) {
-		square = theme?.colors[.squares] ?? Color(red: 32 / 255, green: 168 / 255, blue: 96 / 255)
-		border = theme?.colors[.borders] ?? Color(red: 68 / 255, green: 220 / 255, blue: 138 / 255)
-		pieceLight = theme?.colors[.pieceLight] ?? .white
-		pieceDark = theme?.colors[.pieceDark] ?? .black
 	}
 }
 
@@ -81,7 +67,7 @@ struct ReversiView: View {
 				.focusSection()
 #endif
 			}
-			.background(.linearGradient(colors: [theme.square, theme.border], startPoint: .top, endPoint: .bottom))
+			.background(.linearGradient(colors: [theme.colors[.squares], theme.colors[.borders]], startPoint: .top, endPoint: .bottom))
 			.frame(maxWidth: .infinity, maxHeight: .infinity)
 			.font(.system(.headline, design: .rounded).bold().monospaced())
 		}

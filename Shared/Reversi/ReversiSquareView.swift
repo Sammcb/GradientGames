@@ -27,13 +27,13 @@ struct ReversiSquareView: View {
 			
 			board.place(at: square)
 		} label: {
-			theme.square
+			theme.colors[.squares]
 		}
 		.buttonStyle(.borderless)
 		.overlay {
 			if showMoves && board.validSquares.contains(square) {
 				Circle()
-					.fill(board.lightTurn ? theme.pieceLight : theme.pieceDark)
+					.fill(board.lightTurn ? theme.colors[.pieceLight] : theme.colors[.pieceDark])
 					.scaleEffect(0.25)
 					.transition(.scale.animation(.easeOut))
 					.animation(.easeIn, value: board.lightTurn)

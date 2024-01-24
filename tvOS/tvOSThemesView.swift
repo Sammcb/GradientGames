@@ -18,23 +18,47 @@ struct ThemesView: View {
 	
 	var body: some View {
 		let gameThemes = themes.filter({ $0.game == game })
+		let gameTheme = switch game {
+		case .chess: chessTheme
+		case .reversi: reversiTheme
+		case .checkers: checkersTheme
+		}
+		
 		NavigationStack {
 			Form {
+				Section {
+					let selectedThemeMissing = !themes.contains(where: { theme in theme.id.uuidString == gameTheme })
+					Button {
+						switch game {
+						case .chess: chessTheme = ""
+						case .reversi: reversiTheme = ""
+						case .checkers: checkersTheme = ""
+						}
+					} label: {
+						let defaultTheme = switch game {
+						case .chess: Theme.defaultChessTheme
+						case .reversi: Theme.defaultReversiTheme
+						case .checkers: Theme.defaultCheckersTheme
+						}
+						ThemeListEntryView(theme: defaultTheme, selected: selectedThemeMissing)
+					}
+					.foregroundStyle(.primary)
+					.disabled(selectedThemeMissing)
+				}
+				
 				List {
 					ForEach(gameThemes) { theme in
-						let themeSelected = chessTheme == theme.id.uuidString
-						HStack {
-							Text(theme.symbol)
-							Spacer()
-							Button {
-								chessTheme = themeSelected ? "" : theme.id.uuidString
-							} label: {
-								Label("Selected", systemImage: "checkmark.circle.fill")
-									.labelStyle(.iconOnly)
-									.opacity(themeSelected ? 1 : 0)
-									.foregroundStyle(.green)
+						let themeSelected = gameTheme == theme.id.uuidString
+						Button {
+							switch game {
+							case .chess: chessTheme = themeSelected ? "" : theme.id.uuidString
+							case .reversi: reversiTheme = themeSelected ? "" : theme.id.uuidString
+							case .checkers: checkersTheme = themeSelected ? "" : theme.id.uuidString
 							}
+						} label: {
+							ThemeListEntryView(theme: theme, selected: themeSelected)
 						}
+						.foregroundStyle(.primary)
 					}
 				}
 			}

@@ -16,7 +16,7 @@ struct CheckersPieceView: View {
 		Image(systemName: "circle")
 			.resizable()
 			.symbolVariant(kinged ? .circle.fill : .fill)
-			.foregroundStyle(isLight ? theme.pieceLight : theme.pieceDark)
+			.foregroundStyle(isLight ? theme.colors[.pieceLight] : theme.colors[.pieceDark])
 			.scaledToFit()
 			.scaleEffect(0.75)
 	}

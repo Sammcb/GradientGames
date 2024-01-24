@@ -16,7 +16,7 @@ struct ChessTimeView: View {
 	
 	var body: some View {
 		Text(board.times.stringFor(lightTime: isLight))
-			.foregroundStyle(isLight ? theme.pieceLight : theme.pieceDark)
+			.foregroundStyle(isLight ? theme.colors[.pieceLight] : theme.colors[.pieceDark])
 			.rotationEffect(!board.lightTurn && flipped ? .radians(.pi) : .zero)
 			.animation(.easeIn, value: board.lightTurn)
 			.onReceive(timer) { currentDate in
@@ -61,7 +61,7 @@ struct ChessKingStatusView: View {
 		Image(systemName: kingStateSymbol)
 			.padding()
 			.symbolVariant(.fill.circle)
-			.foregroundStyle(board.lightTurn ? theme.pieceLight : theme.pieceDark)
+			.foregroundStyle(board.lightTurn ? theme.colors[.pieceLight] : theme.colors[.pieceDark])
 			.font(.largeTitle)
 			.rotationEffect(!board.lightTurn && flipped ? .radians(.pi) : .zero)
 			.background(.ultraThinMaterial)
