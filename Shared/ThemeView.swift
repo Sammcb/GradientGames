@@ -8,6 +8,7 @@
 import SwiftUI
 import SwiftData
 
+#if !os(tvOS)
 struct ThemeView: View, ColorConverter {
 	@Environment(\.dismiss) private var dismiss
 	@Bindable var theme: Theme
@@ -36,6 +37,8 @@ struct ThemeView: View, ColorConverter {
 			Form {
 				Section("Symbol") {
 					TextField("Symbol", text: $theme.symbol)
+						.frame(maxWidth: 800)
+						.fixedSize()
 				}
 				
 				Section("Colors") {
@@ -66,3 +69,4 @@ struct ThemeView: View, ColorConverter {
 		}
 	}
 }
+#endif

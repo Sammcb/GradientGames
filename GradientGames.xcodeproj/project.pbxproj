@@ -29,7 +29,9 @@
 		22A4FE8F2B4DDA5D00882E87 /* ChessBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A4FE8E2B4DDA5D00882E87 /* ChessBoard.swift */; };
 		22A4FE912B537D9900882E87 /* ChessEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A4FE902B537D9900882E87 /* ChessEngine.swift */; };
 		22A4FE932B545D6700882E87 /* Chess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A4FE922B545D6700882E87 /* Chess.swift */; };
-		22B007E12B6076D500530F93 /* ThemesBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B007E02B6076D500530F93 /* ThemesBackup.swift */; };
+		22B007E12B6076D500530F93 /* ThemesDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B007E02B6076D500530F93 /* ThemesDocument.swift */; };
+		22B007E52B62341B00530F93 /* ThemesManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B007E42B62341B00530F93 /* ThemesManagementView.swift */; };
+		22B007E72B6234FF00530F93 /* ThemeColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B007E62B6234FF00530F93 /* ThemeColor.swift */; };
 		22BF667E28D3A6C600C13CA3 /* UniversalLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BF667D28D3A6C600C13CA3 /* UniversalLinks.swift */; };
 		22DB9D9227B95101002D8312 /* GradientGamesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9D9127B95101002D8312 /* GradientGamesApp.swift */; };
 		22DB9DA927B9533A002D8312 /* GamesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB9DA827B9533A002D8312 /* GamesView.swift */; };
@@ -82,7 +84,9 @@
 		22A4FE8E2B4DDA5D00882E87 /* ChessBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessBoard.swift; sourceTree = "<group>"; };
 		22A4FE902B537D9900882E87 /* ChessEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessEngine.swift; sourceTree = "<group>"; };
 		22A4FE922B545D6700882E87 /* Chess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chess.swift; sourceTree = "<group>"; };
-		22B007E02B6076D500530F93 /* ThemesBackup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesBackup.swift; sourceTree = "<group>"; };
+		22B007E02B6076D500530F93 /* ThemesDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesDocument.swift; sourceTree = "<group>"; };
+		22B007E42B62341B00530F93 /* ThemesManagementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesManagementView.swift; sourceTree = "<group>"; };
+		22B007E62B6234FF00530F93 /* ThemeColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColor.swift; sourceTree = "<group>"; };
 		22BF667D28D3A6C600C13CA3 /* UniversalLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversalLinks.swift; sourceTree = "<group>"; };
 		22DB9D8E27B95101002D8312 /* GradientGames.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GradientGames.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22DB9D9127B95101002D8312 /* GradientGamesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientGamesApp.swift; sourceTree = "<group>"; };
@@ -181,14 +185,16 @@
 				22DB9DC927B9683A002D8312 /* Assets.xcassets */,
 				22DB9D9127B95101002D8312 /* GradientGamesApp.swift */,
 				22BF667D28D3A6C600C13CA3 /* UniversalLinks.swift */,
-				22B007E02B6076D500530F93 /* ThemesBackup.swift */,
+				22B007E02B6076D500530F93 /* ThemesDocument.swift */,
 				22E43CEC2B5E3B4B00CA1F8C /* ColorConverter.swift */,
 				22DB9DA827B9533A002D8312 /* GamesView.swift */,
+				22B007E42B62341B00530F93 /* ThemesManagementView.swift */,
 				22DB9DAF27B95DF3002D8312 /* SettingsView.swift */,
 				224C10562B23F99E00FF47E7 /* ThemeView.swift */,
 				22E43CEE2B5EDFD200CA1F8C /* ThemeListEntryView.swift */,
 				22DB9DC227B96528002D8312 /* Settings.swift */,
 				22DB9DBE27B96273002D8312 /* Times.swift */,
+				22B007E62B6234FF00530F93 /* ThemeColor.swift */,
 				22A4FE8A2B4D995B00882E87 /* Theme.swift */,
 				22DB9DA027B9528E002D8312 /* Chess */,
 				22DB9DAC27B9546B002D8312 /* Reversi */,
@@ -335,6 +341,7 @@
 				22BF667E28D3A6C600C13CA3 /* UniversalLinks.swift in Sources */,
 				226EE7F427D125FE00C8A473 /* CheckersSquareView.swift in Sources */,
 				22DB9DBF27B96273002D8312 /* Times.swift in Sources */,
+				22B007E52B62341B00530F93 /* ThemesManagementView.swift in Sources */,
 				220FFACA2B5D826B00A6262A /* macOSThemesView.swift in Sources */,
 				220FFAC82B5CB20600A6262A /* tvOSThemesView.swift in Sources */,
 				22DB9DF927B97F53002D8312 /* ReversiUIView.swift in Sources */,
@@ -349,6 +356,7 @@
 				22DB9DA927B9533A002D8312 /* GamesView.swift in Sources */,
 				22E43CED2B5E3B4B00CA1F8C /* ColorConverter.swift in Sources */,
 				22DB9DBB27B96234002D8312 /* ChessPiece.swift in Sources */,
+				22B007E72B6234FF00530F93 /* ThemeColor.swift in Sources */,
 				226EE80127D1547F00C8A473 /* CheckersUIView.swift in Sources */,
 				226EE7E327CC515000C8A473 /* CheckersPiece.swift in Sources */,
 				226EE7E127CC514500C8A473 /* CheckersSquare.swift in Sources */,
@@ -356,7 +364,7 @@
 				22DB9DE027B97143002D8312 /* ChessPieceView.swift in Sources */,
 				226EE7E827CC516200C8A473 /* CheckersMove.swift in Sources */,
 				22A4FE8B2B4D995B00882E87 /* Theme.swift in Sources */,
-				22B007E12B6076D500530F93 /* ThemesBackup.swift in Sources */,
+				22B007E12B6076D500530F93 /* ThemesDocument.swift in Sources */,
 				22DB9DF327B97EF5002D8312 /* ReversiBoardView.swift in Sources */,
 				22DB9DEB27B97D2C002D8312 /* ReversiPiece.swift in Sources */,
 				22DB9DED27B97D43002D8312 /* ReversiSquare.swift in Sources */,

@@ -6,51 +6,14 @@
 //
 
 import SwiftUI
-import SwiftData
 import CloudKit
 
 struct SettingsView: View {
-	@Environment(\.modelContext) private var context
-	@Query(sort: \Theme.index) private var themes: [Theme]
 	@AppStorage(Setting.enableUndo.rawValue) private var enableUndo = true
 	@AppStorage(Setting.enableTimer.rawValue) private var enableTimer = false
 	@AppStorage(Setting.flipUI.rawValue) private var flipUI = false
 	@AppStorage(Setting.showMoves.rawValue) private var showMoves = true
 	@State private var icloudStatus: CKAccountStatus = .couldNotDetermine
-	@State private var exportThemes = false
-	@State private var importThemes = false
-	@State private var showImportStatusAlert = false
-	@State private var importStatusMessage = ""
-	
-	private func importThemesSucceeded(for importFileResult: Result<URL, Error>) -> Bool {
-		switch importFileResult {
-		case .success(let url):
-			guard url.startAccessingSecurityScopedResource() else {
-				return false
-			}
-			
-			defer {
-				url.stopAccessingSecurityScopedResource()
-			}
-			
-			guard let data = try? Data(contentsOf: url) else {
-				return false
-			}
-			
-			guard let document = try? ThemesDocument(data: data) else {
-				return false
-			}
-
-			for theme in document.themes {
-				let index = themes.count
-				theme.index = index
-				context.insert(theme)
-			}
-			return true
-		case .failure(_):
-			return false
-		}
-	}
 	
 	var body: some View {
 		Form {
@@ -112,7 +75,7 @@ struct SettingsView: View {
 						.font(.footnote)
 						.foregroundStyle(.secondary)
 				}
-				#else
+#else
 				Label(statusCategory, systemImage: statusIcon)
 #endif
 			} header: {
@@ -124,18 +87,12 @@ struct SettingsView: View {
 			}
 			.headerProminence(.increased)
 			
-			#if os(macOS)
-			Button {
-				exportThemes.toggle()
-			} label: {
-				Label("Export All Themes", systemImage: "arrow.up.doc.fill")
+#if !os(tvOS)
+			Section("Themes Management") {
+				ThemesManagementView()
 			}
-			Button {
-				importThemes.toggle()
-			} label: {
-				Label("Import Themes", systemImage: "square.and.arrow.down")
-			}
-			#endif
+			.headerProminence(.increased)
+#endif
 			
 			Section {
 				VStack(alignment: .leading) {
@@ -164,36 +121,5 @@ struct SettingsView: View {
 			icloudStatus = accountStatus
 		}
 		.navigationTitle("Settings")
-		#if os(iOS)
-		.toolbar {
-			ToolbarItem {
-				Menu {
-					Button {
-						exportThemes.toggle()
-					} label: {
-						Label("Export All Themes", systemImage: "arrow.up.doc")
-					}
-					Button {
-						importThemes.toggle()
-					} label: {
-						Label("Import Themes", systemImage: "square.and.arrow.down")
-					}
-				} label: {
-					Label("Actions", systemImage: "ellipsis")
-						.symbolVariant(.circle)
-				}
-			}
-		}
-#endif
-		.fileExporter(isPresented: $exportThemes, document: ThemesDocument(themes), contentType: .json, defaultFilename: ThemesBackup.backupFileName) { _ in }
-		.fileImporter(isPresented: $importThemes, allowedContentTypes: [.json]) { result in
-			let importSucceeded = importThemesSucceeded(for: result)
-			importStatusMessage = importSucceeded ? "Import succeeded" : "Import failed"
-			showImportStatusAlert = true
-		}
-		.alert(importStatusMessage, isPresented: $showImportStatusAlert) {
-			Button("OK", role: .cancel, action: {})
-				.keyboardShortcut(.defaultAction)
-		}
 	}
 }

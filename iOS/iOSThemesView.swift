@@ -97,6 +97,22 @@ struct ThemesView: View {
 									.tint(.blue)
 							}
 						}
+						.contextMenu {
+							Button {
+								sheetTheme = theme
+							} label: {
+								Label("Edit", systemImage: "pencil")
+							}
+							
+							Button(role: .destructive) {
+								guard let index = gameThemes.firstIndex(of: theme) else {
+									return
+								}
+								deleteTheme(at: [index])
+							} label: {
+								Label("Delete", systemImage: "trash")
+							}
+						}
 					}
 					.onDelete(perform: deleteTheme)
 					.onMove(perform: moveTheme)

@@ -94,11 +94,11 @@ struct GamesView: View, UniversalLinkReciever {
 		return board
 	}
 	
-//	private func present(_ themeId: UUID) {
-//		selectedView = .settings
-//		navigation.themeLinkOpened = true
-//		path = []
-//	}
+	//	private func present(_ themeId: UUID) {
+	//		selectedView = .settings
+	//		navigation.themeLinkOpened = true
+	//		path = []
+	//	}
 	
 	private func createTheme(with themeField: ThemeField) {
 		//		let theme: Theme

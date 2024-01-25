@@ -1,10 +1,11 @@
 //
-//  ThemesBackup.swift
+//  ThemesDocument.swift
 //  GradientGames
 //
 //  Created by Sam McBroom on 1/23/24.
 //
 
+#if !os(tvOS)
 import SwiftUI
 import UniformTypeIdentifiers
 
@@ -86,3 +87,4 @@ private struct BackupThemes: Codable {
 		self.themes = themes.map({ theme in BackupTheme(theme) })
 	}
 }
+#endif
