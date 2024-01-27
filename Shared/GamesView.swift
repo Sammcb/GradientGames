@@ -31,6 +31,10 @@ private enum DetailView: String, Identifiable, CaseIterable {
 		case .settings: "gearshape"
 		}
 	}
+	
+	init?(game: Theme.Game) {
+		self.init(rawValue: game.rawValue)
+	}
 }
 
 struct GamesView: View, UniversalLinkReciever {
@@ -47,6 +51,25 @@ struct GamesView: View, UniversalLinkReciever {
 	@AppStorage(Setting.flipUI.rawValue) private var flipped = false
 	@AppStorage(Setting.enableTimer.rawValue) private var enableTimer = false
 	@AppStorage(Setting.showMoves.rawValue) private var showMoves = true
+	
+	private func parseTheme(_ url: URL) {
+		guard let theme = try? parseUniversalLink(url) else {
+			return
+		}
+		
+		let gameThemes = themes.filter({ $0.game == theme.game })
+		if let lastThemeIndex = gameThemes.last?.index {
+			theme.index = lastThemeIndex + 1
+		}
+		
+		context.insert(theme)
+		switch theme.game {
+		case .chess: chessTheme = theme.id.uuidString
+		case .reversi: reversiTheme = theme.id.uuidString
+		case .checkers: checkersTheme = theme.id.uuidString
+		}
+		selectedView = DetailView(game: theme.game)
+	}
 	
 	private func resetGame(for detailView: DetailView) {
 		switch detailView {
@@ -93,37 +116,7 @@ struct GamesView: View, UniversalLinkReciever {
 		}
 		return board
 	}
-	
-	//	private func present(_ themeId: UUID) {
-	//		selectedView = .settings
-	//		navigation.themeLinkOpened = true
-	//		path = []
-	//	}
-	
-	private func createTheme(with themeField: ThemeField) {
-		//		let theme: Theme
-		//		switch themeField {
-		//		case .chess(let symbol, let pieceLight, let pieceDark, let squareLight, let squareDark):
-		//			let lastThemeIndex = chessThemes.last?.index ?? -1
-		//			let themeIndex = lastThemeIndex + 1
-		//			let chessTheme = ChessTheme(index: themeIndex, symbol: symbol, pieceDark: pieceDark, pieceLight: pieceLight, squareDark: squareDark, squareLight: squareLight)
-		//			context.insert(chessTheme)
-		//		case .reversi(let symbol, let pieceLight, let pieceDark, let square, let border):
-		//			let lastThemeIndex = reversiThemes.last?.index ?? -1
-		//			let themeIndex = lastThemeIndex + 1
-		//			let reversiTheme = ReversiTheme(index: themeIndex, symbol: symbol, pieceDark: pieceDark, pieceLight: pieceLight, border: border, square: square)
-		//			context.insert(reversiTheme)
-		//		case .checkers(let symbol, let pieceLight, let pieceDark, let squareLight, let squareDark):
-		//			let lastThemeIndex = checkersThemes.last?.index ?? -1
-		//			let themeIndex = lastThemeIndex + 1
-		//			let checkersTheme = CheckersTheme(index: themeIndex, symbol: symbol, pieceDark: pieceDark, pieceLight: pieceLight, squareDark: squareDark, squareLight: squareLight)
-		//			context.insert(checkersTheme)
-		//		}
-		//		try? context.save()
-		
-		//		present(theme)
-	}
-	
+
 	var body: some View {
 		NavigationSplitView {
 			List(selection: $selectedView) {
@@ -161,11 +154,7 @@ struct GamesView: View, UniversalLinkReciever {
 #endif
 			.navigationTitle("Games")
 			.onOpenURL { url in
-				guard let themeField = try? parseUniversalLink(url) else {
-					return
-				}
-				
-				createTheme(with: themeField)
+				parseTheme(url)
 			}
 		} detail: {
 			switch selectedView {
