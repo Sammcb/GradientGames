@@ -33,7 +33,7 @@ struct GradientGamesApp: App {
 		let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
 		
 		do {
-			container = try ModelContainer(for: schema, configurations: [modelConfiguration])
+			container = try ModelContainer(for: schema, migrationPlan: ThemesMigrationPlan.self, configurations: [modelConfiguration])
 		} catch {
 			fatalError("Could not create ModelContainer: \(error)")
 		}

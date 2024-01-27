@@ -59,6 +59,7 @@
 		22E43CEB2B5D93EB00CA1F8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22DB9DC927B9683A002D8312 /* Assets.xcassets */; };
 		22E43CED2B5E3B4B00CA1F8C /* ColorConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E43CEC2B5E3B4B00CA1F8C /* ColorConverter.swift */; };
 		22E43CEF2B5EDFD200CA1F8C /* ThemeListEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E43CEE2B5EDFD200CA1F8C /* ThemeListEntryView.swift */; };
+		22ED01BD2B65848A00CFE8A5 /* ThemeV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ED01BC2B65848A00CFE8A5 /* ThemeV1.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -117,6 +118,7 @@
 		22DB9DF827B97F53002D8312 /* ReversiUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversiUIView.swift; sourceTree = "<group>"; };
 		22E43CEC2B5E3B4B00CA1F8C /* ColorConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorConverter.swift; sourceTree = "<group>"; };
 		22E43CEE2B5EDFD200CA1F8C /* ThemeListEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeListEntryView.swift; sourceTree = "<group>"; };
+		22ED01BC2B65848A00CFE8A5 /* ThemeV1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeV1.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +198,7 @@
 				22DB9DBE27B96273002D8312 /* Times.swift */,
 				22B007E62B6234FF00530F93 /* ThemeColor.swift */,
 				22A4FE8A2B4D995B00882E87 /* Theme.swift */,
+				22ED01BC2B65848A00CFE8A5 /* ThemeV1.swift */,
 				22DB9DA027B9528E002D8312 /* Chess */,
 				22DB9DAC27B9546B002D8312 /* Reversi */,
 				226EE7DA27CBEF9A00C8A473 /* Checkers */,
@@ -352,6 +355,7 @@
 				22DB9DE227B97153002D8312 /* ChessUIView.swift in Sources */,
 				22A4FE932B545D6700882E87 /* Chess.swift in Sources */,
 				22DB9DC127B96292002D8312 /* ChessMove.swift in Sources */,
+				22ED01BD2B65848A00CFE8A5 /* ThemeV1.swift in Sources */,
 				22DB9DC327B96528002D8312 /* Settings.swift in Sources */,
 				22DB9DA927B9533A002D8312 /* GamesView.swift in Sources */,
 				22E43CED2B5E3B4B00CA1F8C /* ColorConverter.swift in Sources */,
