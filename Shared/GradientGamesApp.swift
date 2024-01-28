@@ -30,7 +30,7 @@ struct GradientGamesApp: App {
 	
 	init() {
 		let schema = Schema(versionedSchema: SchemaV1_0_0.self)
-		let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
+		let modelConfiguration = ModelConfiguration(schema: schema)
 		do {
 			container = try ModelContainer(for: schema, migrationPlan: MigrationPlan.self, configurations: modelConfiguration)
 		} catch {

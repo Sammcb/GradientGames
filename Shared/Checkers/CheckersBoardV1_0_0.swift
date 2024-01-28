@@ -11,6 +11,8 @@ import SwiftData
 extension SchemaV1_0_0 {
 	@Model
 	final class CheckersBoard: CheckersEngine {
+		let id = UUID()
+		
 		private var startingPieces: Checkers.Pieces = []
 		private (set) var history: [Checkers.Move] = []
 		var times = Times(light: 0, dark: 0, lastUpdate: Date())

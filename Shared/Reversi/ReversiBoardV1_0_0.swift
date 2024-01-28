@@ -11,6 +11,8 @@ import SwiftData
 extension SchemaV1_0_0 {
 	@Model
 	final class ReversiBoard: ReversiEngine {
+		let id = UUID()
+		
 		private var startingPieces: Reversi.Pieces = []
 		private (set) var history: [Reversi.Move] = []
 		var times = Times(light: 0, dark: 0, lastUpdate: Date())

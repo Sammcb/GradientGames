@@ -19,6 +19,8 @@ enum MigrationPlan: SchemaMigrationPlan {
 }
 
 enum SchemaV1_0_0: VersionedSchema {
-	static var models: [any PersistentModel.Type] = [Theme.self, ChessBoard.self, ReversiBoard.self, CheckersBoard.self]
+	// TODO: Delete after most users have updated to 2.0.0
+	static var models: [any PersistentModel.Type] = [Theme.self, ChessBoard.self, ReversiBoard.self, CheckersBoard.self,
+																									 ChessTheme.self, ReversiTheme.self, CheckersTheme.self]
 	static var versionIdentifier = Schema.Version(1, 0, 0)
 }

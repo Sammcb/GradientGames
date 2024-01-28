@@ -61,6 +61,7 @@
 		22ED01C32B65D2D700CFE8A5 /* ReversiBoardV1_0_0.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ED01C22B65D2D700CFE8A5 /* ReversiBoardV1_0_0.swift */; };
 		22ED01C52B65D34900CFE8A5 /* CheckersBoardV1_0_0.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ED01C42B65D34900CFE8A5 /* CheckersBoardV1_0_0.swift */; };
 		22ED01C72B65EDAC00CFE8A5 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 22ED01C62B65EDAC00CFE8A5 /* PrivacyInfo.xcprivacy */; };
+		22ED01C92B65F7C800CFE8A5 /* OldThemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ED01C82B65F7C800CFE8A5 /* OldThemes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -121,6 +122,7 @@
 		22ED01C22B65D2D700CFE8A5 /* ReversiBoardV1_0_0.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversiBoardV1_0_0.swift; sourceTree = "<group>"; };
 		22ED01C42B65D34900CFE8A5 /* CheckersBoardV1_0_0.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckersBoardV1_0_0.swift; sourceTree = "<group>"; };
 		22ED01C62B65EDAC00CFE8A5 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		22ED01C82B65F7C800CFE8A5 /* OldThemes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldThemes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,6 +204,7 @@
 				22B007E62B6234FF00530F93 /* ThemeColor.swift */,
 				22ED01C02B65912A00CFE8A5 /* SchemaVersioning.swift */,
 				22ED01BC2B65848A00CFE8A5 /* ThemeV1_0_0.swift */,
+				22ED01C82B65F7C800CFE8A5 /* OldThemes.swift */,
 				22DB9DA027B9528E002D8312 /* Chess */,
 				22DB9DAC27B9546B002D8312 /* Reversi */,
 				226EE7DA27CBEF9A00C8A473 /* Checkers */,
@@ -347,6 +350,7 @@
 				22877A0F2B558DA50081DA0B /* ReversiEngine.swift in Sources */,
 				22BF667E28D3A6C600C13CA3 /* UniversalLinks.swift in Sources */,
 				226EE7F427D125FE00C8A473 /* CheckersSquareView.swift in Sources */,
+				22ED01C92B65F7C800CFE8A5 /* OldThemes.swift in Sources */,
 				22DB9DBF27B96273002D8312 /* Times.swift in Sources */,
 				22B007E52B62341B00530F93 /* ThemesManagementView.swift in Sources */,
 				220FFACA2B5D826B00A6262A /* macOSThemesView.swift in Sources */,

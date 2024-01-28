@@ -52,6 +52,11 @@ struct GamesView: View, UniversalLinkReciever {
 	@AppStorage(Setting.enableTimer.rawValue) private var enableTimer = false
 	@AppStorage(Setting.showMoves.rawValue) private var showMoves = true
 	
+	// TODO: Delete after most users have updated to 2.0.0
+	@Query private var oldChessThemes: [ChessTheme]
+	@Query private var oldReversiThemes: [ReversiTheme]
+	@Query private var oldCheckersThemes: [CheckersTheme]
+	
 	private func parseTheme(_ url: URL) {
 		guard let theme = try? parseUniversalLink(url) else {
 			return
@@ -155,6 +160,27 @@ struct GamesView: View, UniversalLinkReciever {
 			.navigationTitle("Games")
 			.onOpenURL { url in
 				parseTheme(url)
+			}
+			// TODO: Delete after most users have updated to 2.0.0
+			.onChange(of: oldChessThemes.count) {
+				guard !oldChessThemes.isEmpty else {
+					return
+				}
+				MigrateOldThemes.migrate(context)
+			}
+			// TODO: Delete after most users have updated to 2.0.0
+			.onChange(of: oldReversiThemes.count) {
+				guard !oldReversiThemes.isEmpty else {
+					return
+				}
+				MigrateOldThemes.migrate(context)
+			}
+			// TODO: Delete after most users have updated to 2.0.0
+			.onChange(of: oldCheckersThemes.count) {
+				guard !oldCheckersThemes.isEmpty else {
+					return
+				}
+				MigrateOldThemes.migrate(context)
 			}
 		} detail: {
 			switch selectedView {
