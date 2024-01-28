@@ -7,6 +7,7 @@
 
 #if !os(tvOS)
 import SwiftUI
+import SwiftData
 import UniformTypeIdentifiers
 
 struct ThemesDocument: FileDocument {
@@ -20,7 +21,7 @@ struct ThemesDocument: FileDocument {
 	init(data: Data) throws {
 		let backupThemes = try JSONDecoder().decode(BackupThemes.self, from: data)
 		
-		guard ThemesBackup.supportedThemeSchemaVersions.contains(backupThemes.schemaVersion) else {
+		guard ThemesBackup.supportedSchemaVersions.contains(backupThemes.schemaVersion) else {
 			throw ThemesBackupError.versionUnsupported
 		}
 		
@@ -37,7 +38,7 @@ struct ThemesDocument: FileDocument {
 	}
 	
 	func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
-		let backupThemes = BackupThemes(themes, schemaVersion: ThemesBackup.currentThemeSchemaVersion)
+		let backupThemes = BackupThemes(themes, schemaVersion: ThemesBackup.currentSchemaVersion)
 		let encoder = JSONEncoder()
 		encoder.outputFormatting = .prettyPrinted
 		let data = try encoder.encode(backupThemes)
@@ -53,8 +54,8 @@ struct ThemesBackup {
 	private init() {}
 	
 	static let backupFileName = "themes.json"
-	static let supportedThemeSchemaVersions = [1]
-	static let currentThemeSchemaVersion = 1
+	static let supportedSchemaVersions = [Schema.Version(1, 0, 0)]
+	static let currentSchemaVersion = Schema.Version(1, 0, 0)
 }
 
 private struct BackupThemes: Codable {
@@ -79,10 +80,10 @@ private struct BackupThemes: Codable {
 		}
 	}
 	
-	let schemaVersion: Int
+	let schemaVersion: Schema.Version
 	let themes: [BackupTheme]
 	
-	init(_ themes: [Theme], schemaVersion: Int) {
+	init(_ themes: [Theme], schemaVersion: Schema.Version) {
 		self.schemaVersion = schemaVersion
 		self.themes = themes.map({ theme in BackupTheme(theme) })
 	}

@@ -1,5 +1,5 @@
 //
-//  ThemeV1.swift
+//  ThemeV1_0_0.swift
 //  GradientGames
 //
 //  Created by Sam McBroom on 1/27/24.
@@ -8,12 +8,9 @@
 import SwiftData
 import SwiftUI
 
-enum ThemeSchemaV1: VersionedSchema {
-	static var models: [any PersistentModel.Type] = [Theme.self]
-	static var versionIdentifier = Schema.Version(0, 0, 1)
-	
+extension SchemaV1_0_0 {
 	@Model
-	class Theme: ColorConverter {
+	final class Theme: ColorConverter {
 		enum Game: String, Codable {
 			case chess, reversi, checkers
 		}

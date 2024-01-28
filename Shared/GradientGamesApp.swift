@@ -29,11 +29,10 @@ struct GradientGamesApp: App {
 	}
 	
 	init() {
-		let schema = Schema([Theme.self, ChessBoard.self, ReversiBoard.self, CheckersBoard.self])
+		let schema = Schema(versionedSchema: SchemaV1_0_0.self)
 		let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
-		
 		do {
-			container = try ModelContainer(for: schema, migrationPlan: ThemesMigrationPlan.self, configurations: [modelConfiguration])
+			container = try ModelContainer(for: schema, migrationPlan: MigrationPlan.self, configurations: modelConfiguration)
 		} catch {
 			fatalError("Could not create ModelContainer: \(error)")
 		}
