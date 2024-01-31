@@ -535,9 +535,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "";
 				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=appletvos*]" = AppIcontvOS;
 				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=appletvsimulator*]" = AppIcontvOS;
-				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=iphoneos*]" = AppIconiOS;
-				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=iphonesimulator*]" = AppIconiOS;
-				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=macosx*]" = AppIconmacOS;
+				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=iphoneos*]" = AppIcon;
+				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=iphonesimulator*]" = AppIcon;
+				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=macosx*]" = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = Shared/GradientGames.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -574,8 +574,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "";
 				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=appletvos*]" = AppIcontvOS;
-				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=iphoneos*]" = AppIconiOS;
-				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=macosx*]" = AppIconmacOS;
+				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=iphoneos*]" = AppIcon;
+				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=macosx*]" = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = Shared/GradientGames.entitlements;
 				CODE_SIGN_STYLE = Automatic;
