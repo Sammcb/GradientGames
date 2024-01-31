@@ -9,70 +9,39 @@ import SwiftUI
 
 struct ChessPromoteView: View {
 	@Environment(\.chessTheme) private var theme
-	@EnvironmentObject private var game: ChessGame
-	@AppStorage(Setting.chessFlipUI.rawValue) private var flipped = false
-	let isLight: Bool
+	var board: ChessBoard
+	var flipped: Bool
 	let vertical: Bool
-	
-	private func promote(to group: ChessPiece.Group) {
-		let square = game.pawnSquare!
-		let piece = ChessPiece(isLight: game.board.lightTurn, group: group)
-		game.board.promote(at: square, to: piece)
-		game.pawnSquare = nil
-	}
+	private let groups: [Chess.Piece.Group] = [.knight, .bishop, .rook, .queen]
 	
 	var body: some View {
 		let layout = vertical ? AnyLayout(HStackLayout()) : AnyLayout(VStackLayout())
 		layout {
-			Spacer()
-			
-			Button {
-				promote(to: .knight)
-			} label: {
-				ChessPieceView(group: .knight, isLight: isLight)
-					.font(.system(size: 60))
+			ForEach(groups) { group in
+				let piece = switch group {
+				case .pawn: board.lightTurn ? "♙" : "♟︎"
+				case .knight: board.lightTurn ? "♘" : "♞"
+				case .bishop: board.lightTurn ? "♗" : "♝"
+				case .rook: board.lightTurn ? "♖" : "♜"
+				case .queen: board.lightTurn ? "♕" : "♛"
+				case .king: board.lightTurn ? "♔" : "♚"
+				}
+				Button {
+					board.promote(to: group)
+				} label: {
+					Text(piece)
+						.font(.largeTitle)
+				}
+				.rotationEffect(!board.lightTurn && flipped ? .radians(.pi) : .zero)
+				.padding()
+				.disabled(!board.promoting)
 			}
-			.rotationEffect(!game.board.lightTurn && flipped ? .radians(.pi) : .zero)
-			
-			Spacer()
-			
-			Button {
-				promote(to: .bishop)
-			} label: {
-				ChessPieceView(group: .bishop, isLight: isLight)
-					.font(.system(size: 60))
-			}
-			.rotationEffect(!game.board.lightTurn && flipped ? .radians(.pi) : .zero)
-			
-			Spacer()
-			
-			Button {
-				promote(to: .rook)
-			} label: {
-				ChessPieceView(group: .rook, isLight: isLight)
-					.font(.system(size: 60))
-			}
-			.rotationEffect(!game.board.lightTurn && flipped ? .radians(.pi) : .zero)
-			
-			Spacer()
-			
-			Button {
-				promote(to: .queen)
-			} label: {
-				ChessPieceView(group: .queen, isLight: isLight)
-					.font(.system(size: 60))
-			}
-			.rotationEffect(!game.board.lightTurn && flipped ? .radians(.pi) : .zero)
-			
-			Spacer()
 		}
-		.disabled(game.pawnSquare == nil)
-		.animation(.easeIn, value: game.board.lightTurn)
-		.padding(vertical ? .vertical : .horizontal)
+		.padding()
 		.background(.ultraThinMaterial)
+		.clipShape(RoundedRectangle(cornerRadius: 10))
 #if os(tvOS)
 		.focusSection()
 #endif
-		.transition(.opacity.animation(.linear))
 	}
 }

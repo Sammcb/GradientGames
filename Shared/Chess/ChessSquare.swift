@@ -7,17 +7,16 @@
 
 import Foundation
 
-struct ChessSquare: Equatable, Codable, Hashable {
-	let file: ChessFile
-	let rank: Int
-	
-	init(file: ChessFile, rank: Int) {
-		self.file = file
-		self.rank = rank
+extension Chess {
+	struct Square: Equatable, Codable, Hashable {
+		let file: File
+		let rank: Int
 	}
-	
-	init?(_ square: ChessSquare, deltaFile: Int = 0, deltaRank: Int = 0) {
-		guard square.file + deltaFile != .none && ChessRanks.contains(square.rank + deltaRank) else {
+}
+
+extension Chess.Square {
+	init?(_ square: Self, deltaFile: Int = 0, deltaRank: Int = 0) {
+		guard square.file + deltaFile != .none && Chess.Ranks.contains(square.rank + deltaRank) else {
 			return nil
 		}
 		

@@ -7,143 +7,95 @@
 
 import SwiftUI
 
-struct ChessTimesTimelineView: View {
-	@EnvironmentObject private var game: ChessGame
-	@AppStorage(Setting.chessFlipUI.rawValue) private var flipped = false
-	
-	var body: some View {
-		TimelineView(.periodic(from: .now, by: 1 / 60)) { timeline in
-			ChessTimesView(date: timeline.date)
-		}
-		.rotationEffect(!game.board.lightTurn && flipped ? .radians(.pi) : .zero)
-		.animation(.easeIn, value: game.board.lightTurn)
-	}
-}
-
-struct ChessTimesView: View {
+struct ChessTimeView: View {
 	@Environment(\.chessTheme) private var theme
-	@EnvironmentObject private var game: ChessGame
-	@AppStorage(Setting.chessEnableTimer.rawValue) private var enableTimer = true
-	private let cadence: TimeInterval = 1 / 60
-	let date: Date
+	var board: ChessBoard
+	var flipped: Bool
+	let isLight: Bool
+	let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 	
 	var body: some View {
-		VStack {
-			Text(ChessState.shared.times.stringFor(lightTime: true))
-				.foregroundColor(theme.pieceLight)
-			Text(ChessState.shared.times.stringFor(lightTime: false))
-				.foregroundColor(theme.pieceDark)
-		}
-		.opacity(enableTimer ? 1 : 0)
-		.onChange(of: date) { _ in
-			let lightTurn = game.board.lightTurn
-			let kingState = game.kingState(isLight: lightTurn)
-			guard kingState == .ok || kingState == .check else {
-				return
+		Text(board.times.stringFor(lightTime: isLight))
+			.foregroundStyle(isLight ? theme.colors[.pieceLight] : theme.colors[.pieceDark])
+			.rotationEffect(!board.lightTurn && flipped ? .radians(.pi) : .zero)
+			.animation(.easeIn, value: board.lightTurn)
+			.onReceive(timer) { currentDate in
+				guard board.lightTurn == isLight else {
+					return
+				}
+				
+				if board.gameOver {
+					return
+				}
+				
+				let interval = board.times.lastUpdate.distance(to: currentDate)
+				
+				guard interval > 0 else {
+					return
+				}
+				
+				if isLight {
+					board.times.light += interval
+				} else {
+					board.times.dark += interval
+				}
+				
+				board.times.lastUpdate = currentDate
 			}
-			
-			if lightTurn {
-				ChessState.shared.times.light += cadence
-			} else {
-				ChessState.shared.times.dark += cadence
-			}
-			ChessState.shared.times.lastUpdate = date
-		}
 	}
 }
 
 struct ChessKingStatusView: View {
 	@Environment(\.chessTheme) private var theme
-	@EnvironmentObject private var game: ChessGame
-	let isLight: Bool
-	
-	private func stateSymbol(isLight: Bool) -> String {
-		let opponentKingState = game.kingState(isLight: !isLight)
-		if opponentKingState == .stalemate {
-			return "minus"
-		}
-		
-		switch game.kingState(isLight: isLight) {
-		case .ok:
-			return "checkmark"
-		case .check:
-			return "exclamationmark.triangle"
-		case .checkmate:
-			return "x"
-		case .stalemate:
-			return "minus"
-		}
-	}
+	var board: ChessBoard
+	var flipped: Bool
 	
 	var body: some View {
-		Image(systemName: stateSymbol(isLight: isLight))
-			.symbolVariant(isLight ? .circle : .fill.circle)
-			.foregroundColor(isLight ? theme.pieceLight : theme.pieceDark)
-	}
-}
-
-struct ChessStatusView: View {
-	@EnvironmentObject private var game: ChessGame
-	@AppStorage(Setting.chessFlipUI.rawValue) private var flipped = false
-	
-	var body: some View {
-		let lightTurn = game.board.lightTurn
-		HStack {
-			ChessKingStatusView(isLight: true)
-			
-			ChessPieceView(group: .rook, isLight: lightTurn)
-				.font(.system(size: 60))
-			
-			ChessKingStatusView(isLight: false)
+		let kingState = board.lightTurn ? board.kingStates.light : board.kingStates.dark
+		let kingStateSymbol = switch kingState {
+		case .ok: "checkmark"
+		case .check: "exclamationmark.triangle"
+		case .checkmate: "xmark"
+		case .stalemate: "minus"
 		}
-		.rotationEffect(!lightTurn && flipped ? .radians(.pi) : .zero)
-		.animation(.easeIn, value: lightTurn)
-	}
-}
-
-struct ChessUndoView: View {
-	@EnvironmentObject private var game: ChessGame
-	@AppStorage(Setting.chessEnableUndo.rawValue) private var enableUndo = true
-	@AppStorage(Setting.chessFlipUI.rawValue) private var flipped = false
-	
-	var body: some View {
-		Button {
-			game.selectedSquare = nil
-			game.board.undo()
-		} label: {
-			Image(systemName: "arrow.uturn.backward")
-				.symbolVariant(.circle.fill)
-				.font(.system(size: 50))
-		}
-		.opacity(enableUndo ? 1 : 0)
-		.disabled(game.pawnSquare != nil || game.board.history.isEmpty || !enableUndo)
-		.rotationEffect(!game.board.lightTurn && flipped ? .radians(.pi) : .zero)
-		.animation(.easeIn, value: game.board.lightTurn)
+		Image(systemName: kingStateSymbol)
+			.padding()
+			.symbolVariant(.fill.circle)
+			.foregroundStyle(board.lightTurn ? theme.colors[.pieceLight] : theme.colors[.pieceDark])
+			.font(.largeTitle)
+			.rotationEffect(!board.lightTurn && flipped ? .radians(.pi) : .zero)
+			.background(.ultraThinMaterial)
+			.clipShape(RoundedRectangle(cornerRadius: 10))
+			.animation(.easeIn, value: board.lightTurn)
 	}
 }
 
 struct ChessUIView: View {
+	var board: ChessBoard
+	var enableTimer: Bool
+	var flipped: Bool
 	let vertical: Bool
 	
 	var body: some View {
-		let layout = vertical ? AnyLayout(HStackLayout()) : AnyLayout(VStackLayout())
+		let layout = vertical ? AnyLayout(VStackLayout()) : AnyLayout(HStackLayout())
+		let timersLayout = vertical ? AnyLayout(HStackLayout()) : AnyLayout(VStackLayout())
 		
 		layout {
-			Spacer()
+			if enableTimer {
+				timersLayout {
+					Spacer()
+					ChessTimeView(board: board, flipped: flipped, isLight: true)
+					Spacer()
+					ChessTimeView(board: board, flipped: flipped, isLight: false)
+					Spacer()
+				}
+				.padding()
+				.background(.ultraThinMaterial)
+			}
 			
-			ChessTimesTimelineView()
-			
-			Spacer()
-			
-			ChessStatusView()
-			
-			Spacer()
-			
-			ChessUndoView()
-			
-			Spacer()
+			ChessKingStatusView(board: board, flipped: flipped)
+				.padding()
 		}
-		.padding(vertical ? .vertical : .horizontal)
-		.background(.ultraThinMaterial)
+		.ignoresSafeArea(edges: vertical ? .horizontal : .vertical)
 	}
 }

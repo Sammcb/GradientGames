@@ -9,22 +9,44 @@ import SwiftUI
 
 struct ReversiBoardView: View {
 	@Environment(\.reversiTheme) private var theme
-	@EnvironmentObject private var game: ReversiGame
-	@FocusState private var focusedSquare: ReversiSquare?
+	var board: ReversiBoard
+	var flipped: Bool
+	var showMoves: Bool
+	@FocusState private var focusedSquare: Reversi.Square?
 	
 	var body: some View {
-		let borderColor = game.board.lightTurn ? theme.pieceLight : theme.pieceDark
-		VStack(alignment: .center, spacing: 0) {
-			ForEach(ReversiSizeRange.reversed(), id: \.self) { row in
-				HStack(spacing: 0) {
-					ForEach(ReversiSizeRange, id: \.self) { column in
-						let square = ReversiSquare(column: column, row: row)
-						ReversiSquareView(column: column, row: row)
-							.focused($focusedSquare, equals: square)
-							.border(focusedSquare == square ? borderColor : theme.border, width: focusedSquare == square ? 5 : 1)
+		let borderColor = board.lightTurn ? theme.colors[.pieceLight] : theme.colors[.pieceDark]
+		ZStack {
+			Grid(horizontalSpacing: 0, verticalSpacing: 0) {
+				ForEach(Reversi.SizeRange.reversed(), id: \.self) { row in
+					GridRow {
+						ForEach(Reversi.SizeRange, id: \.self) { column in
+							let square = Reversi.Square(column: column, row: row)
+							ReversiSquareView(board: board, showMoves: showMoves, column: column, row: row)
+								.focused($focusedSquare, equals: square)
+								.border(focusedSquare == square ? borderColor : theme.colors[.borders], width: focusedSquare == square ? 5 : 1)
+						}
 					}
 				}
 			}
+			
+			Grid(horizontalSpacing: 0, verticalSpacing: 0) {
+				ForEach(Reversi.SizeRange.reversed(), id: \.self) { row in
+					GridRow {
+						ForEach(Reversi.SizeRange, id: \.self) { column in
+							if let piece = board.pieces[column, row] {
+								ReversiPieceView(isLight: piece.isLight)
+									.transition(.opacity.animation(.easeIn))
+									.allowsHitTesting(false)
+									.scaleEffect(0.75)
+							} else {
+								Color.clear
+							}
+						}
+					}
+				}
+			}
+			.animation(.easeInOut(duration: 0.6), value: board.history)
 		}
 		.aspectRatio(1, contentMode: .fit)
 	}

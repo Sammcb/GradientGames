@@ -7,12 +7,14 @@
 
 import Foundation
 
-struct ReversiPiece: Codable, Equatable, Identifiable {
-	let isLight: Bool
-	let id: UUID
-	
-	init(isLight: Bool, id: UUID = UUID()) {
-		self.isLight = isLight
-		self.id = id
+extension Reversi {
+	struct Piece: Codable, Equatable, Identifiable {
+		let isLight: Bool
+		let id: UUID
+		
+		init(isLight: Bool, id: UUID = UUID()) {
+			self.isLight = isLight
+			self.id = id
+		}
 	}
 }

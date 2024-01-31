@@ -7,23 +7,22 @@
 
 import Foundation
 
-struct ReversiMove: Codable, Equatable {
-	let piece: ReversiPiece
-	let square: ReversiSquare
-	let flankedSquares: [ReversiSquare]
-	let skip: Bool
-	
-	init(piece: ReversiPiece, at square: ReversiSquare, flanking squares: [ReversiSquare]) {
-		self.piece = piece
-		self.square = square
-		self.flankedSquares = squares
-		self.skip = false
-	}
-	
-	init(skip: Bool) {
-		self.piece = ReversiPiece(isLight: true)
-		self.square = ReversiSquare(column: 1, row: 1)
-		self.flankedSquares = []
-		self.skip = skip
+extension Reversi {
+	struct Move: Codable, Equatable {
+		let light: Bool
+		let square: Square
+		let skip: Bool
+		
+		init(light: Bool, at square: Square) {
+			self.light = light
+			self.square = square
+			self.skip = false
+		}
+		
+		init(skip: Bool) {
+			self.light = true
+			self.square = Square(column: 1, row: 1)
+			self.skip = skip
+		}
 	}
 }
