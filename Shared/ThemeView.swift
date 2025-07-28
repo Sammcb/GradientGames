@@ -17,7 +17,7 @@ struct ThemeView: View, ColorConverter {
 		var components = URLComponents()
 		components.scheme = "https"
 		components.host = "www.sammcb.com"
-		components.path = "/GradientGamesTheme"
+		components.path = UniversalLink.themePath
 		var queryItems = [
 			URLQueryItem(name: "symbol", value: theme.symbol),
 			URLQueryItem(name: "game", value: theme.game.rawValue),

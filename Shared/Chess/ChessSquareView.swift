@@ -44,7 +44,7 @@ struct ChessSquareView: View {
 		.overlay {
 			if showMoves && board.validSquares.contains(square) {
 				Circle()
-					.fill(board.lightTurn ? theme.colors[.pieceLight] : theme.colors[.squareDark])
+					.fill(board.lightTurn ? theme.colors[.pieceLight] : theme.colors[.pieceDark])
 					.scaleEffect(0.25)
 					.transition(.scale.animation(.easeOut))
 					.allowsHitTesting(false)

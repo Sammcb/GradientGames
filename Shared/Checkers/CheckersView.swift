@@ -8,20 +8,8 @@
 import SwiftUI
 import SwiftData
 
-struct CheckersThemeKey: EnvironmentKey {
-	static let defaultValue = Theme.defaultCheckersTheme
-}
-
 extension EnvironmentValues {
-	var checkersTheme: Theme {
-		get {
-			self[CheckersThemeKey.self]
-		}
-		
-		set {
-			self[CheckersThemeKey.self] = newValue
-		}
-	}
+	@Entry var checkersTheme: Theme = .defaultCheckersTheme
 }
 
 struct CheckersView: View {

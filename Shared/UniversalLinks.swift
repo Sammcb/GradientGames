@@ -11,6 +11,12 @@ enum UniversalLinkParseError: Error {
 	case pathError, componentsError, gameError, symbolError, countError, colorError
 }
 
+struct UniversalLink {
+	static let themePath = "/gradientgames/theme"
+	
+	private init() {}
+}
+
 protocol UniversalLinkReciever: ColorConverter {}
 
 extension UniversalLinkReciever {	
@@ -19,7 +25,7 @@ extension UniversalLinkReciever {
 			throw UniversalLinkParseError.componentsError
 		}
 		
-		let themePath = "/GradientGamesTheme"
+		let themePath = UniversalLink.themePath
 		guard components.path == themePath else {
 			throw UniversalLinkParseError.pathError
 		}

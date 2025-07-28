@@ -15,9 +15,10 @@ extension SchemaV1_0_0 {
 			case chess, reversi, checkers
 		}
 		
-		// CloudKit currently does not support unique attribute
-		//	@Attribute(.unique) let id = UUID()
-		let id = UUID()
+		// CloudKit does not support unique attributes even though SwiftData does
+		// #Unique<Theme>([\.id])
+		// This has to be var with Swift 6 but could be a let
+		var id = UUID()
 		var index = 0
 		var symbol = ""
 		var game = Game.chess
@@ -32,6 +33,13 @@ extension SchemaV1_0_0 {
 			case .checkers: [.pieceLight, .pieceDark, .squareLight, .squareDark]
 			}
 			self.colors = colorTargets.map({ target in ThemeColor(target: target) })
+		}
+		
+		init(index: Int, symbol: String, game: Game, colors: ThemeColors) {
+			self.index = index
+			self.symbol = symbol
+			self.game = game
+			self.colors = colors
 		}
 		
 		static var defaultChessTheme: Theme {

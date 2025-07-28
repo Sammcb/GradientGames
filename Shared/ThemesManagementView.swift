@@ -37,9 +37,9 @@ struct ThemesManagementView: View {
 				return false
 			}
 			
-			for (index, theme) in document.themes.enumerated() {
+			for (index, themeData) in document.themes.enumerated() {
 				let importIndex = themesCount + index
-				theme.index = importIndex
+				let theme = Theme(index: importIndex, symbol: themeData.symbol, game: themeData.game, colors: themeData.colors)
 				context.insert(theme)
 			}
 			return true
@@ -68,7 +68,7 @@ struct ThemesManagementView: View {
 					.foregroundStyle(.red)
 			}
 		}
-		.fileExporter(isPresented: $exportThemes, document: ThemesDocument(themes), contentType: .json, defaultFilename: ThemesBackup.backupFileName) { _ in }
+		.fileExporter(isPresented: $exportThemes, document: ThemesDocument(themes), contentType: .json, defaultFilename: ThemesBackup.fileName) { _ in }
 		.fileImporter(isPresented: $importThemes, allowedContentTypes: [.json]) { result in
 			let importSucceeded = importThemes(for: result, context: context, themesCount: themes.count)
 			importStatusMessage = importSucceeded ? "Import succeeded" : "Import failed"

@@ -46,6 +46,7 @@ final class ReversiTheme {
 	init() {}
 }
 
+@MainActor
 struct MigrateOldThemes {
 	private init() {}
 	

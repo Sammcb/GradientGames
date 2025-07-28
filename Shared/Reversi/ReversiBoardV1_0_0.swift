@@ -11,10 +11,11 @@ import SwiftData
 extension SchemaV1_0_0 {
 	@Model
 	final class ReversiBoard: ReversiEngine {
-		let id = UUID()
+		// This has to be var with Swift 6 but could be a let
+		var id = UUID()
 		
 		private var startingPieces: Reversi.Pieces = []
-		private (set) var history: [Reversi.Move] = []
+		private(set) var history: [Reversi.Move] = []
 		var times = Times(light: 0, dark: 0, lastUpdate: Date())
 		
 		@Transient let maxMoves = 32

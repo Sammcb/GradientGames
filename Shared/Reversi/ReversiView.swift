@@ -8,20 +8,8 @@
 import SwiftUI
 import SwiftData
 
-struct ReversiThemeKey: EnvironmentKey {
-	static let defaultValue = Theme.defaultReversiTheme
-}
-
 extension EnvironmentValues {
-	var reversiTheme: Theme {
-		get {
-			self[ReversiThemeKey.self]
-		}
-		
-		set {
-			self[ReversiThemeKey.self] = newValue
-		}
-	}
+	@Entry var reversiTheme: Theme = .defaultReversiTheme
 }
 
 struct ReversiView: View {

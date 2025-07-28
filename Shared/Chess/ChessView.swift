@@ -8,20 +8,8 @@
 import SwiftUI
 import SwiftData
 
-struct ChessThemeKey: EnvironmentKey {
-	static let defaultValue = Theme.defaultChessTheme
-}
-
 extension EnvironmentValues {
-	var chessTheme: Theme {
-		get {
-			self[ChessThemeKey.self]
-		}
-		
-		set {
-			self[ChessThemeKey.self] = newValue
-		}
-	}
+	@Entry var chessTheme: Theme = .defaultChessTheme
 }
 
 struct ChessView: View {

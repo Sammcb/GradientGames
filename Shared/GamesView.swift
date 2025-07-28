@@ -138,9 +138,14 @@ struct GamesView: View, UniversalLinkReciever {
 					}
 				}
 #if os(tvOS)
-				Divider()
-				NavigationLink(value: DetailView.settings) {
-					Label(DetailView.settings.title, systemImage: DetailView.settings.symbol)
+				Section {
+					NavigationLink(value: DetailView.settings) {
+						Label(DetailView.settings.title, systemImage: DetailView.settings.symbol)
+					}
+				} header: {
+					VStack{
+						Divider()
+					}
 				}
 #endif
 			}
@@ -184,8 +189,10 @@ struct GamesView: View, UniversalLinkReciever {
 			}
 		} detail: {
 			switch selectedView {
-			case .none:
+			case nil:
 				ContentUnavailableView("Pick a game to play!", systemImage: "rectangle.checkered")
+					.focusable()
+					.frame(maxWidth: .infinity, maxHeight: .infinity)
 			case .chess:
 				let theme = themes.first(where: { $0.id.uuidString == chessTheme }) ?? Theme.defaultChessTheme
 				ChessView(board: chessBoard(), enableUndo: enableUndo, flipped: flipped, enableTimer: enableTimer, showMoves: showMoves)

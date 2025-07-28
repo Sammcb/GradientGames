@@ -11,10 +11,11 @@ import SwiftData
 extension SchemaV1_0_0 {
 	@Model
 	final class CheckersBoard: CheckersEngine {
-		let id = UUID()
+		// This has to be var with Swift 6 but could be a let
+		var id = UUID()
 		
 		private var startingPieces: Checkers.Pieces = []
-		private (set) var history: [Checkers.Move] = []
+		private(set) var history: [Checkers.Move] = []
 		var times = Times(light: 0, dark: 0, lastUpdate: Date())
 		
 		// Can this be @Transient? Currently that makes it unobservable

@@ -25,7 +25,7 @@
 		22877A132B55E6D50081DA0B /* CheckersEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22877A122B55E6D50081DA0B /* CheckersEngine.swift */; };
 		22A4FE912B537D9900882E87 /* ChessEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A4FE902B537D9900882E87 /* ChessEngine.swift */; };
 		22A4FE932B545D6700882E87 /* Chess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A4FE922B545D6700882E87 /* Chess.swift */; };
-		22B007E12B6076D500530F93 /* ThemesDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B007E02B6076D500530F93 /* ThemesDocument.swift */; };
+		22B007E12B6076D500530F93 /* ThemesBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B007E02B6076D500530F93 /* ThemesBackup.swift */; };
 		22B007E52B62341B00530F93 /* ThemesManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B007E42B62341B00530F93 /* ThemesManagementView.swift */; };
 		22B007E72B6234FF00530F93 /* ThemeColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B007E62B6234FF00530F93 /* ThemeColor.swift */; };
 		22BF667E28D3A6C600C13CA3 /* UniversalLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BF667D28D3A6C600C13CA3 /* UniversalLinks.swift */; };
@@ -83,7 +83,7 @@
 		22877A122B55E6D50081DA0B /* CheckersEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckersEngine.swift; sourceTree = "<group>"; };
 		22A4FE902B537D9900882E87 /* ChessEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessEngine.swift; sourceTree = "<group>"; };
 		22A4FE922B545D6700882E87 /* Chess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chess.swift; sourceTree = "<group>"; };
-		22B007E02B6076D500530F93 /* ThemesDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesDocument.swift; sourceTree = "<group>"; };
+		22B007E02B6076D500530F93 /* ThemesBackup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesBackup.swift; sourceTree = "<group>"; };
 		22B007E42B62341B00530F93 /* ThemesManagementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesManagementView.swift; sourceTree = "<group>"; };
 		22B007E62B6234FF00530F93 /* ThemeColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColor.swift; sourceTree = "<group>"; };
 		22BF667D28D3A6C600C13CA3 /* UniversalLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversalLinks.swift; sourceTree = "<group>"; };
@@ -192,7 +192,7 @@
 				22DB9DC927B9683A002D8312 /* Assets.xcassets */,
 				22DB9D9127B95101002D8312 /* GradientGamesApp.swift */,
 				22BF667D28D3A6C600C13CA3 /* UniversalLinks.swift */,
-				22B007E02B6076D500530F93 /* ThemesDocument.swift */,
+				22B007E02B6076D500530F93 /* ThemesBackup.swift */,
 				22E43CEC2B5E3B4B00CA1F8C /* ColorConverter.swift */,
 				22DB9DA827B9533A002D8312 /* GamesView.swift */,
 				22B007E42B62341B00530F93 /* ThemesManagementView.swift */,
@@ -303,7 +303,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1320;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1640;
 				TargetAttributes = {
 					22DB9D8D27B95101002D8312 = {
 						CreatedOnToolsVersion = 13.2.1;
@@ -379,7 +379,7 @@
 				22DB9DE027B97143002D8312 /* ChessPieceView.swift in Sources */,
 				22ED01C12B65912A00CFE8A5 /* SchemaVersioning.swift in Sources */,
 				226EE7E827CC516200C8A473 /* CheckersMove.swift in Sources */,
-				22B007E12B6076D500530F93 /* ThemesDocument.swift in Sources */,
+				22B007E12B6076D500530F93 /* ThemesBackup.swift in Sources */,
 				22DB9DF327B97EF5002D8312 /* ReversiBoardView.swift in Sources */,
 				22DB9DEB27B97D2C002D8312 /* ReversiPiece.swift in Sources */,
 				22DB9DED27B97D43002D8312 /* ReversiSquare.swift in Sources */,
@@ -441,6 +441,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = J8P6BA4WGF;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -458,15 +459,15 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
-				MACOSX_DEPLOYMENT_TARGET = 14.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TVOS_DEPLOYMENT_TARGET = 17.2;
+				TVOS_DEPLOYMENT_TARGET = 18.0;
 			};
 			name = Debug;
 		};
@@ -506,6 +507,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = J8P6BA4WGF;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -517,14 +519,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
-				MACOSX_DEPLOYMENT_TARGET = 14.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				TVOS_DEPLOYMENT_TARGET = 17.2;
+				TVOS_DEPLOYMENT_TARGET = 18.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -542,7 +544,6 @@
 				CODE_SIGN_ENTITLEMENTS = Shared/GradientGames.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = J8P6BA4WGF;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Shared/Info.plist;
@@ -551,11 +552,12 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sammcb.GradientGames;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -563,9 +565,9 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,3,6";
-				TVOS_DEPLOYMENT_TARGET = 17.2;
+				TVOS_DEPLOYMENT_TARGET = 18.0;
 			};
 			name = Debug;
 		};
@@ -580,7 +582,6 @@
 				CODE_SIGN_ENTITLEMENTS = Shared/GradientGames.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = J8P6BA4WGF;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Shared/Info.plist;
@@ -589,11 +590,12 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sammcb.GradientGames;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -601,9 +603,9 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,3,6";
-				TVOS_DEPLOYMENT_TARGET = 17.2;
+				TVOS_DEPLOYMENT_TARGET = 18.0;
 			};
 			name = Release;
 		};
