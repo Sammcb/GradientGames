@@ -84,9 +84,9 @@ struct ThemesView: View {
 						let themeSelected = gameTheme == theme.id.uuidString
 						Button {
 							switch game {
-							case .chess: chessTheme = themeSelected ? "" : theme.id.uuidString
-							case .reversi: reversiTheme = themeSelected ? "" : theme.id.uuidString
-							case .checkers: checkersTheme = themeSelected ? "" : theme.id.uuidString
+							case .chess: chessTheme = theme.id.uuidString
+							case .reversi: reversiTheme = theme.id.uuidString
+							case .checkers: checkersTheme = theme.id.uuidString
 							}
 						} label: {
 							ThemeListEntryView(theme: theme, selected: themeSelected)

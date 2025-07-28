@@ -15,12 +15,13 @@ struct ThemeListEntryView: View {
 		HStack {
 			Text(theme.symbol)
 			HStack {
+				let rainbow: [Color] = [.red, .yellow, .green, .blue, .purple, .red]
 				ForEach(theme.colors.sorted(by: { $0.target < $1.target })) { themeColor in
 					Image(systemName: "circle")
 						.symbolVariant(.fill)
 						.foregroundStyle(themeColor.color)
 						.padding(2)
-						.background(.angularGradient(colors: [.red, .yellow, .green, .blue, .purple, .red], center: .center, startAngle: .zero, endAngle: .radians(2 * .pi)))
+						.background(.angularGradient(colors: rainbow, center: .center, startAngle: .zero, endAngle: .radians(2 * .pi)))
 						.clipShape(Circle())
 				}
 			}
