@@ -43,7 +43,6 @@ struct ThemesView: View {
 						ThemeListEntryView(theme: defaultTheme, selected: selectedThemeMissing)
 					}
 					.foregroundStyle(.primary)
-					.disabled(selectedThemeMissing)
 				}
 				
 				List {
