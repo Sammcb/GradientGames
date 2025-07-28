@@ -15,13 +15,12 @@ struct ThemeListEntryView: View {
 		HStack {
 			Text(theme.symbol)
 			HStack {
-				let hueColors = stride(from: 0, to: 1, by: 0.01).map { hue in Color(hue: hue, saturation: 1, brightness: 1) }
 				ForEach(theme.colors.sorted(by: { $0.target < $1.target })) { themeColor in
 					Image(systemName: "circle")
 						.symbolVariant(.fill)
 						.foregroundStyle(themeColor.color)
-						.padding(1)
-						.background(.angularGradient(colors: hueColors, center: .center, startAngle: .zero, endAngle: .radians(2 * .pi)))
+						.padding(2)
+						.background(.angularGradient(colors: [.red, .yellow, .green, .blue, .purple, .red], center: .center, startAngle: .zero, endAngle: .radians(2 * .pi)))
 						.clipShape(Circle())
 				}
 			}
