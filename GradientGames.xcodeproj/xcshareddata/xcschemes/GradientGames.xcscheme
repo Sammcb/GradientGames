@@ -16,8 +16,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "22DB9D8D27B95101002D8312"
-               BuildableName = "GradientGames.app"
-               BlueprintName = "GradientGames"
+               BuildableName = "Gradient Games.app"
+               BlueprintName = "Gradient Games"
                ReferencedContainer = "container:GradientGames.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -41,8 +41,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "222FCFA32E382EF500B1F8F9"
-               BuildableName = "GradientGamesUITests.xctest"
-               BlueprintName = "GradientGamesUITests"
+               BuildableName = "Gradient Games UI Tests.xctest"
+               BlueprintName = "Gradient Games UI Tests"
                ReferencedContainer = "container:GradientGames.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -52,8 +52,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "224497892E3AD8D800316547"
-               BuildableName = "GradientGamesTests.xctest"
-               BlueprintName = "GradientGamesTests"
+               BuildableName = "Gradient Games Tests.xctest"
+               BlueprintName = "Gradient Games Tests"
                ReferencedContainer = "container:GradientGames.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -74,8 +74,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "22DB9D8D27B95101002D8312"
-            BuildableName = "GradientGames.app"
-            BlueprintName = "GradientGames"
+            BuildableName = "Gradient Games.app"
+            BlueprintName = "Gradient Games"
             ReferencedContainer = "container:GradientGames.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -91,8 +91,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "22DB9D8D27B95101002D8312"
-            BuildableName = "GradientGames.app"
-            BlueprintName = "GradientGames"
+            BuildableName = "Gradient Games.app"
+            BlueprintName = "Gradient Games"
             ReferencedContainer = "container:GradientGames.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
