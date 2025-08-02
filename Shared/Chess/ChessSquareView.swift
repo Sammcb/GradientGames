@@ -39,8 +39,9 @@ struct ChessSquareView: View {
 		} label: {
 			lightSquare ? theme.colors[.squareLight] : theme.colors[.squareDark]
 		}
+		.accessibilityIdentifier("File\(file)Rank\(rank)ChessBoardSquareButton")
 		.buttonStyle(.borderless)
-		.disabled(board.promoting || board.selectedSquare == square)
+		.disabled(board.promoting)
 		.overlay {
 			if showMoves && board.validSquares.contains(square) {
 				Circle()

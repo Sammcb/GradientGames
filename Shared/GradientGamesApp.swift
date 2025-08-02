@@ -15,14 +15,16 @@ struct GradientGamesApp: App {
 	var body: some Scene {
 		WindowGroup {
 			GamesView()
+#if os(macOS)
 				.frame(minWidth: 400, minHeight: 400)
+#endif
 		}
 		.modelContainer(container)
 #if os(macOS)
 		Settings {
 			SettingsView()
 				.formStyle(.grouped)
-				.fixedSize()
+				.frame(maxWidth: 600)
 		}
 		.modelContainer(container)
 #endif

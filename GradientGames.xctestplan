@@ -1,0 +1,37 @@
+{
+  "configurations" : [
+    {
+      "id" : "3071AF8E-87C9-47FE-9BD4-CF3E4F43AAF4",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:GradientGames.xcodeproj",
+      "identifier" : "22DB9D8D27B95101002D8312",
+      "name" : "GradientGames"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:GradientGames.xcodeproj",
+        "identifier" : "222FCFA32E382EF500B1F8F9",
+        "name" : "GradientGamesUITests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:GradientGames.xcodeproj",
+        "identifier" : "224497892E3AD8D800316547",
+        "name" : "GradientGamesTests"
+      }
+    }
+  ],
+  "version" : 1
+}

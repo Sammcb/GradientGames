@@ -37,8 +37,7 @@ struct ThemeView: View, ColorConverter {
 			Form {
 				Section("Symbol") {
 					TextField("Symbol", text: $theme.symbol)
-						.frame(maxWidth: 800)
-						.fixedSize()
+						.lineLimit(1)
 				}
 				
 				Section("Colors") {

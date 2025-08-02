@@ -42,6 +42,35 @@ struct SettingsView: View {
 			}
 			.headerProminence(.increased)
 			
+			Section {
+				ThemeImportView()
+			} header: {
+				Text("Themes")
+			} footer: {
+				Text("Importing does not overwrite existing themes. Either import from a file or by entering JSON data.")
+#if os(macOS)
+					.font(.footnote)
+					.foregroundStyle(.secondary)
+#endif
+			}
+			.headerProminence(.increased)
+
+#if !os(tvOS)
+			Section {
+				ThemeExportView()
+			} footer: {
+				Text("Export all themes to a file.")
+#if os(macOS)
+					.font(.footnote)
+					.foregroundStyle(.secondary)
+#endif
+			}
+#endif
+			
+			Section {
+				ThemeDeleteAllView()
+			}
+			
 			let statusDescription = switch icloudStatus {
 			case .couldNotDetermine: "iCloud account status could not be determined."
 			case .temporarilyUnavailable: "Currently unable to connect to iCloud account."
@@ -68,31 +97,20 @@ struct SettingsView: View {
 				case .available: "Available"
 				default: "Could not determine"
 				}
-#if os(macOS)
-				VStack(alignment: .leading) {
-					Label(statusCategory, systemImage: statusIcon)
-					Text("\(statusDescription) \(syncStatus)")
-						.font(.footnote)
-						.foregroundStyle(.secondary)
-				}
-#else
 				Label(statusCategory, systemImage: statusIcon)
+#if os(tvOS)
+					.focusable()
 #endif
 			} header: {
 				Text("iCloud Status")
 			} footer: {
-#if !os(macOS)
 				Text("\(statusDescription) \(syncStatus)")
+#if os(macOS)
+					.font(.footnote)
+					.foregroundStyle(.secondary)
 #endif
 			}
 			.headerProminence(.increased)
-			
-#if !os(tvOS)
-			Section("Themes Management") {
-				ThemesManagementView()
-			}
-			.headerProminence(.increased)
-#endif
 			
 			Section {
 				VStack(alignment: .leading) {
@@ -102,6 +120,9 @@ struct SettingsView: View {
 					Spacer()
 					Label("Thanks for downloading!", systemImage: "heart")
 				}
+#if os(tvOS)
+				.focusable()
+#endif
 				.symbolVariant(.fill)
 				.font(.footnote)
 				.foregroundStyle(.secondary)

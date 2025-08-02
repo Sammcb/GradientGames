@@ -5,7 +5,6 @@
 //  Created by Sam McBroom on 1/23/24.
 //
 
-#if !os(tvOS)
 import SwiftUI
 import SwiftData
 import UniformTypeIdentifiers
@@ -51,6 +50,7 @@ struct ThemeBackupData: Codable {
 	}
 }
 
+#if !os(tvOS)
 struct ThemesDocument: FileDocument {
 	static var readableContentTypes: [UTType] {
 		[.json]

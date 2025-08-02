@@ -38,16 +38,14 @@ struct ChessBoardView: View {
 							if let piece = board.pieces[file, rank] {
 								let selected = board.selectedSquare == Chess.Square(file: file, rank: rank)
 								let scale = selected ? 1 : 0.75
-								GeometryReader { geometry in
-									ChessPieceView(group: piece.group, isLight: piece.isLight)
-										.matchedGeometryEffect(id: piece.id, in: pieceAnimation)
-										.frame(width: geometry.size.width * scale, height: geometry.size.height * scale)
-										.transition(.opacity.animation(.easeIn))
-										.allowsHitTesting(false)
-										.rotationEffect(!piece.isLight && flipped ? .radians(.pi) : .zero)
-										.id(piece.id)
-										.frame(maxWidth: .infinity, maxHeight: .infinity)
-								}
+								ChessPieceView(group: piece.group, isLight: piece.isLight)
+									.scaleEffect(x: scale, y: scale)
+									.matchedGeometryEffect(id: piece.id, in: pieceAnimation)
+									.transition(.opacity.animation(.easeIn))
+									.allowsHitTesting(false)
+									.rotationEffect(!piece.isLight && flipped ? .radians(.pi) : .zero)
+									.id(piece.id)
+									.frame(maxWidth: .infinity, maxHeight: .infinity)
 							} else {
 								Color.clear
 							}

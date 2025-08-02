@@ -29,6 +29,7 @@ struct ReversiSquareView: View {
 		} label: {
 			theme.colors[.squares]
 		}
+		.accessibilityIdentifier("Row\(row)Column\(column)ReversiBoardSquareButton")
 		.buttonStyle(.borderless)
 		.overlay {
 			if showMoves && board.validSquares.contains(square) {

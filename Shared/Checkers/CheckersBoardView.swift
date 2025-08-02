@@ -37,15 +37,13 @@ struct CheckersBoardView: View {
 							if let piece = board.pieces[column, row] {
 								let selected = board.selectedSquare == Checkers.Square(column: column, row: row)
 								let scale = selected ? 1 : 0.75
-								GeometryReader { geometry in
-									CheckersPieceView(isLight: piece.isLight, kinged: piece.kinged)
-										.matchedGeometryEffect(id: piece.id, in: pieceAnimation)
-										.frame(width: geometry.size.width * scale, height: geometry.size.height * scale)
-										.transition(.opacity.animation(.easeIn))
-										.allowsHitTesting(false)
-										.id(piece.id)
-										.frame(maxWidth: .infinity, maxHeight: .infinity)
-								}
+								CheckersPieceView(isLight: piece.isLight, kinged: piece.kinged)
+									.scaleEffect(x: scale, y: scale)
+									.matchedGeometryEffect(id: piece.id, in: pieceAnimation)
+									.transition(.opacity.animation(.easeIn))
+									.allowsHitTesting(false)
+									.id(piece.id)
+									.frame(maxWidth: .infinity, maxHeight: .infinity)
 							} else {
 								Color.clear
 							}

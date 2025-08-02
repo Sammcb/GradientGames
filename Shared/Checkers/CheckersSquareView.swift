@@ -40,6 +40,7 @@ struct CheckersSquareView: View {
 		} label: {
 			lightSquare ? theme.colors[.squareLight] : theme.colors[.squareDark]
 		}
+		.accessibilityIdentifier("Row\(row)Column\(column)CheckersBoardSquareButton")
 		.buttonStyle(.borderless)
 		.overlay {
 			if showMoves && board.validSquares.contains(square) {

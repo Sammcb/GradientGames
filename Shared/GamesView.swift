@@ -191,7 +191,9 @@ struct GamesView: View, UniversalLinkReciever {
 			switch selectedView {
 			case nil:
 				ContentUnavailableView("Pick a game to play!", systemImage: "rectangle.checkered")
+#if os(tvOS)
 					.focusable()
+#endif
 					.frame(maxWidth: .infinity, maxHeight: .infinity)
 			case .chess:
 				let theme = themes.first(where: { $0.id.uuidString == chessTheme }) ?? Theme.defaultChessTheme
