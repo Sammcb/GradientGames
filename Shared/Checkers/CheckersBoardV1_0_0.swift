@@ -20,34 +20,34 @@ extension SchemaV1_0_0 {
 		
 		// Can this be @Transient? Currently that makes it unobservable
 		@Attribute(.ephemeral) var selectedSquare: Checkers.Square?
-		@Transient var validSquares: [Checkers.Square] {
+		var validSquares: [Checkers.Square] {
 			guard let selectedSquare else {
 				return []
 			}
 			return validMoveSquares(from: selectedSquare, for: pieces)
 		}
 		
-		@Transient var pieces: Checkers.Pieces {
+		var pieces: Checkers.Pieces {
 			computeState(for: history, from: startingPieces)
 		}
 		
-		@Transient var lightTurn: Bool {
+		var lightTurn: Bool {
 			let darkTurn = history.filter({ move in !move.continued }).count.isMultiple(of: 2)
 			return !darkTurn
 		}
 		
-		@Transient var continuing: Bool {
+		var continuing: Bool {
 			guard let move = history.last else {
 				return false
 			}
 			return move.continued
 		}
 		
-		@Transient var undoEnabled: Bool {
+		var undoEnabled: Bool {
 			!history.isEmpty
 		}
 		
-		@Transient var gameOver: Bool {
+		var gameOver: Bool {
 			!hasValidSquares(for: lightTurn, pieces)
 		}
 		
@@ -76,7 +76,7 @@ extension SchemaV1_0_0 {
 			history.append(move)
 		}
 		
-		@Transient var forcedSelectedSquare: Checkers.Square? {
+		var forcedSelectedSquare: Checkers.Square? {
 			guard let lastMove = history.last, lastMove.continued else {
 				return nil
 			}

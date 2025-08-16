@@ -20,24 +20,24 @@ extension SchemaV1_0_0 {
 		
 		@Transient let maxMoves = 32
 		
-		@Transient var pieces: Reversi.Pieces {
+		var pieces: Reversi.Pieces {
 			computeState(for: history, from: startingPieces)
 		}
 		
-		@Transient var lightTurn: Bool {
+		var lightTurn: Bool {
 			!history.count.isMultiple(of: 2)
 		}
 		
-		@Transient var gameOver: Bool {
+		var gameOver: Bool {
 			// If last player was skipped and current player cannot move, then last player will never be able to move
 			history.last?.skip ?? false && !canMove(for: lightTurn, pieces, history, with: maxMoves)
 		}
 		
-		@Transient var undoEnabled: Bool {
+		var undoEnabled: Bool {
 			!history.isEmpty
 		}
 		
-		@Transient var validSquares: [Reversi.Square] {
+		var validSquares: [Reversi.Square] {
 			allValidSquares(for: lightTurn, pieces)
 		}
 		
