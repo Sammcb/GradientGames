@@ -6,54 +6,20 @@
 //
 
 import SwiftUI
+import SwiftData
 
-struct ChessThemeKey: EnvironmentKey {
-	static let defaultValue = ChessUITheme()
-}
-
-extension EnvironmentValues {	
-	var chessTheme: ChessUITheme {
-		get {
-			self[ChessThemeKey.self]
-		}
-		
-		set {
-			self[ChessThemeKey.self] = newValue
-		}
-	}
-}
-
-struct ChessUITheme {
-	let squareLight: Color
-	let squareDark: Color
-	let pieceLight: Color
-	let pieceDark: Color
-	
-	init(theme: ChessTheme) {
-		squareLight = Color(theme.squareLight)
-		squareDark = Color(theme.squareDark)
-		pieceLight = Color(theme.pieceLight)
-		pieceDark = Color(theme.pieceDark)
-	}
-	
-	init() {
-		squareLight = Color(red: 192 / 255, green: 192 / 255, blue: 192 / 255)
-		squareDark = Color(red: 96 / 255, green: 96 / 255, blue: 96 / 255)
-		pieceLight = .white
-		pieceDark = .black
-	}
+extension EnvironmentValues {
+	@Entry var chessTheme: Theme = .defaultChessTheme
 }
 
 struct ChessView: View {
-	@FetchRequest(sortDescriptors: [SortDescriptor(\ChessTheme.index, order: .forward)]) private var themes: FetchedResults<ChessTheme>
-	@EnvironmentObject private var game: ChessGame
-	@AppStorage(Setting.chessTheme.rawValue) private var chessTheme = ""
-	private var theme: ChessUITheme {
-		guard let selectedTheme = themes.first(where: { $0.id!.uuidString == chessTheme }) else {
-			return ChessUITheme()
-		}
-		return ChessUITheme(theme: selectedTheme)
-	}
+	@Environment(\.chessTheme) private var theme
+	@State private var themesSheetShown = false
+	var board: ChessBoard
+	var enableUndo: Bool
+	var flipped: Bool
+	var enableTimer: Bool
+	var showMoves: Bool
 	
 	var body: some View {
 		GeometryReader { geometry in
@@ -61,39 +27,86 @@ struct ChessView: View {
 			let layout = vertical ? AnyLayout(VStackLayout()) : AnyLayout(HStackLayout())
 			
 			layout {
-				ChessUIView(vertical: vertical)
-					.animation(.linear, value: game.pawnSquare)
-#if os(tvOS)
-					.focusSection()
-#endif
-				ChessBoardView()
-					.animation(.linear, value: game.pawnSquare)
+				ChessUIView(board: board, enableTimer: enableTimer, flipped: flipped, vertical: vertical)
+				
+				if board.promoting {
+					ChessPromoteView(board: board, flipped: flipped, vertical: vertical)
+						.transition(.opacity.animation(.easeIn))
+				}
+				
+				ChessBoardView(board: board, flipped: flipped, showMoves: showMoves)
+					.animation(.easeInOut(duration: 0.6), value: board.promoting)
 					.frame(maxWidth: .infinity, maxHeight: .infinity)
 				
-				if game.pawnSquare != nil {
-					ChessPromoteView(isLight: game.board.lightTurn, vertical: vertical)
+#if os(tvOS)
+				VStack {
+					Button() {
+						themesSheetShown.toggle()
+					} label: {
+						Label("Themes", systemImage: "paintpalette")
+							.labelStyle(.iconOnly)
+					}
+					
+					if enableUndo {
+						Button(action: board.undo) {
+							Label("Undo", systemImage: "arrow.uturn.backward")
+								.symbolVariant(.circle.fill)
+								.labelStyle(.iconOnly)
+						}
+						.disabled(!board.undoEnabled)
+					}
+					
+					Spacer()
 				}
+				.focusSection()
+#endif
 			}
-			.background(.linearGradient(colors: [theme.squareLight, theme.squareDark], startPoint: .top, endPoint: .bottom))
+			.background(.linearGradient(colors: [theme.colors[.squareDark], theme.colors[.squareLight]], startPoint: .top, endPoint: .bottom))
 			.frame(maxWidth: .infinity, maxHeight: .infinity)
-			.font(.system(.headline, design: .rounded).bold().monospacedDigit())
+			.font(.system(.headline, design: .rounded).bold().monospaced())
 		}
+		.onAppear {
+			board.selectedSquare = nil
+			board.times.lastUpdate = Date()
+		}
+		.onDisappear {
+			board.selectedSquare = nil
+		}
+		.sheet(isPresented: $themesSheetShown) {
+			ThemesView(game: .chess)
+		}
+#if os(tvOS)
+		.onPlayPauseCommand {
+			guard enableUndo else {
+				return
+			}
+			
+			board.undo()
+		}
+#else
 #if os(iOS)
 		.navigationBarTitleDisplayMode(.inline)
-#elseif os(tvOS)
-		.onPlayPauseCommand {
-			guard game.pawnSquare == nil else {
-				return
+#endif
+		.navigationTitle("Chess")
+		.toolbar {
+			ToolbarItemGroup {
+				if enableUndo {
+					Button(action: board.undo) {
+						Image(systemName: "arrow.uturn.backward")
+							.symbolVariant(.circle.fill)
+							.rotationEffect(!board.lightTurn && flipped ? .radians(.pi) : .zero)
+							.animation(.easeIn, value: board.lightTurn)
+					}
+					.disabled(!board.undoEnabled)
+				}
+				
+				Button() {
+					themesSheetShown.toggle()
+				} label: {
+					Label("Themes", systemImage: "paintpalette")
+				}
 			}
-			
-			if game.board.history.isEmpty {
-				return
-			}
-			
-			game.selectedSquare = nil
-			game.board.undo()
 		}
 #endif
-		.environment(\.chessTheme, theme)
 	}
 }

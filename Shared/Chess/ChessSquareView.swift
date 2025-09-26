@@ -7,53 +7,49 @@
 
 import SwiftUI
 
-struct ChessSquareStyle: ButtonStyle {
-	func makeBody(configuration: Configuration) -> some View {
-		configuration.label
-			.background(.clear)
-	}
-}
-
 struct ChessSquareView: View {
 	@Environment(\.chessTheme) private var theme
-	@EnvironmentObject private var game: ChessGame
-	let file: ChessFile
+	var board: ChessBoard
+	var showMoves: Bool
+	let file: Chess.File
 	let rank: Int
 	
-	private func select(square: ChessSquare) {
-		if let piece = game.board.pieces[square], piece.isLight == game.board.lightTurn {
-			game.selectedSquare = square
+	private func select(square: Chess.Square) {
+		if board.gameOver {
 			return
 		}
 		
-		guard let selectedSquare = game.selectedSquare, game.board.canMove(from: selectedSquare, to: square) else {
+		if let piece = board.pieces[square], piece.isLight == board.lightTurn {
+			board.selectedSquare = square
 			return
 		}
 		
-		game.selectedSquare = nil
-		game.board.move(from: selectedSquare, to: square)
-		
-		let rank = game.board.lightTurn ? 8 : 1
-		guard let piece = game.board.pieces[square], piece.group == .pawn, square.rank == rank else {
+		guard let selectedSquare = board.selectedSquare, board.canMove(from: selectedSquare, to: square) else {
 			return
 		}
-		game.pawnSquare = square
+		
+		board.move(from: selectedSquare, to: square)
 	}
 	
 	var body: some View {
-		let square = ChessSquare(file: file, rank: rank)
-		let kingState = game.kingState(isLight: game.board.lightTurn)
-		let gameOver = kingState == .checkmate || kingState == .stalemate
+		let square = Chess.Square(file: file, rank: rank)
+		let lightSquare = (rank + file.rawValue - 1).isMultiple(of: 2)
 		Button {
 			select(square: square)
 		} label: {
-			Text("")
-				.frame(maxWidth: .infinity, maxHeight: .infinity)
+			lightSquare ? theme.colors[.squareLight] : theme.colors[.squareDark]
 		}
-#if os(tvOS)
-		.buttonStyle(CheckersSquareStyle())
-#endif
-		.background((rank + file.rawValue - 1).isMultiple(of: 2) ? theme.squareLight : theme.squareDark, in: Rectangle())
-		.disabled(gameOver || game.pawnSquare != nil || game.selectedSquare == square)
+		.accessibilityIdentifier("File\(file)Rank\(rank)ChessBoardSquareButton")
+		.buttonStyle(.borderless)
+		.disabled(board.promoting)
+		.overlay {
+			if showMoves && board.validSquares.contains(square) {
+				Circle()
+					.fill(board.lightTurn ? theme.colors[.pieceLight] : theme.colors[.pieceDark])
+					.scaleEffect(0.25)
+					.transition(.scale.animation(.easeOut))
+					.allowsHitTesting(false)
+			}
+		}
 	}
 }

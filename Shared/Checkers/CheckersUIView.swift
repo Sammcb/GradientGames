@@ -7,123 +7,89 @@
 
 import SwiftUI
 
-struct CheckersTimesTimelineView: View {
-	@EnvironmentObject private var game: CheckersGame
-	@AppStorage(Setting.checkersFlipUI.rawValue) private var flipped = false
-	
-	var body: some View {
-		TimelineView(.periodic(from: .now, by: 1 / 60)) { timeline in
-			CheckersTimesView(date: timeline.date)
-		}
-		.rotationEffect(game.board.lightTurn && flipped ? .radians(.pi) : .zero)
-		.animation(.easeIn, value: game.board.lightTurn)
-	}
-}
-
-struct CheckersTimesView: View {
+struct CheckersTimeView: View {
 	@Environment(\.checkersTheme) private var theme
-	@EnvironmentObject private var game: CheckersGame
-	@AppStorage(Setting.checkersEnableTimer.rawValue) private var enableTimer = true
-	private let cadence: TimeInterval = 1 / 60
-	let date: Date
+	var board: CheckersBoard
+	var flipped: Bool
+	let isLight: Bool
+	let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 	
 	var body: some View {
-		VStack {
-			Text(CheckersState.shared.times.stringFor(lightTime: true))
-				.foregroundColor(theme.pieceLight)
-			Text(CheckersState.shared.times.stringFor(lightTime: false))
-				.foregroundColor(theme.pieceDark)
-		}
-		.opacity(enableTimer ? 1 : 0)
-		.onChange(of: date) { _ in
-			if game.board.gameOver {
-				return
+		Text(board.times.stringFor(lightTime: isLight))
+			.foregroundStyle(isLight ? theme.colors[.pieceLight] : theme.colors[.pieceDark])
+			.rotationEffect(board.lightTurn && flipped ? .radians(.pi) : .zero)
+			.animation(.easeIn, value: board.lightTurn)
+			.onReceive(timer) { currentDate in
+				guard board.lightTurn == isLight else {
+					return
+				}
+				
+				if board.gameOver {
+					return
+				}
+				
+				let interval = board.times.lastUpdate.distance(to: currentDate)
+				
+				guard interval > 0 else {
+					return
+				}
+				
+				if isLight {
+					board.times.light += interval
+				} else {
+					board.times.dark += interval
+				}
+				
+				board.times.lastUpdate = currentDate
 			}
-			
-			if game.board.lightTurn {
-				CheckersState.shared.times.light += cadence
-			} else {
-				CheckersState.shared.times.dark += cadence
-			}
-			CheckersState.shared.times.lastUpdate = date
-		}
 	}
 }
 
 struct CheckersStateView: View {
 	@Environment(\.checkersTheme) private var theme
-	@EnvironmentObject private var game: CheckersGame
-	@AppStorage(Setting.checkersFlipUI.rawValue) private var flipped = false
-	let isLight: Bool
+	var board: CheckersBoard
+	var flipped: Bool
 	
 	var body: some View {
-		Image(systemName: "crown")
-			.symbolVariant(isLight ? .none : .fill)
-			.opacity(game.board.gameOver && game.board.lightTurn != isLight ? 1 : 0)
-			.foregroundColor(isLight ? theme.pieceLight : theme.pieceDark)
-			.rotationEffect(game.board.lightTurn && flipped ? .radians(.pi) : .zero)
-			.animation(.easeIn, value: game.board.lightTurn)
-	}
-}
-
-struct CheckersStatusView: View {
-	@EnvironmentObject private var game: CheckersGame
-	
-	var body: some View {
-		HStack {
-			CheckersStateView(isLight: true)
-			
-			CheckersPieceView(isLight: game.board.lightTurn, kinged: true)
-				.frame(width: 50, height: 50)
-			
-			CheckersStateView(isLight: false)
-		}
-	}
-}
-
-struct CheckersUndoView: View {
-	@EnvironmentObject private var game: CheckersGame
-	@AppStorage(Setting.checkersEnableUndo.rawValue) private var enableUndo = true
-	@AppStorage(Setting.checkersFlipUI.rawValue) private var flipped = false
-	
-	var body: some View {
-		Button {
-			game.selectedSquare = nil
-			game.board.undo()
-		} label: {
-			Image(systemName: "arrow.uturn.backward")
-				.symbolVariant(.circle.fill)
-				.font(.system(size: 50))
-		}
-		.opacity(enableUndo ? 1 : 0)
-		.disabled(game.board.history.isEmpty || !enableUndo)
-		.rotationEffect(game.board.lightTurn && flipped ? .radians(.pi) : .zero)
-		.animation(.easeIn, value: game.board.lightTurn)
+		let toggleColor = board.gameOver ? !board.lightTurn : board.lightTurn
+		Image(systemName: board.gameOver ? "crown" : "circle.circle")
+			.padding()
+			.symbolVariant(.fill)
+			.foregroundStyle(toggleColor ? theme.colors[.pieceLight] : theme.colors[.pieceDark])
+			.font(.largeTitle)
+			.rotationEffect(board.lightTurn && flipped ? .radians(.pi) : .zero)
+			.background(.ultraThinMaterial)
+			.clipShape(RoundedRectangle(cornerRadius: 10))
+			.animation(.easeIn, value: board.lightTurn)
 	}
 }
 
 struct CheckersUIView: View {
+	var board: CheckersBoard
+	var enableTimer: Bool
+	var flipped: Bool
 	let vertical: Bool
 	
 	var body: some View {
-		let layout = vertical ? AnyLayout(HStackLayout()) : AnyLayout(VStackLayout())
+		let layout = vertical ? AnyLayout(VStackLayout()) : AnyLayout(HStackLayout())
+		let timersLayout = vertical ? AnyLayout(HStackLayout()) : AnyLayout(VStackLayout())
 		
 		layout {
-			Spacer()
+			if enableTimer {
+				timersLayout {
+					Spacer()
+					CheckersTimeView(board: board, flipped: flipped, isLight: true)
+					Spacer()
+					CheckersTimeView(board: board, flipped: flipped, isLight: false)
+					Spacer()
+				}
+				.padding()
+				.background(.ultraThinMaterial)
+			}
 			
-			CheckersTimesTimelineView()
-			
-			Spacer()
-			
-			CheckersStatusView()
-			
-			Spacer()
-			
-			CheckersUndoView()
-			
-			Spacer()
+			CheckersStateView(board: board, flipped: flipped)
+				.padding()
 		}
-		.padding(vertical ? .vertical : .horizontal)
-		.background(.ultraThinMaterial)
+		.ignoresSafeArea(edges: vertical ? .horizontal : .vertical)
 	}
 }

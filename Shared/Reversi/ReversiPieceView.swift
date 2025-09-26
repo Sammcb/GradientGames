@@ -9,10 +9,14 @@ import SwiftUI
 
 struct ReversiPieceView: View {
 	@Environment(\.reversiTheme) private var theme
-	let isLight: Bool
+	var isLight: Bool
 	
 	var body: some View {
-		Circle()
-			.foregroundColor(isLight ? theme.pieceLight : theme.pieceDark)
+		Image(systemName: "circle")
+			.resizable()
+			.symbolVariant(.fill)
+			.foregroundStyle(isLight ? theme.colors[.pieceLight] : theme.colors[.pieceDark])
+			.scaledToFit()
+			.scaleEffect(0.75)
 	}
 }

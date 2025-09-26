@@ -7,49 +7,49 @@
 
 import SwiftUI
 
-struct CheckersSquareStyle: ButtonStyle {
-	func makeBody(configuration: Configuration) -> some View {
-		configuration.label
-			.background(.clear)
-	}
-}
-
 struct CheckersSquareView: View {
 	@Environment(\.checkersTheme) private var theme
-	@EnvironmentObject private var game: CheckersGame
+	var board: CheckersBoard
+	var showMoves: Bool
 	let column: Int
 	let row: Int
 	
-	private func select(square: CheckersSquare) {
-		if game.board.history.last?.skip ?? false, game.board.pieces[square] != nil {
+	private func select(square: Checkers.Square) {
+		if board.gameOver {
 			return
 		}
 		
-		if let piece = game.board.pieces[square], piece.isLight == game.board.lightTurn {
-			game.selectedSquare = square
+		if let piece = board.pieces[square], piece.isLight == board.lightTurn, board.forcedSelectedSquare == nil {
+			board.selectedSquare = square
 			return
 		}
 		
-		guard let selectedSquare = game.selectedSquare, game.board.canMove(from: selectedSquare, to: square) else {
+		guard let selectedSquare = board.selectedSquare, board.canMove(from: selectedSquare, to: square) else {
 			return
 		}
 		
-		game.selectedSquare = nil
-		game.board.move(from: selectedSquare, to: square)
+		board.move(from: selectedSquare, to: square)
+		board.selectedSquare = board.forcedSelectedSquare
 	}
 	
 	var body: some View {
-		let square = CheckersSquare(column: column, row: row)
+		let square = Checkers.Square(column: column, row: row)
+		let lightSquare = (row + column - 1).isMultiple(of: 2)
 		Button {
 			select(square: square)
 		} label: {
-			Text("")
-				.frame(maxWidth: .infinity, maxHeight: .infinity)
+			lightSquare ? theme.colors[.squareLight] : theme.colors[.squareDark]
 		}
-#if os(tvOS)
-		.buttonStyle(CheckersSquareStyle())
-#endif
-		.background((row + column - 1).isMultiple(of: 2) ? theme.squareLight : theme.squareDark, in: Rectangle())
-		.disabled(game.board.gameOver)
+		.accessibilityIdentifier("Row\(row)Column\(column)CheckersBoardSquareButton")
+		.buttonStyle(.borderless)
+		.overlay {
+			if showMoves && board.validSquares.contains(square) {
+				Circle()
+					.fill(board.lightTurn ? theme.colors[.pieceLight] : theme.colors[.pieceDark])
+					.scaleEffect(0.25)
+					.transition(.scale.animation(.easeOut))
+					.allowsHitTesting(false)
+			}
+		}
 	}
 }

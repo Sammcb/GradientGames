@@ -7,46 +7,39 @@
 
 import SwiftUI
 
-struct ReversiSquareStyle: ButtonStyle {
-	func makeBody(configuration: Configuration) -> some View {
-		configuration.label
-			.background(.clear)
-	}
-}
-
 struct ReversiSquareView: View {
 	@Environment(\.reversiTheme) private var theme
-	@EnvironmentObject private var game: ReversiGame
+	var board: ReversiBoard
+	var showMoves: Bool
 	let column: Int
 	let row: Int
 	
 	var body: some View {
-		let square = ReversiSquare(column: column, row: row)
+		let square = Reversi.Square(column: column, row: row)
 		Button {
-			guard game.board.canPlace(at: square) else {
+			if board.gameOver {
 				return
 			}
 			
-			game.board.place(at: square)
-		} label: {
-			if let piece = game.board.pieces[square] {
-				ReversiPieceView(isLight: piece.isLight)
-					.scaleEffect(0.5)
-					.frame(maxWidth: .infinity, maxHeight: .infinity)
-					.transition(.opacity.animation(.linear))
-					.animation(.linear, value: game.board)
-			} else {
-				Text("")
-					.frame(maxWidth: .infinity, maxHeight: .infinity)
+			guard board.canPlace(at: square) else {
+				return
 			}
 			
+			board.place(at: square)
+		} label: {
+			theme.colors[.squares]
 		}
-		.background(theme.square, in: Rectangle())
-#if os(iOS)
-		.disabled(game.board.gameOver || game.board.pieces[square] != nil)
-#elseif os(tvOS)
-		.disabled(game.board.gameOver)
-		.buttonStyle(ReversiSquareStyle())
-#endif
+		.accessibilityIdentifier("Row\(row)Column\(column)ReversiBoardSquareButton")
+		.buttonStyle(.borderless)
+		.overlay {
+			if showMoves && board.validSquares.contains(square) {
+				Circle()
+					.fill(board.lightTurn ? theme.colors[.pieceLight] : theme.colors[.pieceDark])
+					.scaleEffect(0.25)
+					.transition(.scale.animation(.easeOut))
+					.animation(.easeIn, value: board.lightTurn)
+					.allowsHitTesting(false)
+			}
+		}
 	}
 }

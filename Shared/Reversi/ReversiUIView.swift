@@ -7,100 +7,132 @@
 
 import SwiftUI
 
-struct ReversiTimesTimelineView: View {
-	@EnvironmentObject private var game: ReversiGame
-	@AppStorage(Setting.reversiFlipUI.rawValue) private var flipped = false
-	
-	var body: some View {
-		TimelineView(.periodic(from: .now, by: 1 / 60)) { timeline in
-			ReversiTimesView(date: timeline.date)
-		}
-		.rotationEffect(game.board.lightTurn && flipped ? .radians(.pi) : .zero)
-		.animation(.easeIn, value: game.board.lightTurn)
-	}
-}
-
-struct ReversiTimesView: View {
+struct ReversiTimeView: View {
 	@Environment(\.reversiTheme) private var theme
-	@EnvironmentObject private var game: ReversiGame
-	@AppStorage(Setting.reversiEnableTimer.rawValue) private var enableTimer = true
-	private let cadence: TimeInterval = 1 / 60
-	let date: Date
+	var board: ReversiBoard
+	var flipped: Bool
+	let isLight: Bool
+	let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 	
 	var body: some View {
-		VStack {
-			Text(ReversiState.shared.times.stringFor(lightTime: true))
-				.foregroundColor(theme.pieceLight)
-			Text(ReversiState.shared.times.stringFor(lightTime: false))
-				.foregroundColor(theme.pieceDark)
-		}
-		.opacity(enableTimer ? 1 : 0)
-		.onChange(of: date) { _ in
-			if game.board.gameOver {
-				return
+		Text(board.times.stringFor(lightTime: isLight))
+			.foregroundStyle(isLight ? theme.colors[.pieceLight] : theme.colors[.pieceDark])
+			.rotationEffect(board.lightTurn && flipped ? .radians(.pi) : .zero)
+			.animation(.easeIn, value: board.lightTurn)
+			.onReceive(timer) { currentDate in
+				guard board.lightTurn == isLight else {
+					return
+				}
+				
+				if board.gameOver {
+					return
+				}
+				
+				let interval = board.times.lastUpdate.distance(to: currentDate)
+				
+				guard interval > 0 else {
+					return
+				}
+				
+				if isLight {
+					board.times.light += interval
+				} else {
+					board.times.dark += interval
+				}
+				
+				board.times.lastUpdate = currentDate
 			}
-			
-			if game.board.lightTurn {
-				ReversiState.shared.times.light += cadence
-			} else {
-				ReversiState.shared.times.dark += cadence
-			}
-			ReversiState.shared.times.lastUpdate = date
-		}
 	}
 }
 
 struct ReversiStatusView: View {
-	@EnvironmentObject private var game: ReversiGame
+	@Environment(\.reversiTheme) private var theme
+	var board: ReversiBoard
+	var flipped: Bool
 	
 	var body: some View {
-		ReversiPieceView(isLight: game.board.lightTurn)
-			.frame(width: 50, height: 50)
+		let pieces = board.pieces.compactMap({ piece in piece })
+		let lightScore = pieces.filter({ piece in piece.isLight }).count
+		let darkScore = pieces.filter({ piece in !piece.isLight }).count
+		let gameOverSymbol = lightScore == darkScore ? "minus.circle" : "crown"
+		let gameOverColor = lightScore > darkScore ? theme.colors[.pieceLight] : theme.colors[.pieceDark]
+		let turnColor = board.lightTurn ? theme.colors[.pieceLight] : theme.colors[.pieceDark]
+		let symbolColor = board.gameOver ? gameOverColor : turnColor
+		Image(systemName: board.gameOver ? gameOverSymbol : "circle")
+			.padding()
+			.symbolVariant(.fill)
+			.foregroundStyle(symbolColor)
+			.font(.largeTitle)
+			.rotationEffect(board.lightTurn && flipped ? .radians(.pi) : .zero)
+			.background(.ultraThinMaterial)
+			.clipShape(RoundedRectangle(cornerRadius: 10))
+			.animation(.easeIn, value: board.lightTurn)
+			.animation(.easeIn, value: board.history)
 	}
 }
 
-struct ReversiUndoView: View {
-	@EnvironmentObject private var game: ReversiGame
-	@AppStorage(Setting.reversiEnableUndo.rawValue) private var enableUndo = true
-	@AppStorage(Setting.reversiFlipUI.rawValue) private var flipped = false
+struct ReversiScoreStatusView: View {
+	@Environment(\.reversiTheme) private var theme
+	var board: ReversiBoard
+	var flipped: Bool
+	var isLight: Bool
 	
 	var body: some View {
-		Button {
-			game.board.undo()
-		} label: {
-			Image(systemName: "arrow.uturn.backward")
-				.symbolVariant(.circle.fill)
-				.font(.system(size: 50))
+		let pieces = board.pieces.compactMap({ piece in piece })
+		let lightScore = pieces.filter({ piece in piece.isLight }).count
+		let darkScore = pieces.filter({ piece in !piece.isLight }).count
+		let initialMoves = 2
+		let moves = board.history.filter({ move in !move.skip }).filter({ move in move.light == isLight }).count
+		VStack(spacing: 0) {
+			ZStack {
+				Image(systemName: "circle")
+					.symbolVariant(.fill)
+					.foregroundStyle(isLight ? theme.colors[.pieceLight] : theme.colors[.pieceDark])
+					.font(.largeTitle)
+				Text("\(isLight ? lightScore : darkScore)")
+					.blendMode(.destinationOut)
+			}
+			.compositingGroup()
+			
+			Text("\(moves + initialMoves)/\(board.maxMoves)")
+				.foregroundStyle(isLight ? theme.colors[.pieceLight] : theme.colors[.pieceDark])
 		}
-		.opacity(enableUndo ? 1 : 0)
-		.disabled(game.board.history.isEmpty || !enableUndo)
-		.rotationEffect(game.board.lightTurn && flipped ? .radians(.pi) : .zero)
-		.animation(.easeIn, value: game.board.lightTurn)
+		.rotationEffect(board.lightTurn && flipped ? .radians(.pi) : .zero)
+		.animation(.easeIn, value: board.lightTurn)
 	}
 }
 
 struct ReversiUIView: View {
-	let vertical: Bool
+	@Environment(\.reversiTheme) private var theme
+	var board: ReversiBoard
+	var enableTimer: Bool
+	var flipped: Bool
+	var vertical: Bool
 	
 	var body: some View {
-		let layout = vertical ? AnyLayout(HStackLayout()) : AnyLayout(VStackLayout())
+		let layout = vertical ? AnyLayout(VStackLayout()) : AnyLayout(HStackLayout())
+		let statsLayout = vertical ? AnyLayout(HStackLayout()) : AnyLayout(VStackLayout())
 		
 		layout {
-			Spacer()
+			statsLayout {
+				Spacer()
+				ReversiScoreStatusView(board: board, flipped: flipped, isLight: false)
+				Spacer()
+				if enableTimer {
+					ReversiTimeView(board: board, flipped: flipped, isLight: false)
+					Spacer()
+					ReversiTimeView(board: board, flipped: flipped, isLight: true)
+					Spacer()
+				}
+				ReversiScoreStatusView(board: board, flipped: flipped, isLight: true)
+				Spacer()
+			}
+			.padding()
+			.background(.ultraThinMaterial)
 			
-			ReversiTimesTimelineView()
-			
-			Spacer()
-			
-			ReversiStatusView()
-			
-			Spacer()
-			
-			ReversiUndoView()
-			
-			Spacer()
+			ReversiStatusView(board: board, flipped: flipped)
+				.padding()
 		}
-		.padding(vertical ? .vertical : .horizontal)
-		.background(.ultraThinMaterial)
+		.ignoresSafeArea(edges: vertical ? .horizontal : .vertical)
 	}
 }
