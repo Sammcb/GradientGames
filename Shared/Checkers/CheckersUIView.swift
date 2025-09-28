@@ -15,7 +15,8 @@ struct CheckersTimeView: View {
 	let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 	
 	var body: some View {
-		Text(board.times.stringFor(lightTime: isLight))
+		Label(board.times.stringFor(lightTime: isLight), systemImage: "stopwatch")
+			.symbolVariant(.fill)
 			.foregroundStyle(isLight ? theme.colors[.pieceLight] : theme.colors[.pieceDark])
 			.rotationEffect(board.lightTurn && flipped ? .radians(.pi) : .zero)
 			.animation(.easeIn, value: board.lightTurn)
