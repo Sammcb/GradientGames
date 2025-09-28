@@ -15,7 +15,8 @@ struct ReversiTimeView: View {
 	let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 	
 	var body: some View {
-		Text(board.times.stringFor(lightTime: isLight))
+		Label(board.times.stringFor(lightTime: isLight), systemImage: "stopwatch")
+			.symbolVariant(.fill)
 			.foregroundStyle(isLight ? theme.colors[.pieceLight] : theme.colors[.pieceDark])
 			.rotationEffect(board.lightTurn && flipped ? .radians(.pi) : .zero)
 			.animation(.easeIn, value: board.lightTurn)
@@ -81,24 +82,11 @@ struct ReversiScoreStatusView: View {
 		let pieces = board.pieces.compactMap({ piece in piece })
 		let lightScore = pieces.filter({ piece in piece.isLight }).count
 		let darkScore = pieces.filter({ piece in !piece.isLight }).count
-		let initialMoves = 2
-		let moves = board.history.filter({ move in !move.skip }).filter({ move in move.light == isLight }).count
-		VStack(spacing: 0) {
-			ZStack {
-				Image(systemName: "circle")
-					.symbolVariant(.fill)
-					.foregroundStyle(isLight ? theme.colors[.pieceLight] : theme.colors[.pieceDark])
-					.font(.largeTitle)
-				Text("\(isLight ? lightScore : darkScore)")
-					.blendMode(.destinationOut)
-			}
-			.compositingGroup()
-			
-			Text("\(moves + initialMoves)/\(board.maxMoves)")
-				.foregroundStyle(isLight ? theme.colors[.pieceLight] : theme.colors[.pieceDark])
-		}
-		.rotationEffect(board.lightTurn && flipped ? .radians(.pi) : .zero)
-		.animation(.easeIn, value: board.lightTurn)
+		Label("x\(isLight ? lightScore : darkScore)".padding(toLength: 3, withPad: " ", startingAt: 0), systemImage: "circle")
+			.symbolVariant(.fill)
+			.foregroundStyle(isLight ? theme.colors[.pieceLight] : theme.colors[.pieceDark])
+			.rotationEffect(board.lightTurn && flipped ? .radians(.pi) : .zero)
+			.animation(.easeIn, value: board.lightTurn)
 	}
 }
 
