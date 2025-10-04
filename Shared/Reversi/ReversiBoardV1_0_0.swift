@@ -16,6 +16,7 @@ extension SchemaV1_0_0 {
 		
 		private var startingPieces: Reversi.Pieces = []
 		private(set) var history: [Reversi.Move] = []
+		@Transient private let maxTime = 3600.0
 		var times = Times(light: 0, dark: 0, lastUpdate: Date())
 		
 		@Transient let maxMoves = 32
@@ -78,6 +79,24 @@ extension SchemaV1_0_0 {
 			}
 			
 			let _ = history.popLast()
+		}
+		
+		func incrementTime(at currentDate: Date, isLight: Bool) {
+			let interval = times.lastUpdate.distance(to: currentDate)
+			
+			guard interval > 0 else {
+				return
+			}
+			
+			if isLight {
+				times.light += interval
+				times.light.formTruncatingRemainder(dividingBy: maxTime)
+			} else {
+				times.dark += interval
+				times.dark.formTruncatingRemainder(dividingBy: maxTime)
+			}
+			
+			times.lastUpdate = currentDate
 		}
 	}
 }

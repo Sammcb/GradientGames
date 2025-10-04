@@ -9,37 +9,29 @@ import SwiftUI
 
 struct ChessPromoteView: View {
 	@Environment(\.chessTheme) private var theme
+	@Environment(\.verticalUI) private var verticalUI
+	@AppStorage(Setting.flipUI.rawValue) private var flipUI = false
 	var board: ChessBoard
-	var flipped: Bool
-	let vertical: Bool
+	let lightTurn: Bool
 	private let groups: [Chess.Piece.Group] = [.knight, .bishop, .rook, .queen]
 	
 	var body: some View {
-		let layout = vertical ? AnyLayout(HStackLayout()) : AnyLayout(VStackLayout())
+		let layout = verticalUI ? AnyLayout(HStackLayout()) : AnyLayout(VStackLayout())
 		layout {
 			ForEach(groups) { group in
-				let piece = switch group {
-				case .pawn: board.lightTurn ? "♙" : "♟︎"
-				case .knight: board.lightTurn ? "♘" : "♞"
-				case .bishop: board.lightTurn ? "♗" : "♝"
-				case .rook: board.lightTurn ? "♖" : "♜"
-				case .queen: board.lightTurn ? "♕" : "♛"
-				case .king: board.lightTurn ? "♔" : "♚"
-				}
 				Button {
 					board.promote(to: group)
 				} label: {
-					Text(piece)
-						.font(.largeTitle)
+					ChessPieceView(group: group, isLight: lightTurn)
+						.aspectRatio(contentMode: .fit)
 				}
-				.rotationEffect(!board.lightTurn && flipped ? .radians(.pi) : .zero)
 				.padding()
 				.disabled(!board.promoting)
 			}
 		}
+		.rotationEffect(!lightTurn && flipUI ? .radians(.pi) : .zero)
+		.glassEffect(.clear)
 		.padding()
-		.background(.ultraThinMaterial)
-		.clipShape(RoundedRectangle(cornerRadius: 10))
 #if os(tvOS)
 		.focusSection()
 #endif

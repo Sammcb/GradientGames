@@ -21,7 +21,7 @@
       "target" : {
         "containerPath" : "container:GradientGames.xcodeproj",
         "identifier" : "222FCFA32E382EF500B1F8F9",
-        "name" : "GradientGamesUITests"
+        "name" : "Gradient Games UI Tests"
       }
     },
     {
@@ -29,7 +29,7 @@
       "target" : {
         "containerPath" : "container:GradientGames.xcodeproj",
         "identifier" : "224497892E3AD8D800316547",
-        "name" : "GradientGamesTests"
+        "name" : "Gradient Games Tests"
       }
     }
   ],

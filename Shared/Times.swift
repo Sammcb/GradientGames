@@ -18,7 +18,7 @@ struct Times: Codable {
 		formatter.unitsStyle = .positional
 		formatter.zeroFormattingBehavior = .pad
 		guard let formattedString = formatter.string(from: lightTime ? light : dark) else {
-			return ""
+			return "--:--"
 		}
 		return formattedString
 	}

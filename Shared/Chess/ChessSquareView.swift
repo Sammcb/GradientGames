@@ -9,8 +9,8 @@ import SwiftUI
 
 struct ChessSquareView: View {
 	@Environment(\.chessTheme) private var theme
+	@AppStorage(Setting.showMoves.rawValue) private var showMoves = true
 	var board: ChessBoard
-	var showMoves: Bool
 	let file: Chess.File
 	let rank: Int
 	
@@ -37,7 +37,9 @@ struct ChessSquareView: View {
 		Button {
 			select(square: square)
 		} label: {
-			lightSquare ? theme.colors[.squareLight] : theme.colors[.squareDark]
+			Color(lightSquare ? theme.colors[.squareLight] : theme.colors[.squareDark])
+				.animation(.easeInOut(duration: 0.6), value: board.history)
+				.animation(.easeInOut, value: board.selectedSquare)
 		}
 		.accessibilityIdentifier("File\(file)Rank\(rank)ChessBoardSquareButton")
 		.buttonStyle(.borderless)

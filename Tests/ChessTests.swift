@@ -7,7 +7,7 @@
 
 import Testing
 import Foundation
-@testable import GradientGames
+@testable import Gradient_Games
 
 extension Chess.Pieces {
 	var withoutIds: Self {

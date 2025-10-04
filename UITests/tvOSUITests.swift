@@ -14,46 +14,55 @@ final class tvOSUITests: XCTestCase {
 	
 	override func tearDownWithError() throws {}
 	
+	@MainActor
 	private func takeScreenshot() {
 		let screenshot = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
 		screenshot.name = UUID().uuidString
 		add(screenshot)
 	}
 	
+	@MainActor
 	private func waitForFocusOn(element: XCUIElement) {
 		XCTAssert(element.wait(for: \.hasFocus, toEqual: true, timeout: 2))
 	}
 	
+	@MainActor
 	private func pressRemote(_ button: XCUIRemote.Button, times: Int) {
 		for _ in 0 ..< times {
 			XCUIRemote.shared.press(button)
 		}
 	}
 	
+	@MainActor
 	private func pressGameBoardButton(identifier: String, app: XCUIApplication) {
 		waitForFocusOn(element: app.buttons[identifier])
 		XCUIRemote.shared.press(.select)
 		Thread.sleep(forTimeInterval: 1)
 	}
 	
+	@MainActor
 	private func pressChessSquareAt(file: String, rank: String, app: XCUIApplication) {
 		pressGameBoardButton(identifier: "File\(file)Rank\(rank)ChessBoardSquareButton", app: app)
 	}
 	
+	@MainActor
 	private func pressReversiSquareAt(row: String, column: String, app: XCUIApplication) {
 		pressGameBoardButton(identifier: "Row\(row)Column\(column)ReversiBoardSquareButton", app: app)
 	}
 	
+	@MainActor
 	private func pressCheckersSquareAt(row: String, column: String, app: XCUIApplication) {
 		pressGameBoardButton(identifier: "Row\(row)Column\(column)CheckersBoardSquareButton", app: app)
 	}
 	
+	@MainActor
 	private func prepareToSwitchTheme(expectedFocusLabel: String, app: XCUIApplication) {
 		waitForFocusOn(element: app.buttons["Themes"])
 		XCUIRemote.shared.press(.select)
 		waitForFocusOn(element: app.cells[expectedFocusLabel].firstMatch)
 	}
 	
+	@MainActor
 	private func switchTheme(expectedFocusLabel: String, downPresses: Int, app: XCUIApplication) {
 		pressRemote(.down, times: downPresses)
 		waitForFocusOn(element: app.cells[expectedFocusLabel].firstMatch)

@@ -52,8 +52,6 @@ struct ThemeView: View, ColorConverter {
 						dismiss()
 					} label: {
 						Label("Done", systemImage: "checkmark")
-							.symbolVariant(.circle)
-							.labelStyle(.titleOnly)
 					}
 				}
 				ToolbarItem {

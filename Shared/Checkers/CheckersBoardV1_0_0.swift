@@ -16,6 +16,7 @@ extension SchemaV1_0_0 {
 		
 		private var startingPieces: Checkers.Pieces = []
 		private(set) var history: [Checkers.Move] = []
+		@Transient private let maxTime = 3600.0
 		var times = Times(light: 0, dark: 0, lastUpdate: Date())
 		
 		// Can this be @Transient? Currently that makes it unobservable
@@ -90,6 +91,24 @@ extension SchemaV1_0_0 {
 			
 			let _ = history.popLast()
 			selectedSquare = forcedSelectedSquare
+		}
+		
+		func incrementTime(at currentDate: Date, isLight: Bool) {
+			let interval = times.lastUpdate.distance(to: currentDate)
+			
+			guard interval > 0 else {
+				return
+			}
+			
+			if isLight {
+				times.light += interval
+				times.light.formTruncatingRemainder(dividingBy: maxTime)
+			} else {
+				times.dark += interval
+				times.dark.formTruncatingRemainder(dividingBy: maxTime)
+			}
+			
+			times.lastUpdate = currentDate
 		}
 	}
 }

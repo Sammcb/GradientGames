@@ -48,10 +48,6 @@ struct SettingsView: View {
 				Text("Themes")
 			} footer: {
 				Text("Importing does not overwrite existing themes. Either import from a file or by entering JSON data.")
-#if os(macOS)
-					.font(.footnote)
-					.foregroundStyle(.secondary)
-#endif
 			}
 			.headerProminence(.increased)
 
@@ -60,10 +56,6 @@ struct SettingsView: View {
 				ThemeExportView()
 			} footer: {
 				Text("Export all themes to a file.")
-#if os(macOS)
-					.font(.footnote)
-					.foregroundStyle(.secondary)
-#endif
 			}
 #endif
 			
@@ -105,10 +97,6 @@ struct SettingsView: View {
 				Text("iCloud Status")
 			} footer: {
 				Text("\(statusDescription) \(syncStatus)")
-#if os(macOS)
-					.font(.footnote)
-					.foregroundStyle(.secondary)
-#endif
 			}
 			.headerProminence(.increased)
 			

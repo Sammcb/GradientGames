@@ -14,31 +14,37 @@ final class iOSUITests: XCTestCase {
 	
 	override func tearDownWithError() throws {}
 	
+	@MainActor
 	private func takeScreenshot() {
 		let screenshot = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
 		screenshot.name = UUID().uuidString
 		add(screenshot)
 	}
 	
+	@MainActor
 	private func switchTheme(to themeSymbol: String, for game: String, app: XCUIApplication) {
 		app.buttons["Themes"].tap()
 		app.buttons[themeSymbol].tap()
 		app.buttons["Done"].tap()
 	}
 	
+	@MainActor
 	private func tapGameBoardButton(identifier: String, app: XCUIApplication) {
 		app.buttons[identifier].tap()
 		Thread.sleep(forTimeInterval: 1)
 	}
 	
+	@MainActor
 	private func tapChessSquareAt(file: String, rank: String, app: XCUIApplication) {
 		tapGameBoardButton(identifier: "File\(file)Rank\(rank)ChessBoardSquareButton", app: app)
 	}
 	
+	@MainActor
 	private func tapReversiSquareAt(row: String, column: String, app: XCUIApplication) {
 		tapGameBoardButton(identifier: "Row\(row)Column\(column)ReversiBoardSquareButton", app: app)
 	}
 	
+	@MainActor
 	private func tapCheckersSquareAt(row: String, column: String, app: XCUIApplication) {
 		tapGameBoardButton(identifier: "Row\(row)Column\(column)CheckersBoardSquareButton", app: app)
 	}

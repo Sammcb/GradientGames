@@ -9,8 +9,8 @@ import SwiftUI
 
 struct CheckersSquareView: View {
 	@Environment(\.checkersTheme) private var theme
+	@AppStorage(Setting.showMoves.rawValue) private var showMoves = true
 	var board: CheckersBoard
-	var showMoves: Bool
 	let column: Int
 	let row: Int
 	
@@ -38,7 +38,9 @@ struct CheckersSquareView: View {
 		Button {
 			select(square: square)
 		} label: {
-			lightSquare ? theme.colors[.squareLight] : theme.colors[.squareDark]
+			Color(lightSquare ? theme.colors[.squareLight] : theme.colors[.squareDark])
+				.animation(.easeInOut(duration: 0.6), value: board.history)
+				.animation(.easeInOut, value: board.selectedSquare)
 		}
 		.accessibilityIdentifier("Row\(row)Column\(column)CheckersBoardSquareButton")
 		.buttonStyle(.borderless)

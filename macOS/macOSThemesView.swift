@@ -48,7 +48,7 @@ struct ThemesView: View {
 	
 	var body: some View {
 		NavigationStack {
-			Form {
+			List {
 				let gameThemes = themes.filter({ $0.game == game })
 				let gameTheme = switch game {
 				case .chess: chessTheme
@@ -73,13 +73,9 @@ struct ThemesView: View {
 						ThemeListEntryView(theme: defaultTheme, selected: selectedThemeMissing)
 					}
 					.foregroundStyle(.primary)
-					.padding()
 				}
 				
-				Divider()
-					.padding(.horizontal)
-				
-				List {
+				Section {
 					ForEach(gameThemes) { theme in
 						let themeSelected = gameTheme == theme.id.uuidString
 						Button {
@@ -140,8 +136,6 @@ struct ThemesView: View {
 						dismiss()
 					} label: {
 						Label("Done", systemImage: "checkmark")
-							.symbolVariant(.circle)
-							.labelStyle(.titleOnly)
 					}
 				}
 			}
@@ -149,7 +143,6 @@ struct ThemesView: View {
 				ThemeView(theme: selectedTheme)
 			}
 		}
-		.padding()
 		.frame(idealWidth: 500, idealHeight: 500)
 		.fixedSize()
 	}
