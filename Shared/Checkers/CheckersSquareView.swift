@@ -13,25 +13,25 @@ struct CheckersSquareView: View {
 	var board: CheckersBoard
 	let column: Int
 	let row: Int
-	
+
 	private func select(square: Checkers.Square) {
 		if board.gameOver {
 			return
 		}
-		
+
 		if let piece = board.pieces[square], piece.isLight == board.lightTurn, board.forcedSelectedSquare == nil {
 			board.selectedSquare = square
 			return
 		}
-		
+
 		guard let selectedSquare = board.selectedSquare, board.canMove(from: selectedSquare, to: square) else {
 			return
 		}
-		
+
 		board.move(from: selectedSquare, to: square)
 		board.selectedSquare = board.forcedSelectedSquare
 	}
-	
+
 	var body: some View {
 		let square = Checkers.Square(column: column, row: row)
 		let lightSquare = (row + column - 1).isMultiple(of: 2)

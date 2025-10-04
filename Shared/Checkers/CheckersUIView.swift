@@ -14,7 +14,7 @@ struct CheckersTimeView: View {
 	var board: CheckersBoard
 	let isLight: Bool
 	let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-	
+
 	var body: some View {
 		Label(board.times.stringFor(lightTime: isLight), systemImage: "stopwatch")
 			.symbolVariant(.fill)
@@ -32,11 +32,11 @@ struct CheckersTimeView: View {
 				guard board.lightTurn == isLight else {
 					return
 				}
-				
+
 				if board.gameOver {
 					return
 				}
-				
+
 				board.incrementTime(at: currentDate, isLight: isLight)
 			}
 	}
@@ -46,7 +46,7 @@ struct CheckersStateView: View {
 	@Environment(\.checkersTheme) private var theme
 	@AppStorage(Setting.flipUI.rawValue) private var flipUI = false
 	var board: CheckersBoard
-	
+
 	var body: some View {
 		let toggleColor = board.gameOver ? !board.lightTurn : board.lightTurn
 		Image(systemName: board.gameOver ? "crown" : "circle.circle")
@@ -63,10 +63,10 @@ struct CheckersStateView: View {
 struct CheckersUIView: View {
 	@Environment(\.verticalUI) private var verticalUI
 	var board: CheckersBoard
-	
+
 	var body: some View {
 		let layout = verticalUI ? AnyLayout(HStackLayout()) : AnyLayout(VStackLayout())
-		
+
 		layout {
 			Spacer()
 			CheckersTimeView(board: board, isLight: true)

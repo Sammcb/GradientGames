@@ -19,7 +19,7 @@ extension Chess.Square {
 		guard square.file + deltaFile != .none && Chess.Ranks.contains(square.rank + deltaRank) else {
 			return nil
 		}
-		
+
 		self.init(file: square.file + deltaFile, rank: square.rank + deltaRank)
 	}
 }

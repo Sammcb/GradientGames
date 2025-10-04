@@ -13,24 +13,24 @@ struct ChessSquareView: View {
 	var board: ChessBoard
 	let file: Chess.File
 	let rank: Int
-	
+
 	private func select(square: Chess.Square) {
 		if board.gameOver {
 			return
 		}
-		
+
 		if let piece = board.pieces[square], piece.isLight == board.lightTurn {
 			board.selectedSquare = square
 			return
 		}
-		
+
 		guard let selectedSquare = board.selectedSquare, board.canMove(from: selectedSquare, to: square) else {
 			return
 		}
-		
+
 		board.move(from: selectedSquare, to: square)
 	}
-	
+
 	var body: some View {
 		let square = Chess.Square(file: file, rank: rank)
 		let lightSquare = (rank + file.rawValue - 1).isMultiple(of: 2)

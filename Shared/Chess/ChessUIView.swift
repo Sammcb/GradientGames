@@ -14,7 +14,7 @@ struct ChessTimeView: View {
 	var board: ChessBoard
 	let isLight: Bool
 	let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-	
+
 	var body: some View {
 		Label(board.times.stringFor(lightTime: isLight), systemImage: "stopwatch")
 			.symbolVariant(.fill)
@@ -32,11 +32,11 @@ struct ChessTimeView: View {
 				guard board.lightTurn == isLight else {
 					return
 				}
-				
+
 				if board.gameOver {
 					return
 				}
-				
+
 				board.incrementTime(at: currentDate, isLight: isLight)
 			}
 	}
@@ -46,7 +46,7 @@ struct ChessKingStatusView: View {
 	@Environment(\.chessTheme) private var theme
 	@AppStorage(Setting.flipUI.rawValue) private var flipUI = false
 	var board: ChessBoard
-	
+
 	var body: some View {
 		let kingState = board.lightTurn ? board.kingStates.light : board.kingStates.dark
 		let kingStateSymbol = switch kingState {
@@ -69,10 +69,10 @@ struct ChessKingStatusView: View {
 struct ChessUIView: View {
 	@Environment(\.verticalUI) private var verticalUI
 	var board: ChessBoard
-	
+
 	var body: some View {
 		let layout = verticalUI ? AnyLayout(HStackLayout()) : AnyLayout(VStackLayout())
-		
+
 		layout {
 			Spacer()
 			ChessTimeView(board: board, isLight: true)

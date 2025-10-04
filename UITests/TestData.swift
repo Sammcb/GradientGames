@@ -7,7 +7,7 @@
 
 struct TestData {
 	private init() {}
-	
+
 	static let themeData = """
 	{
 		"themes": [
@@ -242,8 +242,8 @@ struct TestData {
 					{"target": "squareDark", "color": "ffaa00"}
 				]
 			}
-	 ],
-	 "schemaVersion": {"major": 1, "minor": 0, "patch": 0}
+		],
+		"schemaVersion": {"major": 1, "minor": 0, "patch": 0}
 	}
 	""".filter({character in !["\n", "\t"].contains(character)})
 }

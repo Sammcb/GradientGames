@@ -20,22 +20,22 @@ struct ChessView: View {
 	@AppStorage(Setting.enableTimer.rawValue) private var enableTimer = false
 	@State private var themesSheetShown = false
 	var board: ChessBoard
-	
+
 	var body: some View {
 		let layout = verticalUI ? AnyLayout(VStackLayout()) : AnyLayout(HStackLayout())
-		
+
 		layout {
 			ChessUIView(board: board)
-			
+
 			if board.promoting {
 				ChessPromoteView(board: board, lightTurn: board.lightTurn)
 					.transition(.scale.animation(.easeIn))
 			}
-			
+
 			ChessBoardView(board: board)
 				.animation(.easeInOut(duration: 0.6), value: board.promoting)
 				.frame(maxWidth: .infinity, maxHeight: .infinity)
-			
+
 #if os(tvOS)
 			VStack {
 				Button() {
@@ -44,7 +44,7 @@ struct ChessView: View {
 					Label("Themes", systemImage: "paintpalette")
 						.labelStyle(.iconOnly)
 				}
-				
+
 				if enableUndo {
 					Button(action: board.undo) {
 						Label("Undo", systemImage: "arrow.uturn.backward")
@@ -53,7 +53,7 @@ struct ChessView: View {
 					}
 					.disabled(!board.undoEnabled)
 				}
-				
+
 				Spacer()
 			}
 			.focusSection()
@@ -78,7 +78,7 @@ struct ChessView: View {
 			guard enableUndo else {
 				return
 			}
-			
+
 			board.undo()
 		}
 #else
@@ -98,7 +98,7 @@ struct ChessView: View {
 					}
 					.disabled(!board.undoEnabled)
 				}
-				
+
 				Button() {
 					themesSheetShown.toggle()
 				} label: {

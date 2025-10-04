@@ -11,16 +11,16 @@ extension Chess {
 	struct Piece: Codable, Equatable, Identifiable, Hashable {
 		enum Group: String, Codable, Identifiable {
 			case pawn, knight, bishop, rook, queen, king
-			
+
 			var id: String {
 				rawValue
 			}
 		}
-		
+
 		let isLight: Bool
 		let group: Group
 		let id: UUID
-		
+
 		init(isLight: Bool, group: Group, id: UUID = UUID()) {
 			self.isLight = isLight
 			self.group = group

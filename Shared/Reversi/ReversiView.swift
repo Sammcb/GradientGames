@@ -20,16 +20,16 @@ struct ReversiView: View {
 	@AppStorage(Setting.enableTimer.rawValue) private var enableTimer = false
 	@State private var themesSheetShown = false
 	var board: ReversiBoard
-	
+
 	var body: some View {
 		let layout = verticalUI ? AnyLayout(VStackLayout()) : AnyLayout(HStackLayout())
-		
+
 		layout {
 			ReversiUIView(board: board)
-			
+
 			ReversiBoardView(board: board)
 				.frame(maxWidth: .infinity, maxHeight: .infinity)
-			
+
 #if os(tvOS)
 			VStack {
 				Button() {
@@ -38,7 +38,7 @@ struct ReversiView: View {
 					Label("Themes", systemImage: "paintpalette")
 						.labelStyle(.iconOnly)
 				}
-				
+
 				if enableUndo {
 					Button(action: board.undo) {
 						Label("Undo", systemImage: "arrow.uturn.backward")
@@ -47,7 +47,7 @@ struct ReversiView: View {
 					}
 					.disabled(!board.undoEnabled)
 				}
-				
+
 				Spacer()
 			}
 			.focusSection()
@@ -68,7 +68,7 @@ struct ReversiView: View {
 			guard enableUndo else {
 				return
 			}
-			
+
 			board.undo()
 		}
 #else
@@ -88,7 +88,7 @@ struct ReversiView: View {
 					}
 					.disabled(!board.undoEnabled)
 				}
-				
+
 				Button() {
 					themesSheetShown.toggle()
 				} label: {

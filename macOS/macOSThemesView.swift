@@ -18,7 +18,7 @@ struct ThemesView: View {
 	@AppStorage(Setting.checkersTheme.rawValue) private var checkersTheme = ""
 	@State private var sheetTheme: Theme?
 	let game: Theme.Game
-	
+
 	private func deleteTheme(at indexSet: IndexSet) {
 		let gameThemes = themes.filter({ $0.game == game })
 		for gameThemeIndex in indexSet {
@@ -26,14 +26,14 @@ struct ThemesView: View {
 			guard let theme = themes.first(where: { $0.id == id }) else {
 				continue
 			}
-			
+
 			context.delete(theme)
 		}
 		for (index, theme) in themes.filter({ $0.game == game }).enumerated() {
 			theme.index = index
 		}
 	}
-	
+
 	private func moveTheme(from offsets: IndexSet, to offset: Int) {
 		var ids = themes.filter({ $0.game == game }).map({ $0.id })
 		ids.move(fromOffsets: offsets, toOffset: offset)
@@ -41,11 +41,11 @@ struct ThemesView: View {
 			guard let theme = themes.first(where: { $0.id == id }) else {
 				continue
 			}
-			
+
 			theme.index = index
 		}
 	}
-	
+
 	var body: some View {
 		NavigationStack {
 			List {
@@ -55,7 +55,7 @@ struct ThemesView: View {
 				case .reversi: reversiTheme
 				case .checkers: checkersTheme
 				}
-				
+
 				Section {
 					let selectedThemeMissing = !themes.contains(where: { theme in theme.id.uuidString == gameTheme })
 					Button {
@@ -74,7 +74,7 @@ struct ThemesView: View {
 					}
 					.foregroundStyle(.primary)
 				}
-				
+
 				Section {
 					ForEach(gameThemes) { theme in
 						let themeSelected = gameTheme == theme.id.uuidString
@@ -103,7 +103,7 @@ struct ThemesView: View {
 							} label: {
 								Label("Edit", systemImage: "pencil")
 							}
-							
+
 							Button(role: .destructive) {
 								guard let index = gameThemes.firstIndex(of: theme) else {
 									return
@@ -116,7 +116,7 @@ struct ThemesView: View {
 					}
 					.onDelete(perform: deleteTheme)
 					.onMove(perform: moveTheme)
-					
+
 					Button {
 						let theme = Theme(game: game)
 						if let lastThemeIndex = gameThemes.last?.index {

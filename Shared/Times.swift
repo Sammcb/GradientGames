@@ -11,7 +11,7 @@ struct Times: Codable {
 	var light: TimeInterval
 	var dark: TimeInterval
 	var lastUpdate: Date
-	
+
 	func stringFor(lightTime: Bool) -> String {
 		let formatter = DateComponentsFormatter()
 		formatter.allowedUnits = [.minute, .second]

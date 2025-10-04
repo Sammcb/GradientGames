@@ -14,7 +14,7 @@ extension SchemaV1_0_0 {
 		enum Game: String, Codable {
 			case chess, reversi, checkers
 		}
-		
+
 		// CloudKit does not support unique attributes even though SwiftData does
 		// #Unique<Theme>([\.id])
 		// This has to be var with Swift 6 but could be a let
@@ -22,9 +22,9 @@ extension SchemaV1_0_0 {
 		var index = 0
 		var symbol = ""
 		var game = Game.chess
-		
+
 		var colors: ThemeColors = []
-		
+
 		init(game: Game) {
 			self.game = game
 			let colorTargets: [ThemeColor.Target] = switch game {
@@ -34,14 +34,14 @@ extension SchemaV1_0_0 {
 			}
 			self.colors = colorTargets.map({ target in ThemeColor(target: target) })
 		}
-		
+
 		init(index: Int, symbol: String, game: Game, colors: ThemeColors) {
 			self.index = index
 			self.symbol = symbol
 			self.game = game
 			self.colors = colors
 		}
-		
+
 		static var defaultChessTheme: Theme {
 			let theme = Theme.init(game: .chess)
 			theme.symbol = "🌑"
@@ -54,7 +54,7 @@ extension SchemaV1_0_0 {
 			theme.colors = [pieceLight, pieceDark, squareLight, squareDark]
 			return theme
 		}
-		
+
 		static var defaultReversiTheme: Theme {
 			let theme = Theme.init(game: .reversi)
 			theme.symbol = "🥝"
@@ -67,7 +67,7 @@ extension SchemaV1_0_0 {
 			theme.colors = [pieceLight, pieceDark, squares, borders]
 			return theme
 		}
-		
+
 		static var defaultCheckersTheme: Theme {
 			let theme = Theme.init(game: .checkers)
 			theme.symbol = "☕️"

@@ -13,7 +13,7 @@ struct ChessBoardView: View {
 	var board: ChessBoard
 	@FocusState private var focusedSquare: Chess.Square?
 	@Namespace private var pieceAnimation
-	
+
 	var body: some View {
 		let borderColor = board.lightTurn ? theme.colors[.pieceLight] : theme.colors[.pieceDark]
 		ZStack {
@@ -29,7 +29,7 @@ struct ChessBoardView: View {
 					}
 				}
 			}
-			
+
 			Grid(horizontalSpacing: 0, verticalSpacing: 0) {
 				ForEach(Chess.Ranks.reversed(), id: \.self) { rank in
 					GridRow {

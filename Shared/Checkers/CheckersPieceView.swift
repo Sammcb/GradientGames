@@ -11,7 +11,7 @@ struct CheckersPieceView: View {
 	@Environment(\.checkersTheme) private var theme
 	let isLight: Bool
 	let kinged: Bool
-	
+
 	var body: some View {
 		Image(systemName: "circle")
 			.resizable()

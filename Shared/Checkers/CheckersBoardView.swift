@@ -12,7 +12,7 @@ struct CheckersBoardView: View {
 	var board: CheckersBoard
 	@FocusState private var focusedSquare: Checkers.Square?
 	@Namespace private var pieceAnimation
-	
+
 	var body: some View {
 		let borderColor = board.lightTurn ? theme.colors[.pieceLight] : theme.colors[.pieceDark]
 		ZStack {
@@ -28,7 +28,7 @@ struct CheckersBoardView: View {
 					}
 				}
 			}
-			
+
 			Grid(horizontalSpacing: 0, verticalSpacing: 0) {
 				ForEach(Checkers.SizeRange.reversed(), id: \.self) { row in
 					GridRow {

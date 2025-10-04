@@ -13,18 +13,18 @@ struct ReversiSquareView: View {
 	var board: ReversiBoard
 	let column: Int
 	let row: Int
-	
+
 	var body: some View {
 		let square = Reversi.Square(column: column, row: row)
 		Button {
 			if board.gameOver {
 				return
 			}
-			
+
 			guard board.canPlace(at: square) else {
 				return
 			}
-			
+
 			board.place(at: square)
 		} label: {
 			Color(theme.colors[.squares])

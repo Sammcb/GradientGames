@@ -11,7 +11,7 @@ struct ReversiBoardView: View {
 	@Environment(\.reversiTheme) private var theme
 	var board: ReversiBoard
 	@FocusState private var focusedSquare: Reversi.Square?
-	
+
 	var body: some View {
 		let borderColor = board.lightTurn ? theme.colors[.pieceLight] : theme.colors[.pieceDark]
 		ZStack {
@@ -27,7 +27,7 @@ struct ReversiBoardView: View {
 					}
 				}
 			}
-			
+
 			Grid(horizontalSpacing: 0, verticalSpacing: 0) {
 				ForEach(Reversi.SizeRange.reversed(), id: \.self) { row in
 					GridRow {

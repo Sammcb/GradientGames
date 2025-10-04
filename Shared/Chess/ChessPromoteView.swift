@@ -14,7 +14,7 @@ struct ChessPromoteView: View {
 	var board: ChessBoard
 	let lightTurn: Bool
 	private let groups: [Chess.Piece.Group] = [.knight, .bishop, .rook, .queen]
-	
+
 	var body: some View {
 		let layout = verticalUI ? AnyLayout(HStackLayout()) : AnyLayout(VStackLayout())
 		layout {

@@ -15,7 +15,7 @@ struct ThemeImportView: View {
 	@State private var showImportStatusAlert = false
 	@State private var importStatusMessage = ""
 	@State private var themesDataJSON = ""
-	
+
 	private func importThemes(_ themes: [ThemeData], context: ModelContext, themesCount: Int) {
 		for (index, themeData) in themes.enumerated() {
 			let importIndex = themesCount + index
@@ -23,7 +23,7 @@ struct ThemeImportView: View {
 			context.insert(theme)
 		}
 	}
-	
+
 #if !os(tvOS)
 	private func importThemes(for importFileResult: Result<URL, Error>, context: ModelContext, themesCount: Int) -> Bool {
 		switch importFileResult {
@@ -31,19 +31,19 @@ struct ThemeImportView: View {
 			guard url.startAccessingSecurityScopedResource() else {
 				return false
 			}
-			
+
 			defer {
 				url.stopAccessingSecurityScopedResource()
 			}
-			
+
 			guard let data = try? Data(contentsOf: url) else {
 				return false
 			}
-			
+
 			guard let document = try? ThemesDocument(data: data) else {
 				return false
 			}
-			
+
 			importThemes(document.themes, context: context, themesCount: themesCount)
 			return true
 		case .failure(_):
@@ -51,24 +51,24 @@ struct ThemeImportView: View {
 		}
 	}
 #endif
-	
+
 	private func importThemes(from jsonData: String, context: ModelContext) -> Bool {
 		guard let themesData = jsonData.data(using: .utf8) else {
 			return false
 		}
-		
+
 		guard let backup = try? JSONDecoder().decode(ThemeBackupData.self, from: themesData) else {
 			return false
 		}
-		
+
 		guard ThemesBackup.supportedSchemaVersions.contains(backup.schemaVersion) else {
 			return false
 		}
-		
+
 		importThemes(backup.themes, context: context, themesCount: themes.count)
 		return true
 	}
-	
+
 	var body: some View {
 		Group {
 #if !os(tvOS)

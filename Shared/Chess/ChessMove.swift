@@ -14,7 +14,7 @@ extension Chess {
 		let capturedSquare: Square?
 		let promoted: Bool
 		var promotedPiece: Piece?
-		
+
 		init(from oldSquare: Square, to square: Square, capturedAt capturedSquare: Square?, promoted: Bool) {
 			self.fromSquare = oldSquare
 			self.toSquare = square

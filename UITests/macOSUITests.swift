@@ -11,7 +11,7 @@ final class macOSUITests: XCTestCase {
 	override func setUpWithError() throws {
 		continueAfterFailure = false
 	}
-	
+
 	override func tearDownWithError() throws {}
 
 	@MainActor
@@ -20,37 +20,37 @@ final class macOSUITests: XCTestCase {
 		screenshot.name = UUID().uuidString
 		add(screenshot)
 	}
-	
+
 	@MainActor
 	private func switchTheme(to themeSymbol: String, for game: String, app: XCUIApplication) {
 		app.windows[game.capitalized].toolbars.element.buttons["Themes"].firstMatch.click()
 		app.buttons[themeSymbol].click()
 		app.sheets.buttons["Done"].firstMatch.click()
 	}
-	
+
 	@MainActor
 	private func clickGameBoardButton(identifier: String, app: XCUIApplication) {
 		app.buttons[identifier].click()
 		Thread.sleep(forTimeInterval: 1)
 	}
-	
+
 	@MainActor
 	private func clickChessSquareAt(file: String, rank: String, app: XCUIApplication) {
 		clickGameBoardButton(identifier: "File\(file)Rank\(rank)ChessBoardSquareButton", app: app)
 	}
-	
+
 	@MainActor
 	private func clickReversiSquareAt(row: String, column: String, app: XCUIApplication) {
 		clickGameBoardButton(identifier: "Row\(row)Column\(column)ReversiBoardSquareButton", app: app)
 	}
-	
+
 	@MainActor
 	private func clickCheckersSquareAt(row: String, column: String, app: XCUIApplication) {
 		clickGameBoardButton(identifier: "Row\(row)Column\(column)CheckersBoardSquareButton", app: app)
 	}
-	
+
 	@MainActor
-	func testPlayAllGamesAndChangeThemes() throws {		
+	func testPlayAllGamesAndChangeThemes() throws {
 		let app = XCUIApplication()
 		app.launch()
 
@@ -67,11 +67,11 @@ final class macOSUITests: XCTestCase {
 		jsonThemeDataField.typeText("\(TestData.themeData)\r")
 		app.windows["Settings"].sheets.buttons["OK"].click()
 		app.windows["Settings"].buttons.matching(identifier: XCUIIdentifierCloseWindow).firstMatch.click()
-		
+
 		let chessButton = app.buttons["Chess"]
 		let reversiButton = app.buttons["Reversi"]
 		let checkersButton = app.buttons["Checkers"]
-		
+
 		// Reset games
 		chessButton.rightClick()
 		app.menuItems["New game"].click()
@@ -79,10 +79,10 @@ final class macOSUITests: XCTestCase {
 		app.menuItems["New game"].click()
 		checkersButton.rightClick()
 		app.menuItems["New game"].click()
-		
+
 		// Open chess
 		chessButton.click()
-		
+
 		// Play chess
 		clickChessSquareAt(file: "c", rank: "2", app: app)
 		takeScreenshot()
@@ -97,10 +97,10 @@ final class macOSUITests: XCTestCase {
 		clickChessSquareAt(file: "d", rank: "8", app: app)
 		takeScreenshot()
 		clickChessSquareAt(file: "d", rank: "5", app: app)
-		
+
 		// Open reversi
 		reversiButton.click()
-		
+
 		// Play reversi
 		takeScreenshot()
 		clickReversiSquareAt(row: "6", column: "4", app: app)
@@ -111,10 +111,10 @@ final class macOSUITests: XCTestCase {
 		clickReversiSquareAt(row: "5", column: "3", app: app)
 		switchTheme(to: "🌑", for: "reversi", app: app)
 		clickReversiSquareAt(row: "6", column: "5", app: app)
-		
+
 		// Open checkers
 		checkersButton.click()
-		
+
 		// Play checkers
 		clickCheckersSquareAt(row: "3", column: "3", app: app)
 		takeScreenshot()

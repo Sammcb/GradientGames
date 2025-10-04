@@ -12,7 +12,7 @@ struct ThemeDeleteAllView: View {
 	@Environment(\.modelContext) private var context
 	@Query(sort: \Theme.index) private var themes: [Theme]
 	@State private var showDeleteConfirmation = false
-	
+
 	var body: some View {
 		Button(role: .destructive) {
 			showDeleteConfirmation.toggle()
