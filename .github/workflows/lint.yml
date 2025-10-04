@@ -1,0 +1,52 @@
+name: Lint
+on: workflow_call
+permissions: {}
+jobs:
+  flake:
+    runs-on: ubuntu-24.04-arm
+    steps:
+    - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      with:
+        persist-credentials: false
+    - uses: ./.github/actions/setup-nix
+    - uses: DeterminateSystems/flake-checker-action@3164002371bc90729c68af0e24d5aacf20d7c9f6 # v12
+      with:
+        send-statistics: false
+        ignore-missing-flake-lock: false
+        fail-mode: true
+  checks:
+    runs-on: ubuntu-24.04-arm
+    steps:
+    - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      with:
+        persist-credentials: false
+    - uses: ./.github/actions/setup-nix
+    - name: Flake checks
+      run: nix flake check --all-systems
+  editorconfig:
+    runs-on: ubuntu-24.04-arm
+    steps:
+    - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      with:
+        persist-credentials: false
+    - uses: ./.github/actions/setup-nix
+    - name: Lint editorconfig
+      run: nix develop .#lintEditorconfig -c editorconfig-checker -f github-actions
+  workflows:
+    runs-on: ubuntu-24.04-arm
+    permissions:
+      security-events: write
+    steps:
+    - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      with:
+        persist-credentials: false
+    - uses: ./.github/actions/setup-nix
+    - name: Lint workflows
+      run: nix develop .#lintWorkflows -c zizmor --format sarif . > workflow_results.sarif
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Upload workflow report
+      uses: github/codeql-action/upload-sarif@3599b3baa15b485a2e49ef411a7a4bb2452e7f93 # v3.29.5
+      with:
+        sarif_file: workflow_results.sarif
+        category: zizmor

@@ -1,0 +1,15 @@
+name: Secure
+on: workflow_call
+permissions: {}
+jobs:
+  secrets:
+    runs-on: ubuntu-24.04-arm
+    steps:
+    - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      with:
+        persist-credentials: false
+    - uses: ./.github/actions/setup-nix
+    - name: Scan secrets
+      run: nix develop .#scanSecrets -c trufflehog git file://. --branch "${SHA}" --fail --github-actions --results=verified,unknown
+      env:
+        SHA: ${{ github.sha }}
