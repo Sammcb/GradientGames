@@ -10,10 +10,9 @@ import SwiftUI
 struct CheckersBoardView: View {
 	@Environment(\.checkersTheme) private var theme
 	var board: CheckersBoard
-	var showMoves: Bool
 	@FocusState private var focusedSquare: Checkers.Square?
 	@Namespace private var pieceAnimation
-	
+
 	var body: some View {
 		let borderColor = board.lightTurn ? theme.colors[.pieceLight] : theme.colors[.pieceDark]
 		ZStack {
@@ -22,14 +21,14 @@ struct CheckersBoardView: View {
 					GridRow {
 						ForEach(Checkers.SizeRange, id: \.self) { column in
 							let square = Checkers.Square(column: column, row: row)
-							CheckersSquareView(board: board, showMoves: showMoves, column: column, row: row)
+							CheckersSquareView(board: board, column: column, row: row)
 								.focused($focusedSquare, equals: square)
 								.border(focusedSquare == square ? borderColor : .clear, width: 5)
 						}
 					}
 				}
 			}
-			
+
 			Grid(horizontalSpacing: 0, verticalSpacing: 0) {
 				ForEach(Checkers.SizeRange.reversed(), id: \.self) { row in
 					GridRow {

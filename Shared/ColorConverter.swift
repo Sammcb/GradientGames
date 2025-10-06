@@ -14,14 +14,14 @@ extension ColorConverter {
 		guard let hex = UInt32(colorString, radix: 16) else {
 			return Color.clear
 		}
-		
+
 		let red = (hex & 0xff0000) >> 16
 		let green = (hex & 0x00ff00) >> 8
 		let blue = hex & 0x0000ff
 		let resolvedColor = Color.Resolved(red: Float(red) / 255, green: Float(green) / 255, blue: Float(blue) / 255)
 		return Color(resolvedColor)
 	}
-	
+
 	func hexFrom(_ color: Color) -> String {
 		let resolvedColor = color.resolve(in: EnvironmentValues())
 		let redInt = UInt32(resolvedColor.red * 255)

@@ -12,9 +12,9 @@ struct ThemeColor: Identifiable, ColorConverter {
 		static func <(lhs: Target, rhs: Target) -> Bool {
 			lhs.rawValue < rhs.rawValue
 		}
-		
+
 		case pieceLight, pieceDark, squareLight, squareDark, squares, borders
-		
+
 		var displayName: String {
 			switch self {
 			case .pieceLight: "Light pieces"
@@ -26,10 +26,10 @@ struct ThemeColor: Identifiable, ColorConverter {
 			}
 		}
 	}
-	
+
 	let target: Target
 	var color: Color = .clear
-	
+
 	var id: Target {
 		target
 	}
@@ -39,14 +39,14 @@ extension ThemeColor: Codable {
 	private enum CodingKeys: String, CodingKey {
 		case target, color
 	}
-	
+
 	init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
 		target = try values.decode(Target.self, forKey: .target)
 		let colorString = try values.decode(String.self, forKey: .color)
 		color = colorFrom(colorString)
 	}
-	
+
 	func encode(to encoder: Encoder) throws {
 		var container = encoder.container(keyedBy: CodingKeys.self)
 		try container.encode(target, forKey: .target)

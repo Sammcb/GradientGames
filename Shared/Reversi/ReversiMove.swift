@@ -12,13 +12,13 @@ extension Reversi {
 		let light: Bool
 		let square: Square
 		let skip: Bool
-		
+
 		init(light: Bool, at square: Square) {
 			self.light = light
 			self.square = square
 			self.skip = false
 		}
-		
+
 		init(skip: Bool) {
 			self.light = true
 			self.square = Square(column: 1, row: 1)

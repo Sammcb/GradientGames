@@ -15,7 +15,7 @@ struct ThemesView: View {
 	@AppStorage(Setting.reversiTheme.rawValue) private var reversiTheme = ""
 	@AppStorage(Setting.checkersTheme.rawValue) private var checkersTheme = ""
 	let game: Theme.Game
-	
+
 	var body: some View {
 		let gameThemes = themes.filter({ $0.game == game })
 		let gameTheme = switch game {
@@ -23,9 +23,11 @@ struct ThemesView: View {
 		case .reversi: reversiTheme
 		case .checkers: checkersTheme
 		}
-		
+
 		NavigationStack {
-			Form {
+			Spacer()
+
+			List {
 				Section {
 					let selectedThemeMissing = !themes.contains(where: { theme in theme.id.uuidString == gameTheme })
 					Button {
@@ -43,9 +45,15 @@ struct ThemesView: View {
 						ThemeListEntryView(theme: defaultTheme, selected: selectedThemeMissing)
 					}
 					.foregroundStyle(.primary)
+					.buttonStyle(.glassProminent)
 				}
-				
-				List {
+
+				if !gameThemes.isEmpty {
+					Divider()
+						.padding(.horizontal)
+				}
+
+				Section {
 					ForEach(gameThemes) { theme in
 						let themeSelected = gameTheme == theme.id.uuidString
 						Button {
@@ -58,6 +66,7 @@ struct ThemesView: View {
 							ThemeListEntryView(theme: theme, selected: themeSelected)
 						}
 						.foregroundStyle(.primary)
+						.buttonStyle(.glassProminent)
 					}
 				}
 			}

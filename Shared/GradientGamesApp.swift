@@ -11,7 +11,7 @@ import SwiftData
 @main
 struct GradientGamesApp: App {
 	let container: ModelContainer
-	
+
 	var body: some Scene {
 		WindowGroup {
 			GamesView()
@@ -29,7 +29,7 @@ struct GradientGamesApp: App {
 		.modelContainer(container)
 #endif
 	}
-	
+
 	init() {
 		let schema = Schema(versionedSchema: SchemaV1_0_0.self)
 		let modelConfiguration = ModelConfiguration(schema: schema)

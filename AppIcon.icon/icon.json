@@ -1,0 +1,142 @@
+{
+  "color-space-for-untagged-svg-colors" : "display-p3",
+  "fill-specializations" : [
+    {
+      "value" : "automatic"
+    },
+    {
+      "appearance" : "dark",
+      "value" : "automatic"
+    }
+  ],
+  "groups" : [
+    {
+      "hidden-specializations" : [
+        {
+          "value" : false
+        },
+        {
+          "appearance" : "light",
+          "value" : true
+        },
+        {
+          "appearance" : "tinted",
+          "value" : true
+        }
+      ],
+      "layers" : [
+        {
+          "image-name" : "CheckersPieceGradient.png",
+          "name" : "CheckersPieceGradient"
+        },
+        {
+          "image-name" : "ReversiPieceGradient.png",
+          "name" : "ReversiPieceGradient"
+        },
+        {
+          "image-name" : "RookGradient.png",
+          "name" : "RookGradient"
+        },
+        {
+          "image-name" : "GridGradient.png",
+          "name" : "GridGradient"
+        }
+      ],
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    },
+    {
+      "hidden-specializations" : [
+        {
+          "appearance" : "dark",
+          "value" : true
+        }
+      ],
+      "layers" : [
+        {
+          "image-name" : "CheckersPiece.svg",
+          "name" : "CheckersPiece",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              -236.5,
+              236.5
+            ]
+          }
+        },
+        {
+          "image-name" : "ReversiPiece.svg",
+          "name" : "ReversiPiece",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              236.5,
+              -236.5
+            ]
+          }
+        },
+        {
+          "image-name" : "Rook.svg",
+          "name" : "Rook",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              -236.5,
+              -236.5
+            ]
+          }
+        },
+        {
+          "hidden" : false,
+          "image-name" : "Grid.svg",
+          "name" : "Grid"
+        }
+      ],
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    },
+    {
+      "hidden-specializations" : [
+        {
+          "appearance" : "dark",
+          "value" : true
+        },
+        {
+          "appearance" : "tinted",
+          "value" : true
+        }
+      ],
+      "layers" : [
+        {
+          "glass" : false,
+          "image-name" : "Background.png",
+          "name" : "Background"
+        }
+      ],
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "specular" : true,
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "squares" : "shared"
+  }
+}

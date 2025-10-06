@@ -12,7 +12,7 @@ extension Checkers {
 		let fromSquare: Square
 		let toSquare: Square
 		var continued: Bool = false
-		
+
 		init(from oldSquare: Square, to square: Square) {
 			self.fromSquare = oldSquare
 			self.toSquare = square

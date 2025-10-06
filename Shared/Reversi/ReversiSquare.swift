@@ -19,7 +19,7 @@ extension Reversi.Square {
 		guard Reversi.SizeRange.contains(square.column + deltaColumn) && Reversi.SizeRange.contains(square.row + deltaRow) else {
 			return nil
 		}
-		
+
 		self.init(column: square.column + deltaColumn, row: square.row + deltaRow)
 	}
 }

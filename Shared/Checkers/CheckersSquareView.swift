@@ -9,36 +9,38 @@ import SwiftUI
 
 struct CheckersSquareView: View {
 	@Environment(\.checkersTheme) private var theme
+	@AppStorage(Setting.showMoves.rawValue) private var showMoves = true
 	var board: CheckersBoard
-	var showMoves: Bool
 	let column: Int
 	let row: Int
-	
+
 	private func select(square: Checkers.Square) {
 		if board.gameOver {
 			return
 		}
-		
+
 		if let piece = board.pieces[square], piece.isLight == board.lightTurn, board.forcedSelectedSquare == nil {
 			board.selectedSquare = square
 			return
 		}
-		
+
 		guard let selectedSquare = board.selectedSquare, board.canMove(from: selectedSquare, to: square) else {
 			return
 		}
-		
+
 		board.move(from: selectedSquare, to: square)
 		board.selectedSquare = board.forcedSelectedSquare
 	}
-	
+
 	var body: some View {
 		let square = Checkers.Square(column: column, row: row)
 		let lightSquare = (row + column - 1).isMultiple(of: 2)
 		Button {
 			select(square: square)
 		} label: {
-			lightSquare ? theme.colors[.squareLight] : theme.colors[.squareDark]
+			Color(lightSquare ? theme.colors[.squareLight] : theme.colors[.squareDark])
+				.animation(.easeInOut(duration: 0.6), value: board.history)
+				.animation(.easeInOut, value: board.selectedSquare)
 		}
 		.accessibilityIdentifier("Row\(row)Column\(column)CheckersBoardSquareButton")
 		.buttonStyle(.borderless)

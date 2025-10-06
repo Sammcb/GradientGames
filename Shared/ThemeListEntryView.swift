@@ -10,7 +10,7 @@ import SwiftUI
 struct ThemeListEntryView: View {
 	let theme: Theme
 	let selected: Bool
-	
+
 	var body: some View {
 		HStack {
 			Text(theme.symbol)

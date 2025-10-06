@@ -49,9 +49,9 @@ final class ReversiTheme {
 @MainActor
 struct MigrateOldThemes {
 	private init() {}
-	
+
 	static private var migratedIds: [UUID] = []
-	
+
 	static private func getColor(from hex: Int64) -> Color {
 		let uhex = UInt32(hex)
 		let red = (uhex & 0xff0000) >> 16
@@ -59,12 +59,12 @@ struct MigrateOldThemes {
 		let blue = uhex & 0x0000ff
 		return Color.init(red: CGFloat(red) / 255, green: CGFloat(green) / 255, blue: CGFloat(blue) / 255, opacity: 1)
 	}
-	
+
 	static func migrate(_ context: ModelContext) {
 		let chessThemes = try? context.fetch(FetchDescriptor<ChessTheme>())
 		let reversiThemes = try? context.fetch(FetchDescriptor<ReversiTheme>())
 		let checkersThemes = try? context.fetch(FetchDescriptor<CheckersTheme>())
-		
+
 		for chessTheme in chessThemes ?? [] {
 			guard let chessId = chessTheme.id, !migratedIds.contains(chessId) else {
 				continue
@@ -81,7 +81,7 @@ struct MigrateOldThemes {
 			context.delete(chessTheme)
 			migratedIds.append(chessId)
 		}
-		
+
 		for reversiTheme in reversiThemes ?? [] {
 			guard let reversiId = reversiTheme.id, !migratedIds.contains(reversiId) else {
 				continue
@@ -98,7 +98,7 @@ struct MigrateOldThemes {
 			context.delete(reversiTheme)
 			migratedIds.append(reversiId)
 		}
-		
+
 		for checkersTheme in checkersThemes ?? [] {
 			guard let checkersId = checkersTheme.id, !migratedIds.contains(checkersId) else {
 				continue
@@ -115,7 +115,7 @@ struct MigrateOldThemes {
 			context.delete(checkersTheme)
 			migratedIds.append(checkersId)
 		}
-		
+
 		try? context.save()
 	}
 }

@@ -9,12 +9,11 @@ import SwiftUI
 
 struct ChessBoardView: View {
 	@Environment(\.chessTheme) private var theme
+	@AppStorage(Setting.flipUI.rawValue) private var flipUI = false
 	var board: ChessBoard
-	var flipped: Bool
-	var showMoves: Bool
 	@FocusState private var focusedSquare: Chess.Square?
 	@Namespace private var pieceAnimation
-	
+
 	var body: some View {
 		let borderColor = board.lightTurn ? theme.colors[.pieceLight] : theme.colors[.pieceDark]
 		ZStack {
@@ -23,14 +22,14 @@ struct ChessBoardView: View {
 					GridRow {
 						ForEach(Chess.File.validFiles) { file in
 							let square = Chess.Square(file: file, rank: rank)
-							ChessSquareView(board: board, showMoves: showMoves, file: file, rank: rank)
+							ChessSquareView(board: board, file: file, rank: rank)
 								.focused($focusedSquare, equals: square)
 								.border(focusedSquare == square ? borderColor : .clear, width: 5)
 						}
 					}
 				}
 			}
-			
+
 			Grid(horizontalSpacing: 0, verticalSpacing: 0) {
 				ForEach(Chess.Ranks.reversed(), id: \.self) { rank in
 					GridRow {
@@ -43,7 +42,7 @@ struct ChessBoardView: View {
 									.matchedGeometryEffect(id: piece.id, in: pieceAnimation)
 									.transition(.opacity.animation(.easeIn))
 									.allowsHitTesting(false)
-									.rotationEffect(!piece.isLight && flipped ? .radians(.pi) : .zero)
+									.rotationEffect(!piece.isLight && flipUI ? .radians(.pi) : .zero)
 									.id(piece.id)
 									.frame(maxWidth: .infinity, maxHeight: .infinity)
 							} else {

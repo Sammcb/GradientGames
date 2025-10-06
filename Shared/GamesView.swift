@@ -8,21 +8,25 @@
 import SwiftUI
 import SwiftData
 
+extension EnvironmentValues {
+	@Entry var verticalUI: Bool = true
+}
+
 private enum DetailView: String, Identifiable, CaseIterable {
 	case chess, reversi, checkers, settings
-	
+
 	var id: String {
 		rawValue
 	}
-	
+
 	static var allGames: [Self] {
 		allCases.filter({ detailView in detailView != .settings })
 	}
-	
+
 	var title: String {
 		rawValue.capitalized
 	}
-	
+
 	var symbol: String {
 		switch self {
 		case .chess: "crown"
@@ -31,7 +35,7 @@ private enum DetailView: String, Identifiable, CaseIterable {
 		case .settings: "gearshape"
 		}
 	}
-	
+
 	init?(game: Theme.Game) {
 		self.init(rawValue: game.rawValue)
 	}
@@ -47,26 +51,22 @@ struct GamesView: View, UniversalLinkReciever {
 	@AppStorage(Setting.chessTheme.rawValue) private var chessTheme = ""
 	@AppStorage(Setting.reversiTheme.rawValue) private var reversiTheme = ""
 	@AppStorage(Setting.checkersTheme.rawValue) private var checkersTheme = ""
-	@AppStorage(Setting.enableUndo.rawValue) private var enableUndo = true
-	@AppStorage(Setting.flipUI.rawValue) private var flipped = false
-	@AppStorage(Setting.enableTimer.rawValue) private var enableTimer = false
-	@AppStorage(Setting.showMoves.rawValue) private var showMoves = true
-	
+
 	// TODO: Delete after most users have updated to 2.0.0
 	@Query private var oldChessThemes: [ChessTheme]
 	@Query private var oldReversiThemes: [ReversiTheme]
 	@Query private var oldCheckersThemes: [CheckersTheme]
-	
+
 	private func parseTheme(_ url: URL) {
 		guard let theme = try? parseUniversalLink(url) else {
 			return
 		}
-		
+
 		let gameThemes = themes.filter({ $0.game == theme.game })
 		if let lastThemeIndex = gameThemes.last?.index {
 			theme.index = lastThemeIndex + 1
 		}
-		
+
 		context.insert(theme)
 		switch theme.game {
 		case .chess: chessTheme = theme.id.uuidString
@@ -75,7 +75,7 @@ struct GamesView: View, UniversalLinkReciever {
 		}
 		selectedView = DetailView(game: theme.game)
 	}
-	
+
 	private func resetGame(for detailView: DetailView) {
 		switch detailView {
 		case .chess:
@@ -94,7 +94,7 @@ struct GamesView: View, UniversalLinkReciever {
 			return
 		}
 	}
-	
+
 	private func chessBoard() -> ChessBoard {
 		guard let board = chessBoards.first else {
 			let newBoard = ChessBoard()
@@ -103,7 +103,7 @@ struct GamesView: View, UniversalLinkReciever {
 		}
 		return board
 	}
-	
+
 	private func reversiBoard() -> ReversiBoard {
 		guard let board = reversiBoards.first else {
 			let newBoard = ReversiBoard()
@@ -112,7 +112,7 @@ struct GamesView: View, UniversalLinkReciever {
 		}
 		return board
 	}
-	
+
 	private func checkersBoard() -> CheckersBoard {
 		guard let board = checkersBoards.first else {
 			let newBoard = CheckersBoard()
@@ -163,6 +163,7 @@ struct GamesView: View, UniversalLinkReciever {
 			}
 #endif
 			.navigationTitle("Games")
+			.toolbarBackgroundVisibility(.hidden)
 			.onOpenURL { url in
 				parseTheme(url)
 			}
@@ -188,27 +189,34 @@ struct GamesView: View, UniversalLinkReciever {
 				MigrateOldThemes.migrate(context)
 			}
 		} detail: {
-			switch selectedView {
-			case nil:
-				ContentUnavailableView("Pick a game to play!", systemImage: "rectangle.checkered")
+			GeometryReader { geometry in
+				let vertical = geometry.size.width < geometry.size.height
+
+				switch selectedView {
+				case nil:
+					ContentUnavailableView("Pick a game to play!", systemImage: "rectangle.checkered")
 #if os(tvOS)
-					.focusable()
+						.focusable()
 #endif
-					.frame(maxWidth: .infinity, maxHeight: .infinity)
-			case .chess:
-				let theme = themes.first(where: { $0.id.uuidString == chessTheme }) ?? Theme.defaultChessTheme
-				ChessView(board: chessBoard(), enableUndo: enableUndo, flipped: flipped, enableTimer: enableTimer, showMoves: showMoves)
-					.environment(\.chessTheme, theme)
-			case .reversi:
-				let theme = themes.first(where: { $0.id.uuidString == reversiTheme }) ?? Theme.defaultReversiTheme
-				ReversiView(board: reversiBoard(), enableUndo: enableUndo, flipped: flipped, enableTimer: enableTimer, showMoves: showMoves)
-					.environment(\.reversiTheme, theme)
-			case .checkers:
-				let theme = themes.first(where: { $0.id.uuidString == checkersTheme }) ?? Theme.defaultCheckersTheme
-				CheckersView(board: checkersBoard(), enableUndo: enableUndo, flipped: flipped, enableTimer: enableTimer, showMoves: showMoves)
-					.environment(\.checkersTheme, theme)
-			case .settings:
-				SettingsView()
+						.frame(maxWidth: .infinity, maxHeight: .infinity)
+				case .chess:
+					let theme = themes.first(where: { $0.id.uuidString == chessTheme }) ?? Theme.defaultChessTheme
+					ChessView(board: chessBoard())
+						.environment(\.chessTheme, theme)
+						.environment(\.verticalUI, vertical)
+				case .reversi:
+					let theme = themes.first(where: { $0.id.uuidString == reversiTheme }) ?? Theme.defaultReversiTheme
+					ReversiView(board: reversiBoard())
+						.environment(\.reversiTheme, theme)
+						.environment(\.verticalUI, vertical)
+				case .checkers:
+					let theme = themes.first(where: { $0.id.uuidString == checkersTheme }) ?? Theme.defaultCheckersTheme
+					CheckersView(board: checkersBoard())
+						.environment(\.checkersTheme, theme)
+						.environment(\.verticalUI, vertical)
+				case .settings:
+					SettingsView()
+				}
 			}
 		}
 	}

@@ -11,7 +11,7 @@ struct ChessPieceView: View {
 	@Environment(\.chessTheme) private var theme
 	let group: Chess.Piece.Group
 	let isLight: Bool
-	
+
 	var body: some View {
 		let piece = switch group {
 		case .pawn: isLight ? "♙" : "♟︎"

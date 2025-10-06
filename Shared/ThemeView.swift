@@ -12,7 +12,7 @@ import SwiftData
 struct ThemeView: View, ColorConverter {
 	@Environment(\.dismiss) private var dismiss
 	@Bindable var theme: Theme
-	
+
 	private var themeURL: URL {
 		var components = URLComponents()
 		components.scheme = "https"
@@ -28,10 +28,10 @@ struct ThemeView: View, ColorConverter {
 			queryItems.append(colorQueryItem)
 		}
 		components.queryItems = queryItems
-		
+
 		return components.url ?? URL(string: "https://www.sammcb.com")!
 	}
-	
+
 	var body: some View {
 		NavigationStack {
 			Form {
@@ -39,7 +39,7 @@ struct ThemeView: View, ColorConverter {
 					TextField("Symbol", text: $theme.symbol)
 						.lineLimit(1)
 				}
-				
+
 				Section("Colors") {
 					ForEach($theme.colors.sorted(by: { $0.wrappedValue.target < $1.wrappedValue.target })) { $color in
 						ColorPicker(color.target.displayName, selection: $color.color, supportsOpacity: false)
@@ -52,8 +52,6 @@ struct ThemeView: View, ColorConverter {
 						dismiss()
 					} label: {
 						Label("Done", systemImage: "checkmark")
-							.symbolVariant(.circle)
-							.labelStyle(.titleOnly)
 					}
 				}
 				ToolbarItem {

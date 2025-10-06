@@ -14,7 +14,7 @@ struct SettingsView: View {
 	@AppStorage(Setting.flipUI.rawValue) private var flipUI = false
 	@AppStorage(Setting.showMoves.rawValue) private var showMoves = true
 	@State private var icloudStatus: CKAccountStatus = .couldNotDetermine
-	
+
 	var body: some View {
 		Form {
 			Section {
@@ -41,17 +41,13 @@ struct SettingsView: View {
 #endif
 			}
 			.headerProminence(.increased)
-			
+
 			Section {
 				ThemeImportView()
 			} header: {
 				Text("Themes")
 			} footer: {
 				Text("Importing does not overwrite existing themes. Either import from a file or by entering JSON data.")
-#if os(macOS)
-					.font(.footnote)
-					.foregroundStyle(.secondary)
-#endif
 			}
 			.headerProminence(.increased)
 
@@ -60,17 +56,13 @@ struct SettingsView: View {
 				ThemeExportView()
 			} footer: {
 				Text("Export all themes to a file.")
-#if os(macOS)
-					.font(.footnote)
-					.foregroundStyle(.secondary)
-#endif
 			}
 #endif
-			
+
 			Section {
 				ThemeDeleteAllView()
 			}
-			
+
 			let statusDescription = switch icloudStatus {
 			case .couldNotDetermine: "iCloud account status could not be determined."
 			case .temporarilyUnavailable: "Currently unable to connect to iCloud account."
@@ -105,13 +97,9 @@ struct SettingsView: View {
 				Text("iCloud Status")
 			} footer: {
 				Text("\(statusDescription) \(syncStatus)")
-#if os(macOS)
-					.font(.footnote)
-					.foregroundStyle(.secondary)
-#endif
 			}
 			.headerProminence(.increased)
-			
+
 			Section {
 				VStack(alignment: .leading) {
 					Text("Built using")

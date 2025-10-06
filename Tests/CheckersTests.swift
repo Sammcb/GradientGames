@@ -7,7 +7,7 @@
 
 import Testing
 import Foundation
-@testable import GradientGames
+@testable import Gradient_Games
 
 extension Checkers.Pieces {
 	var withoutIds: Self {

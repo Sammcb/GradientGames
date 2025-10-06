@@ -13,7 +13,7 @@ struct ThemeExportView: View {
 	@Environment(\.modelContext) private var context
 	@Query(sort: \Theme.index) private var themes: [Theme]
 	@State private var exportThemes = false
-	
+
 	var body: some View {
 		Button {
 			exportThemes.toggle()

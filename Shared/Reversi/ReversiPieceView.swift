@@ -10,7 +10,7 @@ import SwiftUI
 struct ReversiPieceView: View {
 	@Environment(\.reversiTheme) private var theme
 	var isLight: Bool
-	
+
 	var body: some View {
 		Image(systemName: "circle")
 			.resizable()
