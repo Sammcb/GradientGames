@@ -1,5 +1,5 @@
 .PHONY: lint
-.DEFAULT_GOAL: lint
+.DEFAULT_GOAL := lint
 
 lint:
 	zizmor .
