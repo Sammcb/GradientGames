@@ -41,7 +41,7 @@ private enum DetailView: String, Identifiable, CaseIterable {
 	}
 }
 
-struct GamesView: View, UniversalLinkReciever {
+struct GamesView: View {
 	@Environment(\.modelContext) private var context
 	@Query(sort: \Theme.index) private var themes: [Theme]
 	@Query private var chessBoards: [ChessBoard]
@@ -56,25 +56,6 @@ struct GamesView: View, UniversalLinkReciever {
 	@Query private var oldChessThemes: [ChessTheme]
 	@Query private var oldReversiThemes: [ReversiTheme]
 	@Query private var oldCheckersThemes: [CheckersTheme]
-
-	private func parseTheme(_ url: URL) {
-		guard let theme = try? parseUniversalLink(url) else {
-			return
-		}
-
-		let gameThemes = themes.filter({ $0.game == theme.game })
-		if let lastThemeIndex = gameThemes.last?.index {
-			theme.index = lastThemeIndex + 1
-		}
-
-		context.insert(theme)
-		switch theme.game {
-		case .chess: chessTheme = theme.id.uuidString
-		case .reversi: reversiTheme = theme.id.uuidString
-		case .checkers: checkersTheme = theme.id.uuidString
-		}
-		selectedView = DetailView(game: theme.game)
-	}
 
 	private func resetGame(for detailView: DetailView) {
 		switch detailView {
@@ -164,9 +145,6 @@ struct GamesView: View, UniversalLinkReciever {
 #endif
 			.navigationTitle("Games")
 			.toolbarBackgroundVisibility(.hidden)
-			.onOpenURL { url in
-				parseTheme(url)
-			}
 			// TODO: Delete after most users have updated to 2.0.0
 			.onChange(of: oldChessThemes.count) {
 				guard !oldChessThemes.isEmpty else {

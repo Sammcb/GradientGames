@@ -13,23 +13,8 @@ struct ThemeView: View, ColorConverter {
 	@Environment(\.dismiss) private var dismiss
 	@Bindable var theme: Theme
 
-	private var themeURL: URL {
-		var components = URLComponents()
-		components.scheme = "https"
-		components.host = "www.sammcb.com"
-		components.path = UniversalLink.themePath
-		var queryItems = [
-			URLQueryItem(name: "symbol", value: theme.symbol),
-			URLQueryItem(name: "game", value: theme.game.rawValue),
-		]
-		for themeColor in theme.colors {
-			let colorHexString = hexFrom(themeColor.color)
-			let colorQueryItem = URLQueryItem(name: themeColor.target.rawValue, value: colorHexString)
-			queryItems.append(colorQueryItem)
-		}
-		components.queryItems = queryItems
-
-		return components.url ?? URL(string: "https://www.sammcb.com")!
+	private var themeData: String {
+		return ThemesDocument([theme]).toString()
 	}
 
 	var body: some View {
@@ -55,7 +40,7 @@ struct ThemeView: View, ColorConverter {
 					}
 				}
 				ToolbarItem {
-					ShareLink(item: themeURL)
+					ShareLink(item: themeData)
 				}
 			}
 #if os(macOS)

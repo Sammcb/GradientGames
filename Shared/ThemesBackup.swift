@@ -20,7 +20,7 @@ struct ThemesBackup {
 	static var supportedSchemaVersions: [Schema.Version] {
 		[.init(1, 0, 0)]
 	}
-//	static let currentSchemaVersion = SemanticVersion(1, 0, 0)
+
 	static var currentSchemaVersion: Schema.Version {
 		.init(1, 0, 0)
 	}
@@ -82,11 +82,24 @@ struct ThemesDocument: FileDocument {
 	}
 
 	func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
-		let backup = ThemeBackupData(schemaVersion: ThemesBackup.currentSchemaVersion, themes: themes)
-		let encoder = JSONEncoder()
-		encoder.outputFormatting = .prettyPrinted
-		let data = try encoder.encode(backup)
+		let data = try toData(themes)
 		return FileWrapper(regularFileWithContents: data)
+	}
+
+	private func toData(_ themeDatas: [ThemeData], outputFormatting: JSONEncoder.OutputFormatting = .prettyPrinted) throws -> Data {
+		let backup = ThemeBackupData(schemaVersion: ThemesBackup.currentSchemaVersion, themes: themeDatas)
+		let encoder = JSONEncoder()
+		encoder.outputFormatting = outputFormatting
+		let data = try encoder.encode(backup)
+		return data
+	}
+
+	func toString() -> String {
+		guard let data = try? toData(themes, outputFormatting: .sortedKeys), let themeDataString = String(data: data, encoding: .utf8) else {
+			return "Failed to parse theme data."
+		}
+
+		return themeDataString
 	}
 }
 #endif
